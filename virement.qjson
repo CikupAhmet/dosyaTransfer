@@ -1814,7 +1814,7 @@ let pjson = {
 																																					"HL": "TS"
 																																				},
 																																				"onSuccessVirementCreate": {
-																																					"H": "quick.EM.trace(\"onSuccessVirementCreate\")\r\nquick.store.set(\"successVirement\", true);\r\n\r\nquick.EM.trace(response.responseVirementCreate);\r\n\r\ncomponents.HeaderSummary.text = 'Müşterinin Hesapları Arası Para Aktarma İşlem Sonuç';\r\ncomponents.EdtrComp_591.text = 'Bitir';\r\ncomponents.EdtrComp_588.visible = false;\r\n\r\nif (response.responseVirementCreate) {\r\n    let date = response.responseVirementCreate.timestamp;\r\n    quick.EM.trace(\"date\");\r\n    quick.EM.trace(date)\r\n    let correlationId = response.responseVirementCreate.result.correlationId;\r\n    quick.EM.trace(\"correlationId\", correlationId)\r\n    quick.EM.trace(correlationId);\r\n    const url = \"date=\" + date + \"&siid=\" + correlationId.toUpperCase();\r\n\r\n    quick.EM.trace(\"dekont-url\")\r\n    quick.EM.trace(url);\r\n\r\n    quick.containerServices.extensions.showVoucherPopUp(url);\r\n}\r\n\r\n\r\n//components.successDialogVirement.dialogClick({ text: 'İşlem başarılı ile gerçekleşti.'});\r\n\r\nquick.MM.trigger(\"ofsaaRequest\", [{operationCode: \"O\", pcuBytes: \"A\", monetaryType: \"P\"}]);\r\n",
+																																					"H": "quick.EM.trace(\"onSuccessVirementCreate\")\r\nquick.store.set(\"successVirement\", true);\r\n\r\nquick.EM.trace(response.responseVirementCreate);\r\n\r\ncomponents.HeaderSummary.text = 'Müşterinin Hesapları Arası Para Aktarma İşlem Sonuç';\r\ncomponents.EdtrComp_591.text = 'Bitir';\r\ncomponents.EdtrComp_588.visible = false;\r\n\r\nif (response.responseVirementCreate) {\r\n    let date = response.responseVirementCreate.timestamp;\r\n    quick.EM.trace(\"date\");\r\n    quick.EM.trace(date)\r\n    let correlationId = response.responseVirementCreate.result.correlationId;\r\n    quick.EM.trace(\"correlationId\", correlationId)\r\n    quick.EM.trace(correlationId);\r\n    const url = \"date=\" + date + \"&siid=\" + correlationId.toUpperCase();\r\n\r\n    quick.EM.trace(\"dekont-url\")\r\n    quick.EM.trace(url);\r\n\r\n    quick.containerServices.extensions.showVoucherPopUp(url);\r\n}\r\n\r\n\r\ncomponents.successDialogVirement.dialogClick({ text: 'İşlem başarılı ile gerçekleşti.'});\r\n\r\nquick.MM.trigger(\"ofsaaRequest\", [{operationCode: \"O\", pcuBytes: \"A\", monetaryType: \"P\"}]);\r\n",
 																																					"C": true,
 																																					"HL": "TS"
 																																				},
@@ -7898,7 +7898,7 @@ let pjson = {
 																																					"HL": "JS"
 																																				},
 																																				"onSuccessVirementCreate": {
-																																					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nquick.EM.trace(\"onSuccessVirementCreate\");\r\nquick.store.set(\"successVirement\", true);\r\nquick.EM.trace(response.responseVirementCreate);\r\ncomponents.HeaderSummary.text = 'Müşterinin Hesapları Arası Para Aktarma İşlem Sonuç';\r\ncomponents.EdtrComp_591.text = 'Bitir';\r\ncomponents.EdtrComp_588.visible = false;\r\nif (response.responseVirementCreate) {\r\n    var date = response.responseVirementCreate.timestamp;\r\n    quick.EM.trace(\"date\");\r\n    quick.EM.trace(date);\r\n    var correlationId = response.responseVirementCreate.result.correlationId;\r\n    quick.EM.trace(\"correlationId\", correlationId);\r\n    quick.EM.trace(correlationId);\r\n    var url = \"date=\" + date + \"&siid=\" + correlationId.toUpperCase();\r\n    quick.EM.trace(\"dekont-url\");\r\n    quick.EM.trace(url);\r\n    quick.containerServices.extensions.showVoucherPopUp(url);\r\n}\r\n//components.successDialogVirement.dialogClick({ text: 'İşlem başarılı ile gerçekleşti.'});\r\nquick.MM.trigger(\"ofsaaRequest\", [{ operationCode: \"O\", pcuBytes: \"A\", monetaryType: \"P\" }]);\r\n",
+																																					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nquick.EM.trace(\"onSuccessVirementCreate\");\r\nquick.store.set(\"successVirement\", true);\r\nquick.EM.trace(response.responseVirementCreate);\r\ncomponents.HeaderSummary.text = 'Müşterinin Hesapları Arası Para Aktarma İşlem Sonuç';\r\ncomponents.EdtrComp_591.text = 'Bitir';\r\ncomponents.EdtrComp_588.visible = false;\r\nif (response.responseVirementCreate) {\r\n    var date = response.responseVirementCreate.timestamp;\r\n    quick.EM.trace(\"date\");\r\n    quick.EM.trace(date);\r\n    var correlationId = response.responseVirementCreate.result.correlationId;\r\n    quick.EM.trace(\"correlationId\", correlationId);\r\n    quick.EM.trace(correlationId);\r\n    var url = \"date=\" + date + \"&siid=\" + correlationId.toUpperCase();\r\n    quick.EM.trace(\"dekont-url\");\r\n    quick.EM.trace(url);\r\n    quick.containerServices.extensions.showVoucherPopUp(url);\r\n}\r\ncomponents.successDialogVirement.dialogClick({ text: 'İşlem başarılı ile gerçekleşti.' });\r\nquick.MM.trigger(\"ofsaaRequest\", [{ operationCode: \"O\", pcuBytes: \"A\", monetaryType: \"P\" }]);\r\n",
 																																					"C": true,
 																																					"HL": "JS"
 																																				},
@@ -8392,7 +8392,7 @@ let pjson = {
 																																							},
 																																							"O": {
 																																								"cType": "slot",
-																																								"compDomClasses": "q-label "
+																																								"compDomClasses": "q-label newDropBorder"
 																																							}
 																																						}
 																																					],
@@ -8420,7 +8420,7 @@ let pjson = {
 																																					},
 																																					"class": "d-flex flex-column"
 																																				},
-																																				"compDomClasses": "col d-flex flex-column"
+																																				"compDomClasses": "col d-flex flex-column newDropBorder"
 																																			},
 																																			"S": {
 																																				"xs-xl": {
@@ -8491,7 +8491,7 @@ let pjson = {
 																															},
 																															"O": {
 																																"cType": "slot",
-																																"compDomClasses": "row"
+																																"compDomClasses": "row newDropBorder"
 																															}
 																														}
 																													],
@@ -8547,7 +8547,7 @@ let pjson = {
 																											},
 																											"O": {
 																												"cType": "slot",
-																												"compDomClasses": "v-card v-sheet theme--light"
+																												"compDomClasses": "v-card v-sheet theme--light newDropBorder"
 																											}
 																										},
 																										{
@@ -8725,7 +8725,7 @@ let pjson = {
 																																			},
 																																			"O": {
 																																				"cType": "slot",
-																																				"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-select v-autocomplete undefined"
+																																				"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-select v-autocomplete undefined newDropBorder"
 																																			}
 																																		}
 																																	],
@@ -8753,7 +8753,7 @@ let pjson = {
 																																	},
 																																	"class": "d-flex flex-column"
 																																},
-																																"compDomClasses": "col d-flex flex-column"
+																																"compDomClasses": "col d-flex flex-column newDropBorder"
 																															},
 																															"S": {
 																																"xs-xl": {
@@ -8957,7 +8957,7 @@ let pjson = {
 																																			},
 																																			"O": {
 																																				"cType": "slot",
-																																				"compDomClasses": "v-input v-input--is-disabled v-input--is-loading v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-select v-autocomplete undefined"
+																																				"compDomClasses": "v-input v-input--is-disabled v-input--is-loading v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-select v-autocomplete undefined newDropBorder"
 																																			}
 																																		}
 																																	],
@@ -8985,7 +8985,7 @@ let pjson = {
 																																	},
 																																	"class": "d-flex flex-column"
 																																},
-																																"compDomClasses": "col d-flex flex-column"
+																																"compDomClasses": "col d-flex flex-column newDropBorder"
 																															},
 																															"S": {
 																																"xs-xl": {
@@ -9069,7 +9069,7 @@ let pjson = {
 																											},
 																											"O": {
 																												"cType": "slot",
-																												"compDomClasses": "row"
+																												"compDomClasses": "row newDropBorder"
 																											}
 																										}
 																									],
@@ -9326,7 +9326,7 @@ let pjson = {
 																																							},
 																																							"O": {
 																																								"cType": "slot",
-																																								"compDomClasses": "q-label "
+																																								"compDomClasses": "q-label newDropBorder"
 																																							}
 																																						}
 																																					],
@@ -9354,7 +9354,7 @@ let pjson = {
 																																					},
 																																					"class": "d-flex flex-column"
 																																				},
-																																				"compDomClasses": "col d-flex flex-column"
+																																				"compDomClasses": "col d-flex flex-column newDropBorder"
 																																			},
 																																			"S": {
 																																				"xs-xl": {
@@ -9435,7 +9435,7 @@ let pjson = {
 																															},
 																															"O": {
 																																"cType": "slot",
-																																"compDomClasses": "row"
+																																"compDomClasses": "row newDropBorder"
 																															}
 																														}
 																													],
@@ -9492,7 +9492,7 @@ let pjson = {
 																											},
 																											"O": {
 																												"cType": "slot",
-																												"compDomClasses": "v-card v-sheet theme--light"
+																												"compDomClasses": "v-card v-sheet theme--light newDropBorder"
 																											}
 																										},
 																										{
@@ -9675,7 +9675,7 @@ let pjson = {
 																																			},
 																																			"O": {
 																																				"cType": "slot",
-																																				"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-select v-autocomplete undefined"
+																																				"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-select v-autocomplete undefined newDropBorder"
 																																			}
 																																		}
 																																	],
@@ -9703,7 +9703,7 @@ let pjson = {
 																																	},
 																																	"class": "d-flex flex-column"
 																																},
-																																"compDomClasses": "col d-flex flex-column"
+																																"compDomClasses": "col d-flex flex-column newDropBorder"
 																															},
 																															"S": {
 																																"xs-xl": {
@@ -9907,7 +9907,7 @@ let pjson = {
 																																			},
 																																			"O": {
 																																				"cType": "slot",
-																																				"compDomClasses": "v-input v-input--is-disabled v-input--is-loading v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-select v-autocomplete undefined"
+																																				"compDomClasses": "v-input v-input--is-disabled v-input--is-loading v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-select v-autocomplete undefined newDropBorder"
 																																			}
 																																		}
 																																	],
@@ -9935,7 +9935,7 @@ let pjson = {
 																																	},
 																																	"class": "d-flex flex-column"
 																																},
-																																"compDomClasses": "col d-flex flex-column"
+																																"compDomClasses": "col d-flex flex-column newDropBorder"
 																															},
 																															"S": {
 																																"xs-xl": {
@@ -10019,7 +10019,7 @@ let pjson = {
 																											},
 																											"O": {
 																												"cType": "slot",
-																												"compDomClasses": "row"
+																												"compDomClasses": "row newDropBorder"
 																											}
 																										}
 																									],
@@ -10047,7 +10047,7 @@ let pjson = {
 																									},
 																									"class": "d-flex flex-column"
 																								},
-																								"compDomClasses": "col d-flex flex-column"
+																								"compDomClasses": "col d-flex flex-column newDropBorder"
 																							},
 																							"S": {
 																								"xs-sm": {
@@ -10167,7 +10167,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "row"
+																				"compDomClasses": "row newDropBorder"
 																			}
 																		},
 																		{
@@ -10276,7 +10276,7 @@ let pjson = {
 																																							},
 																																							"O": {
 																																								"cType": "slot",
-																																								"compDomClasses": "q-label "
+																																								"compDomClasses": "q-label newDropBorder"
 																																							}
 																																						}
 																																					],
@@ -10304,7 +10304,7 @@ let pjson = {
 																																					},
 																																					"class": "d-flex flex-column"
 																																				},
-																																				"compDomClasses": "col d-flex flex-column"
+																																				"compDomClasses": "col d-flex flex-column newDropBorder"
 																																			},
 																																			"S": {
 																																				"xs-xl": {
@@ -10385,7 +10385,7 @@ let pjson = {
 																															},
 																															"O": {
 																																"cType": "slot",
-																																"compDomClasses": "row"
+																																"compDomClasses": "row newDropBorder"
 																															}
 																														}
 																													],
@@ -10442,7 +10442,7 @@ let pjson = {
 																											},
 																											"O": {
 																												"cType": "slot",
-																												"compDomClasses": "v-card v-sheet theme--light"
+																												"compDomClasses": "v-card v-sheet theme--light newDropBorder"
 																											}
 																										},
 																										{
@@ -10593,7 +10593,7 @@ let pjson = {
 																																			},
 																																			"O": {
 																																				"cType": "slot",
-																																				"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined undefined"
+																																				"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined undefined newDropBorder"
 																																			}
 																																		}
 																																	],
@@ -10621,7 +10621,7 @@ let pjson = {
 																																	},
 																																	"class": "d-flex flex-column"
 																																},
-																																"compDomClasses": "col d-flex flex-column"
+																																"compDomClasses": "col d-flex flex-column newDropBorder"
 																															},
 																															"S": {
 																																"xs-xl": {
@@ -10789,7 +10789,7 @@ let pjson = {
 																																			},
 																																			"O": {
 																																				"cType": "slot",
-																																				"compDomClasses": "v-input v-input--is-disabled theme--light v-text-field v-text-field--is-booted undefined"
+																																				"compDomClasses": "v-input v-input--is-disabled theme--light v-text-field v-text-field--is-booted undefined newDropBorder"
 																																			}
 																																		}
 																																	],
@@ -10817,7 +10817,7 @@ let pjson = {
 																																	},
 																																	"class": "d-flex flex-column"
 																																},
-																																"compDomClasses": "col d-flex flex-column"
+																																"compDomClasses": "col d-flex flex-column newDropBorder"
 																															},
 																															"S": {
 																																"xs-xl": {
@@ -10956,7 +10956,7 @@ let pjson = {
 																																			},
 																																			"O": {
 																																				"cType": "slot",
-																																				"compDomClasses": "v-input theme--light v-input--selection-controls v-input--checkbox"
+																																				"compDomClasses": "v-input theme--light v-input--selection-controls v-input--checkbox newDropBorder"
 																																			}
 																																		}
 																																	],
@@ -10984,7 +10984,7 @@ let pjson = {
 																																	},
 																																	"class": "d-flex flex-column"
 																																},
-																																"compDomClasses": "col d-flex flex-column"
+																																"compDomClasses": "col d-flex flex-column newDropBorder"
 																															},
 																															"S": {
 																																"xs-xl": {
@@ -11068,7 +11068,7 @@ let pjson = {
 																											},
 																											"O": {
 																												"cType": "slot",
-																												"compDomClasses": "row"
+																												"compDomClasses": "row newDropBorder"
 																											}
 																										}
 																									],
@@ -11096,7 +11096,7 @@ let pjson = {
 																									},
 																									"class": "d-flex flex-column"
 																								},
-																								"compDomClasses": "col d-flex flex-column"
+																								"compDomClasses": "col d-flex flex-column newDropBorder"
 																							},
 																							"S": {
 																								"xs-sm": {
@@ -11216,7 +11216,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "row"
+																				"compDomClasses": "row newDropBorder"
 																			}
 																		},
 																		{
@@ -11367,7 +11367,7 @@ let pjson = {
 																											},
 																											"O": {
 																												"cType": "slot",
-																												"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined undefined"
+																												"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined undefined newDropBorder"
 																											}
 																										}
 																									],
@@ -11395,7 +11395,7 @@ let pjson = {
 																									},
 																									"class": "d-flex flex-column"
 																								},
-																								"compDomClasses": "col d-flex flex-column"
+																								"compDomClasses": "col d-flex flex-column newDropBorder"
 																							},
 																							"S": {
 																								"xs-xl": {
@@ -11479,7 +11479,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "row"
+																				"compDomClasses": "row newDropBorder"
 																			}
 																		},
 																		{
@@ -11549,7 +11549,7 @@ let pjson = {
 																															},
 																															"O": {
 																																"cType": "child",
-																																"compDomClasses": "q-label "
+																																"compDomClasses": "q-label newDropBorder"
 																															},
 																															"S": {
 																																"xs-xl": {
@@ -11702,7 +11702,7 @@ let pjson = {
 																											},
 																											"O": {
 																												"cType": "slot",
-																												"compDomClasses": "v-btn v-btn--depressed theme--light v-size--default"
+																												"compDomClasses": "v-btn v-btn--depressed theme--light v-size--default newDropBorder"
 																											}
 																										},
 																										{
@@ -11766,7 +11766,7 @@ let pjson = {
 																															},
 																															"O": {
 																																"cType": "child",
-																																"compDomClasses": "q-label "
+																																"compDomClasses": "q-label newDropBorder"
 																															},
 																															"S": {
 																																"xs-xl": {
@@ -11860,7 +11860,7 @@ let pjson = {
 																											},
 																											"O": {
 																												"cType": "slot",
-																												"compDomClasses": "v-btn v-btn--depressed theme--light v-size--default"
+																												"compDomClasses": "v-btn v-btn--depressed theme--light v-size--default newDropBorder"
 																											}
 																										}
 																									],
@@ -11888,7 +11888,7 @@ let pjson = {
 																									},
 																									"class": "d-flex flex-column"
 																								},
-																								"compDomClasses": "col d-flex flex-column"
+																								"compDomClasses": "col d-flex flex-column newDropBorder"
 																							},
 																							"S": {
 																								"xs-sm": {
@@ -12006,7 +12006,7 @@ let pjson = {
 																			},
 																			"O": {
 																				"cType": "slot",
-																				"compDomClasses": "row"
+																				"compDomClasses": "row newDropBorder"
 																			}
 																		}
 																	],
@@ -12172,7 +12172,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": ""
+				"compDomClasses": "newDropBorder"
 			}
 		},
 		{
@@ -12196,7 +12196,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": ""
+				"compDomClasses": "newDropBorder"
 			}
 		}
 	],

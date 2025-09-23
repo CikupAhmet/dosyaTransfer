@@ -14,16 +14,11 @@ let pjson = {
 			},
 			"E": {
 				"EndRender": {
-					"H": "quick.EM.trace('End Render')\r\n\r\nquick.store.set(\"successVirement\", false);\r\n\r\ncomponents.creditAccountInfo.loading = true;\r\ncomponents.debitAccountInfo.loading = true;\r\n\r\nlet idempotentRequest: IRequest = {\r\n    url: '/api/dep-operations/v1/api/dep-operations/keys',\r\n    http: 'get',\r\n    blockRender: true,\r\n    onSuccess: 'onSuccessIdempotent',\r\n    onFail: 'onFailIdempotent',\r\n    responseField: 'idempotent',\r\n    data: null\r\n}\r\nquick.Request.async(idempotentRequest);\r\n\r\n\r\n\r\n\r\nlet customerContext = quick.containerServices.getCustomerContext() as any;\r\nquick.store.set(\"customerValue\", customerContext.customerNumber);\r\n\r\nlet accountListRequest: IRequest = {\r\n    url: '/api/dep-operations/v1/api/dep-operations/retrieveDepositAccounts?customerId=' + quick.store.get(\"customerValue\"),\r\n    http: 'get',\r\n    blockRender: true,\r\n    onSuccess: 'onSuccessAccountList',\r\n    onFail: 'onFailAccountList',\r\n    responseField: 'accountList',\r\n    data: null\r\n}\r\nquick.Request.async(accountListRequest);\r\n\r\n",
+					"H": "quick.EM.trace('End Render')\r\n\r\nquick.store.set(\"successVirement\", false);\r\n\r\ncomponents.creditAccountInfo.loading = true;\r\ncomponents.debitAccountInfo.loading = true;\r\n\r\n\r\nlet accountTypes: { text: string; value: string }[] = [\r\n  { text: 'Vadesiz TL', value: 'DEMAND' }\r\n];\r\ncomponents.creditAccountType.items = [];\r\n\r\naccountTypes.forEach(function (accountType) {\r\n    components.creditAccountType.items.push({\r\n        text: accountType.text,\r\n        value: accountType.value\r\n    });\r\n    components.debitAccountType.items.push({\r\n        text: accountType.text,\r\n        value: accountType.value\r\n    });\r\n    components.creditAccountType.qValue = accountType;\r\n    components.debitAccountType.qValue = accountType;\r\n    (<any>components.creditAccountType).updateValue();\r\n    (<any>components.debitAccountType).updateValue();\r\n});\r\n\r\n\r\nlet idempotentRequest: IRequest = {\r\n    url: '/api/dep-operations/v1/api/dep-operations/keys',\r\n    http: 'get',\r\n    blockRender: true,\r\n    onSuccess: 'onSuccessIdempotent',\r\n    onFail: 'onFailIdempotent',\r\n    responseField: 'idempotent',\r\n    data: null\r\n}\r\nquick.Request.async(idempotentRequest);\r\n\r\n\r\nlet customerContext = quick.containerServices.getCustomerContext() as any;\r\nquick.store.set(\"customerValue\", customerContext.customerNumber);\r\n\r\nlet accountListRequest: IRequest = {\r\n    url: '/api/dep-operations/v1/api/dep-operations/retrieveDepositAccounts?customerId=' + quick.store.get(\"customerValue\"),\r\n    http: 'get',\r\n    blockRender: true,\r\n    onSuccess: 'onSuccessAccountList',\r\n    onFail: 'onFailAccountList',\r\n    responseField: 'accountList',\r\n    data: null\r\n}\r\nquick.Request.async(accountListRequest);\r\n\r\n",
 					"HL": "TS"
 				},
 				"onSuccessAccountList": {
-					"H": "quick.EM.trace(\"onSuccessAccountList\")\r\nquick.EM.trace(response.accountList)\r\n\r\ncomponents.creditAccountInfo.loading = false;\r\ncomponents.debitAccountInfo.loading = false;",
-					"C": true,
-					"HL": "TS"
-				},
-				"fillAccounts": {
-					"H": "quick.EM.trace(\"#### fillAccounts ####\")\r\nquick.EM.trace(components.debitAccountType.qValue)\r\n\r\n\r\n",
+					"H": "components.creditAccountInfo.loading = false;\r\ncomponents.debitAccountInfo.loading = false;\r\n\r\nconst accountType = components.creditAccountType.qValue?.value;\r\nconst selectedAccountIdDebit = components.debitAccountInfo.qValue?.accountId;\r\nconst selectedAccountIdCredit = components.creditAccountInfo.qValue?.accountId;\r\n\r\ncomponents.debitAccountInfo.items = [];\r\ncomponents.creditAccountInfo.items = [];\r\n\r\n\r\nconst depositResponse = Array.isArray(response.accountList)\r\n  ? response.accountList\r\n  : Object.keys(response.accountList).map(k => (response.accountList as any)[k]);\r\n\r\nconst toAccountObj = (item: any) => {\r\n  const result = Number(item.balance) - Number(item.blockedAmount);\r\n  const formattedResult = item.isHidden \r\n  ? item.balance \r\n  : new Intl.NumberFormat(\"tr-TR\", {\r\n      minimumFractionDigits: 2,\r\n      maximumFractionDigits: 2\r\n    }).format(result);\r\n  return {\r\n    text: `${item.branchCode} - ${item.iban} - ${formattedResult} ${item.currencyCode}`,\r\n    value: item.accountId,\r\n    iban: item.iban,\r\n    availableBalance: formattedResult,\r\n    blockageAmount: item.blockageAmount,\r\n    balance: item.balance,\r\n    accountNumber: item.accountNumber,\r\n    branchCode: item.branchCode,\r\n    currencyCode: item.currencyCode,\r\n    savingCode: item.savingCode,\r\n    productId: item.productId,\r\n    accountId: item.accountId,\r\n  };\r\n};\r\n\r\ndepositResponse\r\n  .filter((item: any) => item.accountType === accountType)\r\n  .forEach((item: any) => {\r\n    const account = toAccountObj(item);\r\n\r\n    if (item.accountId === selectedAccountIdCredit) {\r\n      // credit'te seçili, debit'ten çıkar (credit kendi listesinde kalsın)\r\n      components.creditAccountInfo.items.push(account);\r\n      return;\r\n    }\r\n\r\n    if (item.accountId === selectedAccountIdDebit) {\r\n      // debit'te seçili, credit'ten çıkar (debit kendi listesinde kalsın)\r\n      components.debitAccountInfo.items.push(account);\r\n      return;\r\n    }\r\n\r\n    // normal durum: iki listeye de ekle\r\n    components.creditAccountInfo.items.push(account);\r\n    components.debitAccountInfo.items.push(account);\r\n  });\r\n",
 					"C": true,
 					"HL": "TS"
 				},
@@ -38,12 +33,17 @@ let pjson = {
 					"HL": "TS"
 				},
 				"onFailAccountList": {
-					"H": "quick.EM.trace('onFailAccountList')\r\nquick.EM.trace(response)\r\n\r\ncomponents.creditAccountInfo.loading = false;\r\ncomponents.debitAccountInfo.loading = false;\r\n\r\ncomponents.errorDialogVirement.dialogClick({ text: 'Hesaplar şu anda görüntülenemiyor. Lütfen kısa bir süre sonra yeniden deneyin.'});\r\n",
+					"H": "declare var error;\r\n\r\nquick.EM.trace('onFailAccountList')\r\nquick.EM.trace(error.response)\r\n\r\ncomponents.creditAccountInfo.loading = false;\r\ncomponents.debitAccountInfo.loading = false;\r\n\r\nlet errorMessage = \"\";\r\n\r\nif (error.response) {\r\n    if (error.response.data.responseMessage) {\r\n        errorMessage = error.response.data.responseMessage\r\n    } else {\r\n        errorMessage = \"Beklenmedik bir hata oluştu.\"\r\n    }\r\n}\r\n\r\ncomponents.errorDialogVirement.dialogClick({ text: errorMessage});",
 					"C": true,
 					"HL": "TS"
 				},
 				"onSuccessIdempotent": {
 					"H": "quick.EM.trace(\"onSuccessIdempotent\")\r\nquick.EM.trace(response.onSuccessIdempotent)",
+					"C": true,
+					"HL": "TS"
+				},
+				"updateAccountList": {
+					"H": "declare const accountId;\r\ndeclare const isDebit;\r\n\r\nquick.EM.trace(\"#### updateAccountList ####\")\r\nquick.EM.trace(components.debitAccountType.qValue)\r\n\r\nif (isDebit == \"false\" && accountId != null) {\r\n    \r\n}",
 					"C": true,
 					"HL": "TS"
 				}
@@ -1310,7 +1310,7 @@ let pjson = {
 																																					"legendMarginLeft": "0px",
 																																					"marginRight": "",
 																																					"marginBottom": "",
-																																					"marginTop": "4px",
+																																					"marginTop": "0px",
 																																					"paddingTop": "12px",
 																																					"paddingBottom": "",
 																																					"paddingLeft": "",
@@ -1785,12 +1785,438 @@ let pjson = {
 																																			"O": {
 																																				"cType": "slot"
 																																			}
+																																		}
+																																	],
+																																	"cType": "slot"
+																																}
+																															},
+																															"E": {},
+																															"P": {
+																																"ID": {
+																																	"H": "EdtrComp_587",
+																																	"T": "prop"
+																																}
+																															},
+																															"_Editor": {
+																																"eID": "EdtrComp_587"
+																															},
+																															"O": {
+																																"cType": "slot",
+																																"layout": {
+																																	"dOpt": {
+																																		"xs": [
+																																			"d:d-flex",
+																																			"fd:flex-column"
+																																		]
+																																	},
+																																	"class": "d-flex flex-column"
+																																}
+																															},
+																															"S": {
+																																"xs-sm": {
+																																	"col": "2",
+																																	"flexDirection": "column",
+																																	"alignItems": "flex-start",
+																																	"justifyContent": "center",
+																																	"marginLeft": "",
+																																	"marginRight": "",
+																																	"marginBottom": "",
+																																	"marginTop": "px",
+																																	"paddingTop": "12px",
+																																	"paddingBottom": "12px",
+																																	"paddingLeft": "0px",
+																																	"paddingRight": "12px",
+																																	"boxShadow": "",
+																																	"boxSizing": "",
+																																	"borderTopStyle": "",
+																																	"borderRightStyle": "",
+																																	"borderBottomStyle": "",
+																																	"borderLeftStyle": "",
+																																	"borderTopLeftRadius": "",
+																																	"borderTopRightRadius": "",
+																																	"borderBottomLeftRadius": "",
+																																	"borderBottomRightRadius": "",
+																																	"borderTopWidth": "",
+																																	"borderRightWidth": "",
+																																	"borderBottomWidth": "",
+																																	"borderLeftWidth": "",
+																																	"defaultBorderColor": "",
+																																	"sides": ""
+																																},
+																																"layoutMap": {
+																																	"LAYOUT": "xs-sm",
+																																	"LAYOUT_1": "sm-xl"
+																																},
+																																"sm-xl": {
+																																	"col": "12",
+																																	"flexDirection": "row",
+																																	"alignItems": "flex-end",
+																																	"justifyContent": "flex-end",
+																																	"marginLeft": "",
+																																	"marginRight": "",
+																																	"marginBottom": "",
+																																	"marginTop": "px",
+																																	"paddingTop": "12px",
+																																	"paddingBottom": "12px",
+																																	"paddingLeft": "12px",
+																																	"paddingRight": "12px",
+																																	"boxShadow": "",
+																																	"boxSizing": "",
+																																	"borderTopStyle": "",
+																																	"borderRightStyle": "",
+																																	"borderBottomStyle": "",
+																																	"borderLeftStyle": "",
+																																	"borderTopLeftRadius": "",
+																																	"borderTopRightRadius": "",
+																																	"borderBottomLeftRadius": "",
+																																	"borderBottomRightRadius": "",
+																																	"borderTopWidth": "",
+																																	"borderRightWidth": "",
+																																	"borderBottomWidth": "",
+																																	"borderLeftWidth": "",
+																																	"defaultBorderColor": "",
+																																	"sides": ""
+																																},
+																																"selectedLayout": "LAYOUT"
+																															}
+																														}
+																													],
+																													"cType": "slot"
+																												}
+																											},
+																											"_Editor": {
+																												"eID": "EdtrComp_586"
+																											},
+																											"S": {
+																												"xs-xl": {
+																													"marginLeft": "-0px",
+																													"marginRight": "-12px",
+																													"marginBottom": "px",
+																													"marginTop": "px",
+																													"paddingTop": "px",
+																													"paddingBottom": "",
+																													"paddingLeft": "",
+																													"paddingRight": "",
+																													"width": "",
+																													"height": "",
+																													"maxWidth": "",
+																													"maxHeight": "",
+																													"minWidth": "",
+																													"minHeight": "",
+																													"unlink": "false",
+																													"unlinkMax": "false",
+																													"unlinkMin": "false",
+																													"isSizeCollapsed": "false",
+																													"backgroundColor": "",
+																													"boxShadow": "",
+																													"boxSizing": "",
+																													"borderTopStyle": "",
+																													"borderRightStyle": "",
+																													"borderBottomStyle": "",
+																													"borderLeftStyle": "",
+																													"borderTopLeftRadius": "",
+																													"borderTopRightRadius": "",
+																													"borderBottomLeftRadius": "",
+																													"borderBottomRightRadius": "",
+																													"borderTopWidth": "",
+																													"borderRightWidth": "",
+																													"borderBottomWidth": "",
+																													"borderLeftWidth": "",
+																													"defaultBorderColor": "",
+																													"sides": ""
+																												}
+																											},
+																											"O": {
+																												"cType": "slot"
+																											}
+																										}
+																									],
+																									"cType": "slot"
+																								}
+																							},
+																							"E": {},
+																							"P": {
+																								"ID": {
+																									"H": "EdtrComp_6",
+																									"T": "prop"
+																								}
+																							},
+																							"_Editor": {
+																								"eID": "EdtrComp_6"
+																							},
+																							"O": {
+																								"cType": "slot",
+																								"layout": {
+																									"dOpt": {
+																										"xs": [
+																											"d:d-flex",
+																											"fd:flex-column"
+																										]
+																									},
+																									"class": "d-flex flex-column"
+																								}
+																							},
+																							"S": {
+																								"xs-xl": {
+																									"col": "1",
+																									"flexDirection": "column",
+																									"alignItems": "",
+																									"justifyContent": "",
+																									"marginLeft": "",
+																									"marginRight": "",
+																									"marginBottom": "",
+																									"marginTop": "",
+																									"paddingTop": "12px",
+																									"paddingBottom": "12px",
+																									"paddingLeft": "12px",
+																									"paddingRight": "12px",
+																									"backgroundColor": "",
+																									"boxShadow": "",
+																									"boxSizing": "",
+																									"borderTopStyle": "",
+																									"borderRightStyle": "",
+																									"borderBottomStyle": "",
+																									"borderLeftStyle": "",
+																									"borderTopLeftRadius": "",
+																									"borderTopRightRadius": "",
+																									"borderBottomLeftRadius": "",
+																									"borderBottomRightRadius": "",
+																									"borderTopWidth": "",
+																									"borderRightWidth": "",
+																									"borderBottomWidth": "",
+																									"borderLeftWidth": "",
+																									"defaultBorderColor": "",
+																									"sides": ""
+																								}
+																							}
+																						},
+																						{
+																							"T": "VCol",
+																							"C": {
+																								"default": {
+																									"c": [
+																										{
+																											"T": "VRow",
+																											"P": {
+																												"ID": {
+																													"H": "EdtrComp_187",
+																													"T": "prop"
+																												}
+																											},
+																											"E": {},
+																											"C": {
+																												"default": {
+																													"c": [
+																														{
+																															"T": "VCol",
+																															"C": {
+																																"default": {
+																																	"c": [
+																																		{
+																																			"T": "VBtn",
+																																			"P": {
+																																				"ID": {
+																																					"H": "EdtrComp_189",
+																																					"T": "prop"
+																																				},
+																																				"depressed": {
+																																					"H": "true",
+																																					"T": "prop"
+																																				},
+																																				"visible": {
+																																					"H": "true",
+																																					"T": "prop"
+																																				},
+																																				"DiscardSettings": {
+																																					"H": "true",
+																																					"T": "prop",
+																																					"HL": "QS"
+																																				}
+																																			},
+																																			"E": {
+																																				"click": {
+																																					"H": "quick.Quick.alert({\r\n    text: \"Ekrandan çıkış yapmak istediğinize emin misiniz ?\",\r\n    title: \"Onaylıyor musunuz\",\r\n    category: 'Info',\r\n    actionButtons: [{ name: \"Tamam\", type: 'Confirm', clickEventName: 'onConfirm' },\r\n    {\r\n        name: \"İptal\", type: 'Cancel',\r\n        clickEventName: 'onCancel'\r\n    }],\r\n    additionals: { props: { isPersistent: true }, events: {} }\r\n});",
+																																					"P": "mouseEvent:unknown | undefined",
+																																					"HL": "TS"
+																																				},
+																																				"onConfirm": {
+																																					"H": "quick.EM.trace(\"Cancel button onConfirm\")",
+																																					"C": true,
+																																					"HL": "TS"
+																																				}
+																																			},
+																																			"C": {
+																																				"default": {
+																																					"c": [
+																																						{
+																																							"T": "QLabel",
+																																							"C": {},
+																																							"E": {},
+																																							"P": {
+																																								"ID": {
+																																									"H": "EdtrComp_190",
+																																									"T": "prop"
+																																								},
+																																								"text": {
+																																									"H": "'Çıkış'",
+																																									"T": "prop",
+																																									"HL": "QS"
+																																								}
+																																							},
+																																							"_Editor": {
+																																								"eID": "EdtrComp_190"
+																																							},
+																																							"O": {
+																																								"cType": "child"
+																																							},
+																																							"S": {
+																																								"xs-xl": {
+																																									"marginTop": "",
+																																									"marginRight": "",
+																																									"marginBottom": "",
+																																									"marginLeft": "",
+																																									"paddingTop": "",
+																																									"paddingRight": "",
+																																									"paddingBottom": "",
+																																									"paddingLeft": "",
+																																									"fontColor": "#000000",
+																																									"fontFamily": "Roboto",
+																																									"fontSize": "14px",
+																																									"fontStyle": "normal",
+																																									"fontWeight": "500",
+																																									"combinedFont": "Roboto-Medium",
+																																									"lineHeight": "20px",
+																																									"ThemeFont": "Custom"
+																																								}
+																																							}
+																																						}
+																																					],
+																																					"cType": "slot"
+																																				}
+																																			},
+																																			"_Editor": {
+																																				"eID": "EdtrComp_189"
+																																			},
+																																			"S": {
+																																				"xs-sm": {
+																																					"marginTop": "",
+																																					"marginRight": "px",
+																																					"marginBottom": "",
+																																					"marginLeft": "",
+																																					"paddingTop": "",
+																																					"paddingRight": "16px",
+																																					"paddingBottom": "",
+																																					"paddingLeft": "16px",
+																																					"minWidth": "",
+																																					"minHeight": "",
+																																					"unlink": "false",
+																																					"unlinkMax": "false",
+																																					"unlinkMin": "false",
+																																					"isSizeCollapsed": "false",
+																																					"fontColor": "#1d92ff",
+																																					"fontFamily": "Roboto",
+																																					"fontSize": "14px",
+																																					"fontStyle": "normal",
+																																					"fontWeight": "500",
+																																					"combinedFont": "",
+																																					"backgroundColor": "unset",
+																																					"boxShadow": "",
+																																					"borderTopLeftRadius": "36px",
+																																					"borderTopRightRadius": "36px",
+																																					"borderBottomLeftRadius": "36px",
+																																					"borderBottomRightRadius": "36px",
+																																					"sides": "Top,Right,Bottom,Left",
+																																					"borderTopWidth": "0px",
+																																					"borderTopStyle": "solid",
+																																					"borderBottomWidth": "0px",
+																																					"borderBottomStyle": "solid",
+																																					"borderLeftWidth": "0px",
+																																					"borderLeftStyle": "solid",
+																																					"borderRightWidth": "0px",
+																																					"borderRightStyle": "solid",
+																																					"defaultBorderColor": "#ffffff00",
+																																					"ThemeFont": "Custom",
+																																					"lineHeight": "36px",
+																																					"height": "36px",
+																																					"disabledBackgroundColor": "unset"
+																																				},
+																																				"layoutMap": {
+																																					"LAYOUT": "xs-sm",
+																																					"LAYOUT_1": "sm-xl"
+																																				},
+																																				"selectedLayout": "LAYOUT_1",
+																																				"sm-xl": {
+																																					"marginTop": "",
+																																					"marginRight": "16px",
+																																					"marginBottom": "",
+																																					"marginLeft": "",
+																																					"paddingTop": "",
+																																					"paddingRight": "16px",
+																																					"paddingBottom": "",
+																																					"paddingLeft": "16px",
+																																					"minWidth": "",
+																																					"minHeight": "",
+																																					"unlink": "false",
+																																					"unlinkMax": "false",
+																																					"unlinkMin": "false",
+																																					"isSizeCollapsed": "false",
+																																					"fontColor": "#1d92ff",
+																																					"fontFamily": "Roboto",
+																																					"fontSize": "14px",
+																																					"fontStyle": "normal",
+																																					"fontWeight": "500",
+																																					"combinedFont": "",
+																																					"backgroundColor": "unset",
+																																					"boxShadow": "",
+																																					"borderTopLeftRadius": "36px",
+																																					"borderTopRightRadius": "36px",
+																																					"borderBottomLeftRadius": "36px",
+																																					"borderBottomRightRadius": "36px",
+																																					"sides": "Top,Right,Bottom,Left",
+																																					"borderTopWidth": "0px",
+																																					"borderTopStyle": "solid",
+																																					"borderBottomWidth": "0px",
+																																					"borderBottomStyle": "solid",
+																																					"borderLeftWidth": "0px",
+																																					"borderLeftStyle": "solid",
+																																					"borderRightWidth": "0px",
+																																					"borderRightStyle": "solid",
+																																					"defaultBorderColor": "#ffffff00",
+																																					"ThemeFont": "Custom",
+																																					"lineHeight": "36px",
+																																					"height": "36px",
+																																					"disabledBackgroundColor": "unset"
+																																				}
+																																			},
+																																			"SC": {
+																																				"fontColor": {
+																																					"QLabel": "fontColor"
+																																				},
+																																				"fontStyle": {
+																																					"QLabel": "fontStyle"
+																																				},
+																																				"fontSize": {
+																																					"QLabel": "fontSize"
+																																				},
+																																				"fontFamily": {
+																																					"QLabel": "fontFamily"
+																																				},
+																																				"fontWeight": {
+																																					"QLabel": "fontWeight"
+																																				},
+																																				"combinedFont": {
+																																					"QLabel": "combinedFont"
+																																				}
+																																			},
+																																			"O": {
+																																				"cType": "slot"
+																																			}
 																																		},
 																																		{
 																																			"T": "VBtn",
 																																			"P": {
 																																				"ID": {
-																																					"H": "EdtrComp_590",
+																																					"H": "EdtrComp_191",
 																																					"T": "prop"
 																																				},
 																																				"depressed": {
@@ -1814,12 +2240,12 @@ let pjson = {
 																																					"HL": "TS"
 																																				},
 																																				"onSuccessVirementCreate": {
-																																					"H": "quick.EM.trace(\"onSuccessVirementCreate\")\r\nquick.store.set(\"successVirement\", true);\r\n\r\nquick.EM.trace(response.responseVirementCreate);\r\n\r\ncomponents.HeaderSummary.text = 'Müşterinin Hesapları Arası Para Aktarma İşlem Sonuç';\r\ncomponents.EdtrComp_591.text = 'Bitir';\r\ncomponents.EdtrComp_588.visible = false;\r\n\r\nif (response.responseVirementCreate) {\r\n    let date = response.responseVirementCreate.timestamp;\r\n    quick.EM.trace(\"date\");\r\n    quick.EM.trace(date)\r\n    let correlationId = response.responseVirementCreate.result.correlationId;\r\n    quick.EM.trace(\"correlationId\", correlationId)\r\n    quick.EM.trace(correlationId);\r\n    const url = \"date=\" + date + \"&siid=\" + correlationId.toUpperCase();\r\n\r\n    quick.EM.trace(\"dekont-url\")\r\n    quick.EM.trace(url);\r\n\r\n    quick.containerServices.extensions.showVoucherPopUp(url);\r\n}\r\n\r\n\r\ncomponents.successDialogVirement.dialogClick({ text: 'İşlem başarılı ile gerçekleşti.'});\r\n\r\nquick.MM.trigger(\"ofsaaRequest\", [{operationCode: \"O\", pcuBytes: \"A\", monetaryType: \"P\"}]);\r\n",
+																																					"H": "quick.EM.trace(\"onSuccessVirementCreate\")\r\nquick.store.set(\"successVirement\", true);\r\n\r\nquick.EM.trace(response.responseVirementCreate);\r\n\r\ncomponents.HeaderSummary.text = 'Müşterinin Hesapları Arası Para Aktarma İşlem Sonuç';\r\ncomponents.EdtrComp_192.text = 'Bitir';\r\ncomponents.EdtrComp_189.visible = false;\r\n\r\nif (response.responseVirementCreate) {\r\n    let date = response.responseVirementCreate.timestamp;\r\n    quick.EM.trace(\"date\");\r\n    quick.EM.trace(date)\r\n    let correlationId = response.responseVirementCreate.result.correlationId;\r\n    quick.EM.trace(\"correlationId\", correlationId)\r\n    quick.EM.trace(correlationId);\r\n    const url = \"date=\" + date + \"&siid=\" + correlationId.toUpperCase();\r\n\r\n    quick.EM.trace(\"dekont-url\")\r\n    quick.EM.trace(url);\r\n\r\n    quick.containerServices.extensions.showVoucherPopUp(url);\r\n}\r\n\r\n\r\ncomponents.successDialogVirement.dialogClick({ text: 'İşlem başarılı ile gerçekleşti.'});\r\n\r\nquick.MM.trigger(\"ofsaaRequest\", [{operationCode: \"O\", pcuBytes: \"A\", monetaryType: \"P\"}]);\r\n",
 																																					"C": true,
 																																					"HL": "TS"
 																																				},
 																																				"onFailVirementCreate": {
-																																					"H": "quick.EM.trace('onFailVirementCreate')\r\n\r\nquick.store.set(\"successVirement\", false);\r\n\r\nquick.MM.trigger(\"ofsaaRequest\", [{operationCode: \"O\", pcuBytes: \"R\", monetaryType: \"P\"}]);\r\n\r\n\r\nquick.Quick.alert({\r\n    text: \"İşlem sırasında hata\",\r\n    title: \"İşlem sırasında hata\",\r\n    category: 'Error',\r\n    actionButtons: [\r\n        { name: 'Onayla', type: 'Confirm', clickEventName: 'onConfirmTask' },\r\n        { name: 'İptal', type: 'Cancel', clickEventName: 'onCancelTask' }\r\n    ],\r\n    additionals: { props: { isPersistent: true }, events: {} }\r\n});\r\n\r\n\r\ncomponents.errorDialogVirement.dialogClick({ text: 'Beklenmeyen bir hata ile karşılaşıldı.'});\r\n",
+																																					"H": "declare var error;\r\n\r\nquick.EM.trace('onFailVirementCreate')\r\n\r\nquick.store.set(\"successVirement\", false);\r\n\r\nquick.MM.trigger(\"ofsaaRequest\", [{operationCode: \"O\", pcuBytes: \"R\", monetaryType: \"P\"}]);\r\n\r\n\r\n\r\nlet errorMessage = \"\";\r\n\r\nif (error.response) {\r\n    if (error.response.data.responseMessage) {\r\n        errorMessage = error.response.data.responseMessage\r\n    } else {\r\n        errorMessage = \"Beklenmedik bir hata oluştu.\"\r\n    }\r\n}\r\n\r\ncomponents.errorDialogVirement.dialogClick({ text: errorMessage});\r\n",
 																																					"C": true,
 																																					"HL": "TS"
 																																				}
@@ -1833,7 +2259,7 @@ let pjson = {
 																																							"E": {},
 																																							"P": {
 																																								"ID": {
-																																									"H": "EdtrComp_591",
+																																									"H": "EdtrComp_192",
 																																									"T": "prop"
 																																								},
 																																								"text": {
@@ -1843,7 +2269,7 @@ let pjson = {
 																																								}
 																																							},
 																																							"_Editor": {
-																																								"eID": "EdtrComp_591"
+																																								"eID": "EdtrComp_192"
 																																							},
 																																							"O": {
 																																								"cType": "child"
@@ -1873,7 +2299,7 @@ let pjson = {
 																																				}
 																																			},
 																																			"_Editor": {
-																																				"eID": "EdtrComp_590"
+																																				"eID": "EdtrComp_191"
 																																			},
 																																			"S": {
 																																				"xs-xl": {
@@ -1949,12 +2375,12 @@ let pjson = {
 																															"E": {},
 																															"P": {
 																																"ID": {
-																																	"H": "EdtrComp_587",
+																																	"H": "EdtrComp_188",
 																																	"T": "prop"
 																																}
 																															},
 																															"_Editor": {
-																																"eID": "EdtrComp_587"
+																																"eID": "EdtrComp_188"
 																															},
 																															"O": {
 																																"cType": "slot",
@@ -2041,11 +2467,11 @@ let pjson = {
 																												}
 																											},
 																											"_Editor": {
-																												"eID": "EdtrComp_586"
+																												"eID": "EdtrComp_187"
 																											},
 																											"S": {
 																												"xs-xl": {
-																													"marginLeft": "-12px",
+																													"marginLeft": "-0px",
 																													"marginRight": "-12px",
 																													"marginBottom": "px",
 																													"marginTop": "px",
@@ -2093,12 +2519,12 @@ let pjson = {
 																							"E": {},
 																							"P": {
 																								"ID": {
-																									"H": "EdtrComp_6",
+																									"H": "EdtrComp_186",
 																									"T": "prop"
 																								}
 																							},
 																							"_Editor": {
-																								"eID": "EdtrComp_6"
+																								"eID": "EdtrComp_186"
 																							},
 																							"O": {
 																								"cType": "slot",
@@ -2114,7 +2540,7 @@ let pjson = {
 																							},
 																							"S": {
 																								"xs-xl": {
-																									"col": "12",
+																									"col": "11",
 																									"flexDirection": "column",
 																									"alignItems": "",
 																									"justifyContent": "",
@@ -2493,11 +2919,6 @@ let pjson = {
 																																					"H": "false",
 																																					"T": "prop"
 																																				},
-																																				"items": {
-																																					"H": "[{text = 'Vadesiz TL', value = 'DEMAND'}]",
-																																					"T": "prop",
-																																					"HL": "QS"
-																																				},
 																																				"label": {
 																																					"H": "'Hesap Türü'",
 																																					"T": "prop",
@@ -2525,8 +2946,13 @@ let pjson = {
 																																			},
 																																			"E": {
 																																				"change": {
-																																					"H": "components.creditAccountInfo.disabled = false\r\nquick.EM.trace(value)\r\n\r\n\r\ncomponents.creditAccountInfo.qValue = null;\r\ncomponents.creditAccountInfo.items = [];\r\n\r\nquick.EM.trace(\"Response account\")\r\nquick.EM.trace(response.accountList)\r\n\r\nif (response.accountList) {\r\n  const depositResponse = response.accountList;\r\n\r\n  for (const key in depositResponse) {\r\n    if (Object.prototype.hasOwnProperty.call(depositResponse, key)) {\r\n      const item = depositResponse[key];\r\n      if (value.value == item.accountType) {\r\n        \r\n        const selectedAccountId = components.debitAccountInfo.qValue?.accountId;\r\n\r\n        if (item.accountId === selectedAccountId) {\r\n          continue;\r\n        }\r\n\r\n        const result = Number(item.balance) - Number(item.blockedAmount);\r\n        let formattedResult = quick.Quick.toMoney(result, 'tr-Tr');\r\n        if (item.isHidden == true) {\r\n          formattedResult = item.balance;\r\n        }\r\n        const accounts = {\r\n          text: `${item.branchCode} - ${item.iban} - ${formattedResult} ${item.currencyCode}`,\r\n          value: item.accountId,\r\n          iban: item.iban,\r\n          availableBalance: formattedResult,\r\n          blockageAmount: item.blockageAmount,\r\n          balance: item.balance,\r\n          accountNumber: item.accountNumber,\r\n          branchCode: item.branchCode,\r\n          currencyCode: item.currencyCode,\r\n          savingCode: item.savingCode,\r\n          productId: item.productId,\r\n          accountId: item.accountId\r\n        };\r\n        components.creditAccountInfo.items.push(accounts);\r\n      }\r\n    }\r\n  }\r\n}",
+																																					"H": "components.creditAccountInfo.disabled = false\r\nquick.EM.trace(value)\r\nquick.EM.trace(\"###### change value credit type #####\")\r\n\r\n/*components.creditAccountInfo.qValue = null;\r\ncomponents.creditAccountInfo.items = [];\r\n\r\nquick.EM.trace(\"Response account\")\r\nquick.EM.trace(response.accountList)\r\n\r\nif (response.accountList) {\r\n  const depositResponse = response.accountList;\r\n\r\n  for (const key in depositResponse) {\r\n    if (Object.prototype.hasOwnProperty.call(depositResponse, key)) {\r\n      const item = depositResponse[key];\r\n      if (value.value == item.accountType) {\r\n        \r\n        const selectedAccountId = components.debitAccountInfo.qValue?.accountId;\r\n\r\n        if (item.accountId === selectedAccountId) {\r\n          continue;\r\n        }\r\n\r\n        const result = Number(item.balance) - Number(item.blockedAmount);\r\n        let formattedResult = quick.Quick.toMoney(result, 'tr-Tr');\r\n        if (item.isHidden == true) {\r\n          formattedResult = item.balance;\r\n        }\r\n        const accounts = {\r\n          text: `${item.branchCode} - ${item.iban} - ${formattedResult} ${item.currencyCode}`,\r\n          value: item.accountId,\r\n          iban: item.iban,\r\n          availableBalance: formattedResult,\r\n          blockageAmount: item.blockageAmount,\r\n          balance: item.balance,\r\n          accountNumber: item.accountNumber,\r\n          branchCode: item.branchCode,\r\n          currencyCode: item.currencyCode,\r\n          savingCode: item.savingCode,\r\n          productId: item.productId,\r\n          accountId: item.accountId\r\n        };\r\n        components.creditAccountInfo.items.push(accounts);\r\n      }\r\n    }\r\n  }\r\n}\r\n*/",
 																																					"P": "value:any",
+																																					"HL": "TS"
+																																				},
+																																				"input": {
+																																					"H": "quick.EM.trace(\"##### input credit type #####\")",
+																																					"P": "event:unknown | undefined",
 																																					"HL": "TS"
 																																				}
 																																			},
@@ -2755,7 +3181,7 @@ let pjson = {
 																																			},
 																																			"E": {
 																																				"change": {
-																																					"H": "quick.EM.trace(value)\r\ncomponents.currency.qValue = value.currencyCode",
+																																					"H": "quick.EM.trace(value)\r\ncomponents.currency.qValue = value.currencyCode\r\n\r\nquick.MM.trigger(\"onSuccessAccountList\", );\r\n",
 																																					"P": "value:any",
 																																					"HL": "TS"
 																																				}
@@ -3427,11 +3853,6 @@ let pjson = {
 																																					"H": "false",
 																																					"T": "prop"
 																																				},
-																																				"items": {
-																																					"H": "[{text = 'Vadesiz TL', value = 'DEMAND'}]\n\n//[{text = 'Vadesiz TL', value = 'DEMAND'},\n//{text = 'Vadeli TL', value = 'TERM'},\n//{text = 'Vadesiz Döviz', value = 'FX-DEMAND'},\n//{text = 'Vadeli Döviz', value = 'FX-TERM'}]",
-																																					"T": "prop",
-																																					"HL": "QS"
-																																				},
 																																				"label": {
 																																					"H": "'Hesap Türü'",
 																																					"T": "prop",
@@ -3459,7 +3880,7 @@ let pjson = {
 																																			},
 																																			"E": {
 																																				"change": {
-																																					"H": "components.debitAccountInfo.disabled = false\r\nquick.EM.trace(value)\r\n\r\nquick.EM.trace(response.accountList.customerDepositResponse)\r\n\r\ncomponents.debitAccountInfo.qValue = null;\r\ncomponents.debitAccountInfo.items = [];\r\n\r\nif (response.accountList) {\r\n  const depositResponse = response.accountList;\r\n\r\n  for (const key in depositResponse) {\r\n    if (Object.prototype.hasOwnProperty.call(depositResponse, key)) {\r\n      const item = depositResponse[key];\r\n      if (value.value == item.accountType) {\r\n\r\n        const selectedAccountId = components.creditAccountInfo.qValue?.accountId;\r\n\r\n        if (item.accountId === selectedAccountId) {\r\n          continue;\r\n        }\r\n\r\n        const result = Number(item.balance) - Number(item.blockedAmount);\r\n        let formattedResult = quick.Quick.toMoney(result, 'tr-Tr')\r\n        if (item.isHidden == true) {\r\n          formattedResult = item.balance;\r\n        }\r\n        const accounts = {\r\n          text: `${item.branchCode} - ${item.iban} - ${formattedResult} ${item.currencyCode}`,\r\n          value: item.accountId,\r\n          iban: item.iban,\r\n          blockageAmount: item.blockageAmount,\r\n          availableBalance: formattedResult,\r\n          balance: item.balance,\r\n          accountNumber: item.accountNumber,\r\n          branchCode: item.branchCode,\r\n          currencyCode: item.currencyCode,\r\n          savingCode: item.savingCode,\r\n          accountId: item.accountId\r\n        };\r\n        components.debitAccountInfo.items.push(accounts);\r\n      }\r\n    }\r\n  }\r\n}",
+																																					"H": "components.debitAccountInfo.disabled = false\r\nquick.EM.trace(value)\r\n\r\n/*components.debitAccountInfo.qValue = null;\r\ncomponents.debitAccountInfo.items = [];\r\n\r\nif (response.accountList) {\r\n  const depositResponse = response.accountList;\r\n\r\n  for (const key in depositResponse) {\r\n    if (Object.prototype.hasOwnProperty.call(depositResponse, key)) {\r\n      const item = depositResponse[key];\r\n      if (value.value == item.accountType) {\r\n\r\n        const selectedAccountId = components.creditAccountInfo.qValue?.accountId;\r\n\r\n        if (item.accountId === selectedAccountId) {\r\n          continue;\r\n        }\r\n\r\n        const result = Number(item.balance) - Number(item.blockedAmount);\r\n        let formattedResult = quick.Quick.toMoney(result, 'tr-Tr')\r\n        if (item.isHidden == true) {\r\n          formattedResult = item.balance;\r\n        }\r\n        const accounts = {\r\n          text: `${item.branchCode} - ${item.iban} - ${formattedResult} ${item.currencyCode}`,\r\n          value: item.accountId,\r\n          iban: item.iban,\r\n          blockageAmount: item.blockageAmount,\r\n          availableBalance: formattedResult,\r\n          balance: item.balance,\r\n          accountNumber: item.accountNumber,\r\n          branchCode: item.branchCode,\r\n          currencyCode: item.currencyCode,\r\n          savingCode: item.savingCode,\r\n          accountId: item.accountId\r\n        };\r\n        components.debitAccountInfo.items.push(accounts);\r\n      }\r\n    }\r\n  }\r\n}\r\n*/",
 																																					"P": "value:any",
 																																					"HL": "TS"
 																																				},
@@ -3694,7 +4115,7 @@ let pjson = {
 																																			},
 																																			"E": {
 																																				"change": {
-																																					"H": "quick.EM.trace(value)\r\ncomponents.currency.qValue = value.currencyCode\r\n\r\nif (components.totalAmount.qValue) {\r\n    components.amount.qValue = value.availableBalance\r\n}",
+																																					"H": "quick.EM.trace(value)\r\ncomponents.currency.qValue = value.currencyCode\r\n\r\nquick.MM.trigger(\"onSuccessAccountList\", );\r\n\r\nif (components.totalAmount.qValue) {\r\n    components.amount.qValue = value.availableBalance\r\n}",
 																																					"P": "value:any",
 																																					"HL": "TS"
 																																				}
@@ -5392,7 +5813,13 @@ let pjson = {
 																													"HL": "QS"
 																												}
 																											},
-																											"E": {},
+																											"E": {
+																												"click": {
+																													"H": "quick.containerServices.extensions.closeWindow();",
+																													"P": "mouseEvent:unknown | undefined",
+																													"HL": "TS"
+																												}
+																											},
 																											"C": {
 																												"default": {
 																													"c": [
@@ -5598,7 +6025,7 @@ let pjson = {
 																													"HL": "TS"
 																												},
 																												"onSFailCheckVirementCreate": {
-																													"H": "declare var error;\r\n\r\nquick.EM.trace(\"onSFailCheckVirementCreate\")\r\n\r\nquick.MM.trigger(\"ofsaaRequest\", [{operationCode: \"K\", pcuBytes: \"R\", monetaryType: \"Z\"}]);\r\n\r\nquick.EM.trace(error.response.data)\r\n\r\ncomponents.errorDialogVirement.dialogClick({ text: 'Beklenmeyen bir hata ile karşılaşıldı.'});\r\n",
+																													"H": "declare var error;\r\n\r\nquick.EM.trace(\"onSFailCheckVirementCreate\")\r\n\r\nquick.MM.trigger(\"ofsaaRequest\", [{operationCode: \"K\", pcuBytes: \"R\", monetaryType: \"Z\"}]);\r\n\r\nquick.EM.trace(error.response.data.responseMessage)\r\nlet errorMessage = \"\";\r\n\r\nif (error.response) {\r\n    if (error.response.data.responseMessage) {\r\n        errorMessage = error.response.data.responseMessage\r\n    } else {\r\n        errorMessage = \"Beklenmedik bir hata oluştu.\"\r\n    }\r\n}\r\n\r\ncomponents.errorDialogVirement.dialogClick({ text: errorMessage});\r\n",
 																													"C": true,
 																													"HL": "TS"
 																												}
@@ -6065,16 +6492,11 @@ let pjson = {
 			},
 			"E": {
 				"EndRender": {
-					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nquick.EM.trace('End Render');\r\nquick.store.set(\"successVirement\", false);\r\ncomponents.creditAccountInfo.loading = true;\r\ncomponents.debitAccountInfo.loading = true;\r\nvar idempotentRequest = {\r\n    url: '/api/dep-operations/v1/api/dep-operations/keys',\r\n    http: 'get',\r\n    blockRender: true,\r\n    onSuccess: 'onSuccessIdempotent',\r\n    onFail: 'onFailIdempotent',\r\n    responseField: 'idempotent',\r\n    data: null\r\n};\r\nquick.Request.async(idempotentRequest);\r\nvar customerContext = quick.containerServices.getCustomerContext();\r\nquick.store.set(\"customerValue\", customerContext.customerNumber);\r\nvar accountListRequest = {\r\n    url: '/api/dep-operations/v1/api/dep-operations/retrieveDepositAccounts?customerId=' + quick.store.get(\"customerValue\"),\r\n    http: 'get',\r\n    blockRender: true,\r\n    onSuccess: 'onSuccessAccountList',\r\n    onFail: 'onFailAccountList',\r\n    responseField: 'accountList',\r\n    data: null\r\n};\r\nquick.Request.async(accountListRequest);\r\n",
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nquick.EM.trace('End Render');\r\nquick.store.set(\"successVirement\", false);\r\ncomponents.creditAccountInfo.loading = true;\r\ncomponents.debitAccountInfo.loading = true;\r\nvar accountTypes = [\r\n    { text: 'Vadesiz TL', value: 'DEMAND' }\r\n];\r\ncomponents.creditAccountType.items = [];\r\naccountTypes.forEach(function (accountType) {\r\n    components.creditAccountType.items.push({\r\n        text: accountType.text,\r\n        value: accountType.value\r\n    });\r\n    components.debitAccountType.items.push({\r\n        text: accountType.text,\r\n        value: accountType.value\r\n    });\r\n    components.creditAccountType.qValue = accountType;\r\n    components.debitAccountType.qValue = accountType;\r\n    components.creditAccountType.updateValue();\r\n    components.debitAccountType.updateValue();\r\n});\r\nvar idempotentRequest = {\r\n    url: '/api/dep-operations/v1/api/dep-operations/keys',\r\n    http: 'get',\r\n    blockRender: true,\r\n    onSuccess: 'onSuccessIdempotent',\r\n    onFail: 'onFailIdempotent',\r\n    responseField: 'idempotent',\r\n    data: null\r\n};\r\nquick.Request.async(idempotentRequest);\r\nvar customerContext = quick.containerServices.getCustomerContext();\r\nquick.store.set(\"customerValue\", customerContext.customerNumber);\r\nvar accountListRequest = {\r\n    url: '/api/dep-operations/v1/api/dep-operations/retrieveDepositAccounts?customerId=' + quick.store.get(\"customerValue\"),\r\n    http: 'get',\r\n    blockRender: true,\r\n    onSuccess: 'onSuccessAccountList',\r\n    onFail: 'onFailAccountList',\r\n    responseField: 'accountList',\r\n    data: null\r\n};\r\nquick.Request.async(accountListRequest);\r\n",
 					"HL": "JS"
 				},
 				"onSuccessAccountList": {
-					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nquick.EM.trace(\"onSuccessAccountList\");\r\nquick.EM.trace(response.accountList);\r\ncomponents.creditAccountInfo.loading = false;\r\ncomponents.debitAccountInfo.loading = false;\r\n",
-					"C": true,
-					"HL": "JS"
-				},
-				"fillAccounts": {
-					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nquick.EM.trace(\"#### fillAccounts ####\");\r\nquick.EM.trace(components.debitAccountType.qValue);\r\n",
+					"H": "var _a, _b, _c;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ncomponents.creditAccountInfo.loading = false;\r\ncomponents.debitAccountInfo.loading = false;\r\nvar accountType = (_a = components.creditAccountType.qValue) === null || _a === void 0 ? void 0 : _a.value;\r\nvar selectedAccountIdDebit = (_b = components.debitAccountInfo.qValue) === null || _b === void 0 ? void 0 : _b.accountId;\r\nvar selectedAccountIdCredit = (_c = components.creditAccountInfo.qValue) === null || _c === void 0 ? void 0 : _c.accountId;\r\ncomponents.debitAccountInfo.items = [];\r\ncomponents.creditAccountInfo.items = [];\r\nvar depositResponse = Array.isArray(response.accountList)\r\n    ? response.accountList\r\n    : Object.keys(response.accountList).map(function (k) { return response.accountList[k]; });\r\nvar toAccountObj = function (item) {\r\n    var result = Number(item.balance) - Number(item.blockedAmount);\r\n    var formattedResult = item.isHidden\r\n        ? item.balance\r\n        : new Intl.NumberFormat(\"tr-TR\", {\r\n            minimumFractionDigits: 2,\r\n            maximumFractionDigits: 2\r\n        }).format(result);\r\n    return {\r\n        text: item.branchCode + \" - \" + item.iban + \" - \" + formattedResult + \" \" + item.currencyCode,\r\n        value: item.accountId,\r\n        iban: item.iban,\r\n        availableBalance: formattedResult,\r\n        blockageAmount: item.blockageAmount,\r\n        balance: item.balance,\r\n        accountNumber: item.accountNumber,\r\n        branchCode: item.branchCode,\r\n        currencyCode: item.currencyCode,\r\n        savingCode: item.savingCode,\r\n        productId: item.productId,\r\n        accountId: item.accountId,\r\n    };\r\n};\r\ndepositResponse\r\n    .filter(function (item) { return item.accountType === accountType; })\r\n    .forEach(function (item) {\r\n    var account = toAccountObj(item);\r\n    if (item.accountId === selectedAccountIdCredit) {\r\n        // credit'te seçili, debit'ten çıkar (credit kendi listesinde kalsın)\r\n        components.creditAccountInfo.items.push(account);\r\n        return;\r\n    }\r\n    if (item.accountId === selectedAccountIdDebit) {\r\n        // debit'te seçili, credit'ten çıkar (debit kendi listesinde kalsın)\r\n        components.debitAccountInfo.items.push(account);\r\n        return;\r\n    }\r\n    // normal durum: iki listeye de ekle\r\n    components.creditAccountInfo.items.push(account);\r\n    components.debitAccountInfo.items.push(account);\r\n});\r\n",
 					"C": true,
 					"HL": "JS"
 				},
@@ -6089,12 +6511,17 @@ let pjson = {
 					"HL": "JS"
 				},
 				"onFailAccountList": {
-					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nquick.EM.trace('onFailAccountList');\r\nquick.EM.trace(response);\r\ncomponents.creditAccountInfo.loading = false;\r\ncomponents.debitAccountInfo.loading = false;\r\ncomponents.errorDialogVirement.dialogClick({ text: 'Hesaplar şu anda görüntülenemiyor. Lütfen kısa bir süre sonra yeniden deneyin.' });\r\n",
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nquick.EM.trace('onFailAccountList');\r\nquick.EM.trace(error.response);\r\ncomponents.creditAccountInfo.loading = false;\r\ncomponents.debitAccountInfo.loading = false;\r\nvar errorMessage = \"\";\r\nif (error.response) {\r\n    if (error.response.data.responseMessage) {\r\n        errorMessage = error.response.data.responseMessage;\r\n    }\r\n    else {\r\n        errorMessage = \"Beklenmedik bir hata oluştu.\";\r\n    }\r\n}\r\ncomponents.errorDialogVirement.dialogClick({ text: errorMessage });\r\n",
 					"C": true,
 					"HL": "JS"
 				},
 				"onSuccessIdempotent": {
 					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nquick.EM.trace(\"onSuccessIdempotent\");\r\nquick.EM.trace(response.onSuccessIdempotent);\r\n",
+					"C": true,
+					"HL": "JS"
+				},
+				"updateAccountList": {
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nquick.EM.trace(\"#### updateAccountList ####\");\r\nquick.EM.trace(components.debitAccountType.qValue);\r\nif (isDebit == \"false\" && accountId != null) {\r\n}\r\n",
 					"C": true,
 					"HL": "JS"
 				}
@@ -7378,7 +7805,7 @@ let pjson = {
 																																					"legendMarginLeft": "0px",
 																																					"marginRight": "",
 																																					"marginBottom": "",
-																																					"marginTop": "4px",
+																																					"marginTop": "0px",
 																																					"paddingTop": "12px",
 																																					"paddingBottom": "",
 																																					"paddingLeft": "",
@@ -7869,12 +8296,453 @@ let pjson = {
 																																				"cType": "slot",
 																																				"compDomClasses": "v-btn v-btn--depressed theme--light v-size--default newDropBorder"
 																																			}
+																																		}
+																																	],
+																																	"cType": "slot"
+																																}
+																															},
+																															"E": {},
+																															"P": {
+																																"ID": {
+																																	"H": "EdtrComp_587",
+																																	"T": "prop"
+																																}
+																															},
+																															"_Editor": {
+																																"eID": "EdtrComp_587"
+																															},
+																															"O": {
+																																"cType": "slot",
+																																"layout": {
+																																	"dOpt": {
+																																		"xs": [
+																																			"d:d-flex",
+																																			"fd:flex-column"
+																																		]
+																																	},
+																																	"class": "d-flex flex-column"
+																																},
+																																"compDomClasses": "col d-flex flex-column newDropBorder"
+																															},
+																															"S": {
+																																"xs-sm": {
+																																	"col": "2",
+																																	"flexDirection": "column",
+																																	"alignItems": "flex-start",
+																																	"justifyContent": "center",
+																																	"marginLeft": "",
+																																	"marginRight": "",
+																																	"marginBottom": "",
+																																	"marginTop": "px",
+																																	"paddingTop": "12px",
+																																	"paddingBottom": "12px",
+																																	"paddingLeft": "0px",
+																																	"paddingRight": "12px",
+																																	"boxShadow": "",
+																																	"boxSizing": "",
+																																	"borderTopStyle": "",
+																																	"borderRightStyle": "",
+																																	"borderBottomStyle": "",
+																																	"borderLeftStyle": "",
+																																	"borderTopLeftRadius": "",
+																																	"borderTopRightRadius": "",
+																																	"borderBottomLeftRadius": "",
+																																	"borderBottomRightRadius": "",
+																																	"borderTopWidth": "",
+																																	"borderRightWidth": "",
+																																	"borderBottomWidth": "",
+																																	"borderLeftWidth": "",
+																																	"defaultBorderColor": "",
+																																	"sides": ""
+																																},
+																																"layoutMap": {
+																																	"LAYOUT": "xs-sm",
+																																	"LAYOUT_1": "sm-xl"
+																																},
+																																"sm-xl": {
+																																	"col": "12",
+																																	"flexDirection": "row",
+																																	"alignItems": "flex-end",
+																																	"justifyContent": "flex-end",
+																																	"marginLeft": "",
+																																	"marginRight": "",
+																																	"marginBottom": "",
+																																	"marginTop": "px",
+																																	"paddingTop": "12px",
+																																	"paddingBottom": "12px",
+																																	"paddingLeft": "12px",
+																																	"paddingRight": "12px",
+																																	"boxShadow": "",
+																																	"boxSizing": "",
+																																	"borderTopStyle": "",
+																																	"borderRightStyle": "",
+																																	"borderBottomStyle": "",
+																																	"borderLeftStyle": "",
+																																	"borderTopLeftRadius": "",
+																																	"borderTopRightRadius": "",
+																																	"borderBottomLeftRadius": "",
+																																	"borderBottomRightRadius": "",
+																																	"borderTopWidth": "",
+																																	"borderRightWidth": "",
+																																	"borderBottomWidth": "",
+																																	"borderLeftWidth": "",
+																																	"defaultBorderColor": "",
+																																	"sides": ""
+																																},
+																																"selectedLayout": "LAYOUT"
+																															}
+																														}
+																													],
+																													"cType": "slot"
+																												}
+																											},
+																											"_Editor": {
+																												"eID": "EdtrComp_586"
+																											},
+																											"S": {
+																												"xs-xl": {
+																													"marginLeft": "-0px",
+																													"marginRight": "-12px",
+																													"marginBottom": "px",
+																													"marginTop": "px",
+																													"paddingTop": "px",
+																													"paddingBottom": "",
+																													"paddingLeft": "",
+																													"paddingRight": "",
+																													"width": "",
+																													"height": "",
+																													"maxWidth": "",
+																													"maxHeight": "",
+																													"minWidth": "",
+																													"minHeight": "",
+																													"unlink": "false",
+																													"unlinkMax": "false",
+																													"unlinkMin": "false",
+																													"isSizeCollapsed": "false",
+																													"backgroundColor": "",
+																													"boxShadow": "",
+																													"boxSizing": "",
+																													"borderTopStyle": "",
+																													"borderRightStyle": "",
+																													"borderBottomStyle": "",
+																													"borderLeftStyle": "",
+																													"borderTopLeftRadius": "",
+																													"borderTopRightRadius": "",
+																													"borderBottomLeftRadius": "",
+																													"borderBottomRightRadius": "",
+																													"borderTopWidth": "",
+																													"borderRightWidth": "",
+																													"borderBottomWidth": "",
+																													"borderLeftWidth": "",
+																													"defaultBorderColor": "",
+																													"sides": ""
+																												}
+																											},
+																											"O": {
+																												"cType": "slot",
+																												"compDomClasses": "row newDropBorder"
+																											}
+																										}
+																									],
+																									"cType": "slot"
+																								}
+																							},
+																							"E": {},
+																							"P": {
+																								"ID": {
+																									"H": "EdtrComp_6",
+																									"T": "prop"
+																								}
+																							},
+																							"_Editor": {
+																								"eID": "EdtrComp_6"
+																							},
+																							"O": {
+																								"cType": "slot",
+																								"layout": {
+																									"dOpt": {
+																										"xs": [
+																											"d:d-flex",
+																											"fd:flex-column"
+																										]
+																									},
+																									"class": "d-flex flex-column"
+																								},
+																								"compDomClasses": "col d-flex flex-column newDropBorder"
+																							},
+																							"S": {
+																								"xs-xl": {
+																									"col": "1",
+																									"flexDirection": "column",
+																									"alignItems": "",
+																									"justifyContent": "",
+																									"marginLeft": "",
+																									"marginRight": "",
+																									"marginBottom": "",
+																									"marginTop": "",
+																									"paddingTop": "12px",
+																									"paddingBottom": "12px",
+																									"paddingLeft": "12px",
+																									"paddingRight": "12px",
+																									"backgroundColor": "",
+																									"boxShadow": "",
+																									"boxSizing": "",
+																									"borderTopStyle": "",
+																									"borderRightStyle": "",
+																									"borderBottomStyle": "",
+																									"borderLeftStyle": "",
+																									"borderTopLeftRadius": "",
+																									"borderTopRightRadius": "",
+																									"borderBottomLeftRadius": "",
+																									"borderBottomRightRadius": "",
+																									"borderTopWidth": "",
+																									"borderRightWidth": "",
+																									"borderBottomWidth": "",
+																									"borderLeftWidth": "",
+																									"defaultBorderColor": "",
+																									"sides": ""
+																								}
+																							}
+																						},
+																						{
+																							"T": "VCol",
+																							"C": {
+																								"default": {
+																									"c": [
+																										{
+																											"T": "VRow",
+																											"P": {
+																												"ID": {
+																													"H": "EdtrComp_187",
+																													"T": "prop"
+																												}
+																											},
+																											"E": {},
+																											"C": {
+																												"default": {
+																													"c": [
+																														{
+																															"T": "VCol",
+																															"C": {
+																																"default": {
+																																	"c": [
+																																		{
+																																			"T": "VBtn",
+																																			"P": {
+																																				"ID": {
+																																					"H": "EdtrComp_189",
+																																					"T": "prop"
+																																				},
+																																				"depressed": {
+																																					"H": "╬true╩╩",
+																																					"T": "prop"
+																																				},
+																																				"visible": {
+																																					"H": "╬true╩╩",
+																																					"T": "prop"
+																																				},
+																																				"DiscardSettings": {
+																																					"H": "╬true╩╩",
+																																					"T": "prop",
+																																					"HL": "QS"
+																																				}
+																																			},
+																																			"E": {
+																																				"click": {
+																																					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\nquick.Quick.alert({\r\n    text: \"Ekrandan çıkış yapmak istediğinize emin misiniz ?\",\r\n    title: \"Onaylıyor musunuz\",\r\n    category: 'Info',\r\n    actionButtons: [{ name: \"Tamam\", type: 'Confirm', clickEventName: 'onConfirm' },\r\n        {\r\n            name: \"İptal\", type: 'Cancel',\r\n            clickEventName: 'onCancel'\r\n        }],\r\n    additionals: { props: { isPersistent: true }, events: {} }\r\n});\r\n",
+																																					"P": "mouseEvent:unknown | undefined",
+																																					"HL": "JS"
+																																				},
+																																				"onConfirm": {
+																																					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nquick.EM.trace(\"Cancel button onConfirm\");\r\n",
+																																					"C": true,
+																																					"HL": "JS"
+																																				}
+																																			},
+																																			"C": {
+																																				"default": {
+																																					"c": [
+																																						{
+																																							"T": "QLabel",
+																																							"C": {},
+																																							"E": {},
+																																							"P": {
+																																								"ID": {
+																																									"H": "EdtrComp_190",
+																																									"T": "prop"
+																																								},
+																																								"text": {
+																																									"H": "╬'Çıkış'╩╩",
+																																									"T": "prop",
+																																									"HL": "QS"
+																																								}
+																																							},
+																																							"_Editor": {
+																																								"eID": "EdtrComp_190"
+																																							},
+																																							"O": {
+																																								"cType": "child",
+																																								"compDomClasses": "q-label newDropBorder"
+																																							},
+																																							"S": {
+																																								"xs-xl": {
+																																									"marginTop": "",
+																																									"marginRight": "",
+																																									"marginBottom": "",
+																																									"marginLeft": "",
+																																									"paddingTop": "",
+																																									"paddingRight": "",
+																																									"paddingBottom": "",
+																																									"paddingLeft": "",
+																																									"lineHeight": "20px",
+																																									"ThemeFont": "Custom"
+																																								},
+																																								"xs-sm": {
+																																									"fontColor": "#1d92ff",
+																																									"fontStyle": "normal",
+																																									"fontSize": "14px",
+																																									"fontFamily": "Roboto",
+																																									"fontWeight": "500",
+																																									"combinedFont": ""
+																																								},
+																																								"sm-xl": {
+																																									"fontColor": "#1d92ff",
+																																									"fontStyle": "normal",
+																																									"fontSize": "14px",
+																																									"fontFamily": "Roboto",
+																																									"fontWeight": "500",
+																																									"combinedFont": ""
+																																								}
+																																							}
+																																						}
+																																					],
+																																					"cType": "slot"
+																																				}
+																																			},
+																																			"_Editor": {
+																																				"eID": "EdtrComp_189"
+																																			},
+																																			"S": {
+																																				"xs-sm": {
+																																					"marginTop": "",
+																																					"marginRight": "px",
+																																					"marginBottom": "",
+																																					"marginLeft": "",
+																																					"paddingTop": "",
+																																					"paddingRight": "16px",
+																																					"paddingBottom": "",
+																																					"paddingLeft": "16px",
+																																					"minWidth": "",
+																																					"minHeight": "",
+																																					"unlink": "false",
+																																					"unlinkMax": "false",
+																																					"unlinkMin": "false",
+																																					"isSizeCollapsed": "false",
+																																					"fontColor": "#1d92ff",
+																																					"fontFamily": "Roboto",
+																																					"fontSize": "14px",
+																																					"fontStyle": "normal",
+																																					"fontWeight": "500",
+																																					"combinedFont": "",
+																																					"backgroundColor": "unset",
+																																					"boxShadow": "",
+																																					"borderTopLeftRadius": "36px",
+																																					"borderTopRightRadius": "36px",
+																																					"borderBottomLeftRadius": "36px",
+																																					"borderBottomRightRadius": "36px",
+																																					"sides": "Top,Right,Bottom,Left",
+																																					"borderTopWidth": "0px",
+																																					"borderTopStyle": "solid",
+																																					"borderBottomWidth": "0px",
+																																					"borderBottomStyle": "solid",
+																																					"borderLeftWidth": "0px",
+																																					"borderLeftStyle": "solid",
+																																					"borderRightWidth": "0px",
+																																					"borderRightStyle": "solid",
+																																					"defaultBorderColor": "#ffffff00",
+																																					"ThemeFont": "Custom",
+																																					"lineHeight": "36px",
+																																					"height": "36px",
+																																					"disabledBackgroundColor": "unset"
+																																				},
+																																				"layoutMap": {
+																																					"LAYOUT": "xs-sm",
+																																					"LAYOUT_1": "sm-xl"
+																																				},
+																																				"selectedLayout": "LAYOUT_1",
+																																				"sm-xl": {
+																																					"marginTop": "",
+																																					"marginRight": "16px",
+																																					"marginBottom": "",
+																																					"marginLeft": "",
+																																					"paddingTop": "",
+																																					"paddingRight": "16px",
+																																					"paddingBottom": "",
+																																					"paddingLeft": "16px",
+																																					"minWidth": "",
+																																					"minHeight": "",
+																																					"unlink": "false",
+																																					"unlinkMax": "false",
+																																					"unlinkMin": "false",
+																																					"isSizeCollapsed": "false",
+																																					"fontColor": "#1d92ff",
+																																					"fontFamily": "Roboto",
+																																					"fontSize": "14px",
+																																					"fontStyle": "normal",
+																																					"fontWeight": "500",
+																																					"combinedFont": "",
+																																					"backgroundColor": "unset",
+																																					"boxShadow": "",
+																																					"borderTopLeftRadius": "36px",
+																																					"borderTopRightRadius": "36px",
+																																					"borderBottomLeftRadius": "36px",
+																																					"borderBottomRightRadius": "36px",
+																																					"sides": "Top,Right,Bottom,Left",
+																																					"borderTopWidth": "0px",
+																																					"borderTopStyle": "solid",
+																																					"borderBottomWidth": "0px",
+																																					"borderBottomStyle": "solid",
+																																					"borderLeftWidth": "0px",
+																																					"borderLeftStyle": "solid",
+																																					"borderRightWidth": "0px",
+																																					"borderRightStyle": "solid",
+																																					"defaultBorderColor": "#ffffff00",
+																																					"ThemeFont": "Custom",
+																																					"lineHeight": "36px",
+																																					"height": "36px",
+																																					"disabledBackgroundColor": "unset"
+																																				}
+																																			},
+																																			"SC": {
+																																				"fontColor": {
+																																					"QLabel": "fontColor"
+																																				},
+																																				"fontStyle": {
+																																					"QLabel": "fontStyle"
+																																				},
+																																				"fontSize": {
+																																					"QLabel": "fontSize"
+																																				},
+																																				"fontFamily": {
+																																					"QLabel": "fontFamily"
+																																				},
+																																				"fontWeight": {
+																																					"QLabel": "fontWeight"
+																																				},
+																																				"combinedFont": {
+																																					"QLabel": "combinedFont"
+																																				}
+																																			},
+																																			"O": {
+																																				"cType": "slot",
+																																				"compDomClasses": "v-btn v-btn--depressed theme--light v-size--default newDropBorder"
+																																			}
 																																		},
 																																		{
 																																			"T": "VBtn",
 																																			"P": {
 																																				"ID": {
-																																					"H": "EdtrComp_590",
+																																					"H": "EdtrComp_191",
 																																					"T": "prop"
 																																				},
 																																				"depressed": {
@@ -7898,12 +8766,12 @@ let pjson = {
 																																					"HL": "JS"
 																																				},
 																																				"onSuccessVirementCreate": {
-																																					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nquick.EM.trace(\"onSuccessVirementCreate\");\r\nquick.store.set(\"successVirement\", true);\r\nquick.EM.trace(response.responseVirementCreate);\r\ncomponents.HeaderSummary.text = 'Müşterinin Hesapları Arası Para Aktarma İşlem Sonuç';\r\ncomponents.EdtrComp_591.text = 'Bitir';\r\ncomponents.EdtrComp_588.visible = false;\r\nif (response.responseVirementCreate) {\r\n    var date = response.responseVirementCreate.timestamp;\r\n    quick.EM.trace(\"date\");\r\n    quick.EM.trace(date);\r\n    var correlationId = response.responseVirementCreate.result.correlationId;\r\n    quick.EM.trace(\"correlationId\", correlationId);\r\n    quick.EM.trace(correlationId);\r\n    var url = \"date=\" + date + \"&siid=\" + correlationId.toUpperCase();\r\n    quick.EM.trace(\"dekont-url\");\r\n    quick.EM.trace(url);\r\n    quick.containerServices.extensions.showVoucherPopUp(url);\r\n}\r\ncomponents.successDialogVirement.dialogClick({ text: 'İşlem başarılı ile gerçekleşti.' });\r\nquick.MM.trigger(\"ofsaaRequest\", [{ operationCode: \"O\", pcuBytes: \"A\", monetaryType: \"P\" }]);\r\n",
+																																					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nquick.EM.trace(\"onSuccessVirementCreate\");\r\nquick.store.set(\"successVirement\", true);\r\nquick.EM.trace(response.responseVirementCreate);\r\ncomponents.HeaderSummary.text = 'Müşterinin Hesapları Arası Para Aktarma İşlem Sonuç';\r\ncomponents.EdtrComp_192.text = 'Bitir';\r\ncomponents.EdtrComp_189.visible = false;\r\nif (response.responseVirementCreate) {\r\n    var date = response.responseVirementCreate.timestamp;\r\n    quick.EM.trace(\"date\");\r\n    quick.EM.trace(date);\r\n    var correlationId = response.responseVirementCreate.result.correlationId;\r\n    quick.EM.trace(\"correlationId\", correlationId);\r\n    quick.EM.trace(correlationId);\r\n    var url = \"date=\" + date + \"&siid=\" + correlationId.toUpperCase();\r\n    quick.EM.trace(\"dekont-url\");\r\n    quick.EM.trace(url);\r\n    quick.containerServices.extensions.showVoucherPopUp(url);\r\n}\r\ncomponents.successDialogVirement.dialogClick({ text: 'İşlem başarılı ile gerçekleşti.' });\r\nquick.MM.trigger(\"ofsaaRequest\", [{ operationCode: \"O\", pcuBytes: \"A\", monetaryType: \"P\" }]);\r\n",
 																																					"C": true,
 																																					"HL": "JS"
 																																				},
 																																				"onFailVirementCreate": {
-																																					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nquick.EM.trace('onFailVirementCreate');\r\nquick.store.set(\"successVirement\", false);\r\nquick.MM.trigger(\"ofsaaRequest\", [{ operationCode: \"O\", pcuBytes: \"R\", monetaryType: \"P\" }]);\r\nquick.Quick.alert({\r\n    text: \"İşlem sırasında hata\",\r\n    title: \"İşlem sırasında hata\",\r\n    category: 'Error',\r\n    actionButtons: [\r\n        { name: 'Onayla', type: 'Confirm', clickEventName: 'onConfirmTask' },\r\n        { name: 'İptal', type: 'Cancel', clickEventName: 'onCancelTask' }\r\n    ],\r\n    additionals: { props: { isPersistent: true }, events: {} }\r\n});\r\ncomponents.errorDialogVirement.dialogClick({ text: 'Beklenmeyen bir hata ile karşılaşıldı.' });\r\n",
+																																					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nquick.EM.trace('onFailVirementCreate');\r\nquick.store.set(\"successVirement\", false);\r\nquick.MM.trigger(\"ofsaaRequest\", [{ operationCode: \"O\", pcuBytes: \"R\", monetaryType: \"P\" }]);\r\nvar errorMessage = \"\";\r\nif (error.response) {\r\n    if (error.response.data.responseMessage) {\r\n        errorMessage = error.response.data.responseMessage;\r\n    }\r\n    else {\r\n        errorMessage = \"Beklenmedik bir hata oluştu.\";\r\n    }\r\n}\r\ncomponents.errorDialogVirement.dialogClick({ text: errorMessage });\r\n",
 																																					"C": true,
 																																					"HL": "JS"
 																																				}
@@ -7917,7 +8785,7 @@ let pjson = {
 																																							"E": {},
 																																							"P": {
 																																								"ID": {
-																																									"H": "EdtrComp_591",
+																																									"H": "EdtrComp_192",
 																																									"T": "prop"
 																																								},
 																																								"text": {
@@ -7927,7 +8795,7 @@ let pjson = {
 																																								}
 																																							},
 																																							"_Editor": {
-																																								"eID": "EdtrComp_591"
+																																								"eID": "EdtrComp_192"
 																																							},
 																																							"O": {
 																																								"cType": "child",
@@ -7958,7 +8826,7 @@ let pjson = {
 																																				}
 																																			},
 																																			"_Editor": {
-																																				"eID": "EdtrComp_590"
+																																				"eID": "EdtrComp_191"
 																																			},
 																																			"S": {
 																																				"xs-xl": {
@@ -8035,12 +8903,12 @@ let pjson = {
 																															"E": {},
 																															"P": {
 																																"ID": {
-																																	"H": "EdtrComp_587",
+																																	"H": "EdtrComp_188",
 																																	"T": "prop"
 																																}
 																															},
 																															"_Editor": {
-																																"eID": "EdtrComp_587"
+																																"eID": "EdtrComp_188"
 																															},
 																															"O": {
 																																"cType": "slot",
@@ -8128,11 +8996,11 @@ let pjson = {
 																												}
 																											},
 																											"_Editor": {
-																												"eID": "EdtrComp_586"
+																												"eID": "EdtrComp_187"
 																											},
 																											"S": {
 																												"xs-xl": {
-																													"marginLeft": "-12px",
+																													"marginLeft": "-0px",
 																													"marginRight": "-12px",
 																													"marginBottom": "px",
 																													"marginTop": "px",
@@ -8181,12 +9049,12 @@ let pjson = {
 																							"E": {},
 																							"P": {
 																								"ID": {
-																									"H": "EdtrComp_6",
+																									"H": "EdtrComp_186",
 																									"T": "prop"
 																								}
 																							},
 																							"_Editor": {
-																								"eID": "EdtrComp_6"
+																								"eID": "EdtrComp_186"
 																							},
 																							"O": {
 																								"cType": "slot",
@@ -8203,7 +9071,7 @@ let pjson = {
 																							},
 																							"S": {
 																								"xs-xl": {
-																									"col": "12",
+																									"col": "11",
 																									"flexDirection": "column",
 																									"alignItems": "",
 																									"justifyContent": "",
@@ -8587,11 +9455,6 @@ let pjson = {
 																																					"H": "╬false╩╩",
 																																					"T": "prop"
 																																				},
-																																				"items": {
-																																					"H": "╬[]╠{}╠=╣text╩╠'Vadesiz TL'╩╩╠=╣value╩╠'DEMAND'╩╩╩╩╩",
-																																					"T": "prop",
-																																					"HL": "QS"
-																																				},
 																																				"label": {
 																																					"H": "╬'Hesap Türü'╩╩",
 																																					"T": "prop",
@@ -8619,8 +9482,13 @@ let pjson = {
 																																			},
 																																			"E": {
 																																				"change": {
-																																					"H": "var _a;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\ncomponents.creditAccountInfo.disabled = false;\r\nquick.EM.trace(value);\r\ncomponents.creditAccountInfo.qValue = null;\r\ncomponents.creditAccountInfo.items = [];\r\nquick.EM.trace(\"Response account\");\r\nquick.EM.trace(response.accountList);\r\nif (response.accountList) {\r\n    var depositResponse = response.accountList;\r\n    for (var key in depositResponse) {\r\n        if (Object.prototype.hasOwnProperty.call(depositResponse, key)) {\r\n            var item = depositResponse[key];\r\n            if (value.value == item.accountType) {\r\n                var selectedAccountId = (_a = components.debitAccountInfo.qValue) === null || _a === void 0 ? void 0 : _a.accountId;\r\n                if (item.accountId === selectedAccountId) {\r\n                    continue;\r\n                }\r\n                var result = Number(item.balance) - Number(item.blockedAmount);\r\n                var formattedResult = quick.Quick.toMoney(result, 'tr-Tr');\r\n                if (item.isHidden == true) {\r\n                    formattedResult = item.balance;\r\n                }\r\n                var accounts = {\r\n                    text: item.branchCode + \" - \" + item.iban + \" - \" + formattedResult + \" \" + item.currencyCode,\r\n                    value: item.accountId,\r\n                    iban: item.iban,\r\n                    availableBalance: formattedResult,\r\n                    blockageAmount: item.blockageAmount,\r\n                    balance: item.balance,\r\n                    accountNumber: item.accountNumber,\r\n                    branchCode: item.branchCode,\r\n                    currencyCode: item.currencyCode,\r\n                    savingCode: item.savingCode,\r\n                    productId: item.productId,\r\n                    accountId: item.accountId\r\n                };\r\n                components.creditAccountInfo.items.push(accounts);\r\n            }\r\n        }\r\n    }\r\n}\r\n",
+																																					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\ncomponents.creditAccountInfo.disabled = false;\r\nquick.EM.trace(value);\r\nquick.EM.trace(\"###### change value credit type #####\");\r\n",
 																																					"P": "value:any",
+																																					"HL": "JS"
+																																				},
+																																				"input": {
+																																					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\nquick.EM.trace(\"##### input credit type #####\");\r\n",
+																																					"P": "event:unknown | undefined",
 																																					"HL": "JS"
 																																				}
 																																			},
@@ -8725,7 +9593,7 @@ let pjson = {
 																																			},
 																																			"O": {
 																																				"cType": "slot",
-																																				"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-select v-autocomplete undefined newDropBorder"
+																																				"compDomClasses": "v-input v-input--is-label-active v-input--is-dirty v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-select v-autocomplete undefined newDropBorder"
 																																			}
 																																		}
 																																	],
@@ -8851,7 +9719,7 @@ let pjson = {
 																																			},
 																																			"E": {
 																																				"change": {
-																																					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\nquick.EM.trace(value);\r\ncomponents.currency.qValue = value.currencyCode;\r\n",
+																																					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\nquick.EM.trace(value);\r\ncomponents.currency.qValue = value.currencyCode;\r\nquick.MM.trigger(\"onSuccessAccountList\");\r\n",
 																																					"P": "value:any",
 																																					"HL": "JS"
 																																				}
@@ -8957,7 +9825,7 @@ let pjson = {
 																																			},
 																																			"O": {
 																																				"cType": "slot",
-																																				"compDomClasses": "v-input v-input--is-disabled v-input--is-loading v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-select v-autocomplete undefined newDropBorder"
+																																				"compDomClasses": "v-input v-input--is-loading v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-select v-autocomplete undefined newDropBorder"
 																																			}
 																																		}
 																																	],
@@ -9532,11 +10400,6 @@ let pjson = {
 																																					"H": "╬false╩╩",
 																																					"T": "prop"
 																																				},
-																																				"items": {
-																																					"H": "╬[]╠{}╠=╣text╩╠'Vadesiz TL'╩╩╠=╣value╩╠'DEMAND'╩╩╩╩╩",
-																																					"T": "prop",
-																																					"HL": "QS"
-																																				},
 																																				"label": {
 																																					"H": "╬'Hesap Türü'╩╩",
 																																					"T": "prop",
@@ -9564,7 +10427,7 @@ let pjson = {
 																																			},
 																																			"E": {
 																																				"change": {
-																																					"H": "var _a;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\ncomponents.debitAccountInfo.disabled = false;\r\nquick.EM.trace(value);\r\nquick.EM.trace(response.accountList.customerDepositResponse);\r\ncomponents.debitAccountInfo.qValue = null;\r\ncomponents.debitAccountInfo.items = [];\r\nif (response.accountList) {\r\n    var depositResponse = response.accountList;\r\n    for (var key in depositResponse) {\r\n        if (Object.prototype.hasOwnProperty.call(depositResponse, key)) {\r\n            var item = depositResponse[key];\r\n            if (value.value == item.accountType) {\r\n                var selectedAccountId = (_a = components.creditAccountInfo.qValue) === null || _a === void 0 ? void 0 : _a.accountId;\r\n                if (item.accountId === selectedAccountId) {\r\n                    continue;\r\n                }\r\n                var result = Number(item.balance) - Number(item.blockedAmount);\r\n                var formattedResult = quick.Quick.toMoney(result, 'tr-Tr');\r\n                if (item.isHidden == true) {\r\n                    formattedResult = item.balance;\r\n                }\r\n                var accounts = {\r\n                    text: item.branchCode + \" - \" + item.iban + \" - \" + formattedResult + \" \" + item.currencyCode,\r\n                    value: item.accountId,\r\n                    iban: item.iban,\r\n                    blockageAmount: item.blockageAmount,\r\n                    availableBalance: formattedResult,\r\n                    balance: item.balance,\r\n                    accountNumber: item.accountNumber,\r\n                    branchCode: item.branchCode,\r\n                    currencyCode: item.currencyCode,\r\n                    savingCode: item.savingCode,\r\n                    accountId: item.accountId\r\n                };\r\n                components.debitAccountInfo.items.push(accounts);\r\n            }\r\n        }\r\n    }\r\n}\r\n",
+																																					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\ncomponents.debitAccountInfo.disabled = false;\r\nquick.EM.trace(value);\r\n",
 																																					"P": "value:any",
 																																					"HL": "JS"
 																																				},
@@ -9675,7 +10538,7 @@ let pjson = {
 																																			},
 																																			"O": {
 																																				"cType": "slot",
-																																				"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-select v-autocomplete undefined newDropBorder"
+																																				"compDomClasses": "v-input v-input--is-label-active v-input--is-dirty v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-select v-autocomplete undefined newDropBorder"
 																																			}
 																																		}
 																																	],
@@ -9801,7 +10664,7 @@ let pjson = {
 																																			},
 																																			"E": {
 																																				"change": {
-																																					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\nquick.EM.trace(value);\r\ncomponents.currency.qValue = value.currencyCode;\r\nif (components.totalAmount.qValue) {\r\n    components.amount.qValue = value.availableBalance;\r\n}\r\n",
+																																					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\nquick.EM.trace(value);\r\ncomponents.currency.qValue = value.currencyCode;\r\nquick.MM.trigger(\"onSuccessAccountList\");\r\nif (components.totalAmount.qValue) {\r\n    components.amount.qValue = value.availableBalance;\r\n}\r\n",
 																																					"P": "value:any",
 																																					"HL": "JS"
 																																				}
@@ -9907,7 +10770,7 @@ let pjson = {
 																																			},
 																																			"O": {
 																																				"cType": "slot",
-																																				"compDomClasses": "v-input v-input--is-disabled v-input--is-loading v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-select v-autocomplete undefined newDropBorder"
+																																				"compDomClasses": "v-input v-input--is-loading v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-select v-autocomplete undefined newDropBorder"
 																																			}
 																																		}
 																																	],
@@ -11520,7 +12383,13 @@ let pjson = {
 																													"HL": "QS"
 																												}
 																											},
-																											"E": {},
+																											"E": {
+																												"click": {
+																													"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\nquick.containerServices.extensions.closeWindow();\r\n",
+																													"P": "mouseEvent:unknown | undefined",
+																													"HL": "JS"
+																												}
+																											},
 																											"C": {
 																												"default": {
 																													"c": [
@@ -11738,7 +12607,7 @@ let pjson = {
 																													"HL": "JS"
 																												},
 																												"onSFailCheckVirementCreate": {
-																													"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nquick.EM.trace(\"onSFailCheckVirementCreate\");\r\nquick.MM.trigger(\"ofsaaRequest\", [{ operationCode: \"K\", pcuBytes: \"R\", monetaryType: \"Z\" }]);\r\nquick.EM.trace(error.response.data);\r\ncomponents.errorDialogVirement.dialogClick({ text: 'Beklenmeyen bir hata ile karşılaşıldı.' });\r\n",
+																													"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nquick.EM.trace(\"onSFailCheckVirementCreate\");\r\nquick.MM.trigger(\"ofsaaRequest\", [{ operationCode: \"K\", pcuBytes: \"R\", monetaryType: \"Z\" }]);\r\nquick.EM.trace(error.response.data.responseMessage);\r\nvar errorMessage = \"\";\r\nif (error.response) {\r\n    if (error.response.data.responseMessage) {\r\n        errorMessage = error.response.data.responseMessage;\r\n    }\r\n    else {\r\n        errorMessage = \"Beklenmedik bir hata oluştu.\";\r\n    }\r\n}\r\ncomponents.errorDialogVirement.dialogClick({ text: errorMessage });\r\n",
 																													"C": true,
 																													"HL": "JS"
 																												}

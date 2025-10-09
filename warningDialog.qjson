@@ -20,7 +20,7 @@ let pjson = {
 			},
 			"E": {
 				"dialogClick": {
-					"H": "declare const accountId;\r\ncomponents.lblWarn.text = \"Ortaklık Bilgileri\"\r\ncomponents.warnDialog.qValue = true\r\n\r\nquick.MM.trigger('getAccountHolders', [{accountId:accountId}]);",
+					"H": "declare const accountId;\r\ncomponents.lblWarn.text = \"Ortaklık Bilgileri\"\r\ncomponents.warnDialog.qValue = true\r\n\r\nquick.MM.trigger('getAccountHolders', [{accountId:accountId}]);\r\n",
 					"C": true,
 					"EV": true,
 					"HL": "TS"
@@ -31,7 +31,7 @@ let pjson = {
 					"HL": "TS"
 				},
 				"getAccountHolders": {
-					"H": "declare const accountId;\r\n\r\nlet accountHolderListRequest: IRequest = {\r\n    url: '/api/dep-operations/v1/api/dep-operations/getAccountHolders?accountId=' + accountId,\r\n    http: 'get',\r\n    blockRender: true,\r\n    onSuccess: 'onSuccessAccountHolderList',\r\n    onFail: 'onFailAccountHolderList',\r\n    responseField: 'accountHolderList',\r\n    data: null\r\n}\r\nquick.Request.async(accountHolderListRequest);",
+					"H": "declare const accountId;\r\nquick.store.set(\"$customConsumerCode\",'TANE.DEPVIREMENT');\r\n\r\nlet accountHolderListRequest: IRequest = {\r\n    url: '/api/dep-operations/v1/api/dep-operations/getAccountHolders?accountId=' + accountId,\r\n    http: 'get',\r\n    blockRender: true,\r\n    onSuccess: 'onSuccessAccountHolderList',\r\n    onFail: 'onFailAccountHolderList',\r\n    responseField: 'accountHolderList',\r\n    data: null\r\n}\r\nquick.Request.async(accountHolderListRequest);",
 					"C": true,
 					"HL": "TS"
 				}
@@ -1223,7 +1223,7 @@ let pjson = {
 					"HL": "JS"
 				},
 				"getAccountHolders": {
-					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nvar accountHolderListRequest = {\r\n    url: '/api/dep-operations/v1/api/dep-operations/getAccountHolders?accountId=' + accountId,\r\n    http: 'get',\r\n    blockRender: true,\r\n    onSuccess: 'onSuccessAccountHolderList',\r\n    onFail: 'onFailAccountHolderList',\r\n    responseField: 'accountHolderList',\r\n    data: null\r\n};\r\nquick.Request.async(accountHolderListRequest);\r\n",
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nquick.store.set(\"$customConsumerCode\", 'TANE.DEPVIREMENT');\r\nvar accountHolderListRequest = {\r\n    url: '/api/dep-operations/v1/api/dep-operations/getAccountHolders?accountId=' + accountId,\r\n    http: 'get',\r\n    blockRender: true,\r\n    onSuccess: 'onSuccessAccountHolderList',\r\n    onFail: 'onFailAccountHolderList',\r\n    responseField: 'accountHolderList',\r\n    data: null\r\n};\r\nquick.Request.async(accountHolderListRequest);\r\n",
 					"C": true,
 					"HL": "JS"
 				}

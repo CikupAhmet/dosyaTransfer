@@ -347,6 +347,64 @@ let pjson = {
 																												"default": {
 																													"c": [
 																														{
+																															"T": "QLabel",
+																															"P": {
+																																"ID": {
+																																	"H": "EdtrComp_23",
+																																	"T": "prop"
+																																},
+																																"tagType": {
+																																	"H": "'span'",
+																																	"T": "prop"
+																																},
+																																"text": {
+																																	"H": "'Teselsülsüz hesaptır. Gelen hesap sahiplerini kontrol ediniz.'",
+																																	"T": "prop",
+																																	"HL": "QS"
+																																},
+																																"visible": {
+																																	"H": "true",
+																																	"T": "prop"
+																																},
+																																"processHtml": {
+																																	"H": "false",
+																																	"T": "prop"
+																																}
+																															},
+																															"E": {},
+																															"C": {},
+																															"_Editor": {
+																																"eID": "EdtrComp_23"
+																															},
+																															"S": {
+																																"xs-xl": {
+																																	"marginTop": "",
+																																	"marginRight": "",
+																																	"marginBottom": "",
+																																	"marginLeft": "",
+																																	"paddingTop": "",
+																																	"paddingRight": "",
+																																	"paddingBottom": "",
+																																	"paddingLeft": "",
+																																	"fontColor": "#f10606",
+																																	"fontFamily": "Roboto",
+																																	"fontSize": "16px",
+																																	"fontStyle": "normal",
+																																	"fontWeight": "300",
+																																	"combinedFont": "Roboto-Light",
+																																	"ThemeFont": "Custom",
+																																	"lineHeight": "20px",
+																																	"textAlign": "center",
+																																	"textDecorationLine": "none",
+																																	"textDecorationStyle": "solid",
+																																	"textDecorationColor": "#000000"
+																																}
+																															},
+																															"O": {
+																																"cType": "slot"
+																															}
+																														},
+																														{
 																															"T": "VDataTable",
 																															"P": {
 																																"ID": {
@@ -1233,8 +1291,7 @@ let pjson = {
 				"eID": "EdtrComp_1"
 			},
 			"O": {
-				"cType": "child",
-				"compDomClasses": "newDropBorder"
+				"cType": "child"
 			},
 			"S": {
 				"xs-xl": {
@@ -1404,7 +1461,7 @@ let pjson = {
 																															},
 																															"O": {
 																																"cType": "slot",
-																																"compDomClasses": "v-icon notranslate mdi mdi-alert-octagon-outline theme--light info--text"
+																																"compDomClasses": "v-icon notranslate mdi mdi-alert-octagon-outline theme--light info--text newDropBorder"
 																															}
 																														}
 																													],
@@ -1434,7 +1491,7 @@ let pjson = {
 																													},
 																													"class": "d-flex col-1 justify-center"
 																												},
-																												"compDomClasses": "col d-flex col-1 justify-center"
+																												"compDomClasses": "col d-flex col-1 justify-center newDropBorder"
 																											}
 																										},
 																										{
@@ -1480,7 +1537,7 @@ let pjson = {
 																																	},
 																																	"class": "error--text"
 																																},
-																																"compDomClasses": "q-label  error--text"
+																																"compDomClasses": "q-label error--text newDropBorder"
 																															},
 																															"S": {
 																																"xs-xl": {
@@ -1512,7 +1569,7 @@ let pjson = {
 																											},
 																											"O": {
 																												"cType": "slot",
-																												"compDomClasses": "col"
+																												"compDomClasses": "col newDropBorder"
 																											}
 																										}
 																									],
@@ -1524,7 +1581,7 @@ let pjson = {
 																							},
 																							"O": {
 																								"cType": "slot",
-																								"compDomClasses": "row"
+																								"compDomClasses": "row newDropBorder"
 																							}
 																						},
 																						{
@@ -1544,6 +1601,65 @@ let pjson = {
 																											"C": {
 																												"default": {
 																													"c": [
+																														{
+																															"T": "QLabel",
+																															"P": {
+																																"ID": {
+																																	"H": "EdtrComp_23",
+																																	"T": "prop"
+																																},
+																																"tagType": {
+																																	"H": "╬'span'╩╩",
+																																	"T": "prop"
+																																},
+																																"text": {
+																																	"H": "╬'Teselsülsüz hesaptır. Gelen hesap sahiplerini kontrol ediniz.'╩╩",
+																																	"T": "prop",
+																																	"HL": "QS"
+																																},
+																																"visible": {
+																																	"H": "╬true╩╩",
+																																	"T": "prop"
+																																},
+																																"processHtml": {
+																																	"H": "╬false╩╩",
+																																	"T": "prop"
+																																}
+																															},
+																															"E": {},
+																															"C": {},
+																															"_Editor": {
+																																"eID": "EdtrComp_23"
+																															},
+																															"S": {
+																																"xs-xl": {
+																																	"marginTop": "",
+																																	"marginRight": "",
+																																	"marginBottom": "",
+																																	"marginLeft": "",
+																																	"paddingTop": "",
+																																	"paddingRight": "",
+																																	"paddingBottom": "",
+																																	"paddingLeft": "",
+																																	"fontColor": "#f10606",
+																																	"fontFamily": "Roboto",
+																																	"fontSize": "16px",
+																																	"fontStyle": "normal",
+																																	"fontWeight": "300",
+																																	"combinedFont": "Roboto-Light",
+																																	"ThemeFont": "Custom",
+																																	"lineHeight": "20px",
+																																	"textAlign": "center",
+																																	"textDecorationLine": "none",
+																																	"textDecorationStyle": "solid",
+																																	"textDecorationColor": "#000000"
+																																}
+																															},
+																															"O": {
+																																"cType": "slot",
+																																"compDomClasses": "q-label newDropBorder"
+																															}
+																														},
 																														{
 																															"T": "VDataTable",
 																															"P": {
@@ -1900,7 +2016,7 @@ let pjson = {
 																															},
 																															"O": {
 																																"cType": "scopedSlot",
-																																"compDomClasses": "v-data-table theme--light"
+																																"compDomClasses": "v-data-table theme--light newDropBorder"
 																															}
 																														}
 																													],
@@ -1928,7 +2044,7 @@ let pjson = {
 																													},
 																													"class": "d-flex flex-column"
 																												},
-																												"compDomClasses": "col d-flex flex-column"
+																												"compDomClasses": "col d-flex flex-column newDropBorder"
 																											},
 																											"S": {
 																												"xs-xl": {
@@ -2012,7 +2128,7 @@ let pjson = {
 																							},
 																							"O": {
 																								"cType": "slot",
-																								"compDomClasses": "row"
+																								"compDomClasses": "row newDropBorder"
 																							}
 																						},
 																						{
@@ -2095,7 +2211,7 @@ let pjson = {
 																																			},
 																																			"O": {
 																																				"cType": "child",
-																																				"compDomClasses": "q-label "
+																																				"compDomClasses": "q-label newDropBorder"
 																																			}
 																																		}
 																																	],
@@ -2113,7 +2229,7 @@ let pjson = {
 																																	},
 																																	"class": ""
 																																},
-																																"compDomClasses": "v-btn v-btn--depressed v-btn--flat v-btn--outlined theme--light elevation-0 v-size--default error--text"
+																																"compDomClasses": "v-btn v-btn--depressed v-btn--flat v-btn--outlined theme--light elevation-0 v-size--default error--text newDropBorder"
 																															}
 																														}
 																													],
@@ -2141,7 +2257,7 @@ let pjson = {
 																													},
 																													"class": "d-flex justify-end"
 																												},
-																												"compDomClasses": "col d-flex justify-end"
+																												"compDomClasses": "col d-flex justify-end newDropBorder"
 																											},
 																											"S": {
 																												"xs-xl": {
@@ -2217,7 +2333,7 @@ let pjson = {
 																																			},
 																																			"O": {
 																																				"cType": "child",
-																																				"compDomClasses": "q-label "
+																																				"compDomClasses": "q-label newDropBorder"
 																																			}
 																																		}
 																																	],
@@ -2235,7 +2351,7 @@ let pjson = {
 																																	},
 																																	"class": ""
 																																},
-																																"compDomClasses": "v-btn v-btn--depressed v-btn--flat v-btn--outlined theme--light elevation-0 v-size--default info--text"
+																																"compDomClasses": "v-btn v-btn--depressed v-btn--flat v-btn--outlined theme--light elevation-0 v-size--default info--text newDropBorder"
 																															}
 																														}
 																													],
@@ -2263,7 +2379,7 @@ let pjson = {
 																													},
 																													"class": "d-flex justify-end"
 																												},
-																												"compDomClasses": "col d-flex justify-end"
+																												"compDomClasses": "col d-flex justify-end newDropBorder"
 																											}
 																										}
 																									],
@@ -2275,7 +2391,7 @@ let pjson = {
 																							},
 																							"O": {
 																								"cType": "slot",
-																								"compDomClasses": "row"
+																								"compDomClasses": "row newDropBorder"
 																							}
 																						}
 																					],
@@ -2295,7 +2411,7 @@ let pjson = {
 																					},
 																					"class": "mb-0"
 																				},
-																				"compDomClasses": "v-alert v-sheet theme--light elevation-4 v-alert--border v-alert--border-left mb-0"
+																				"compDomClasses": "v-alert v-sheet theme--light elevation-4 v-alert--border v-alert--border-left mb-0 newDropBorder"
 																			}
 																		}
 																	],
@@ -2306,8 +2422,7 @@ let pjson = {
 																"eID": "EdtrComp_535"
 															},
 															"O": {
-																"cType": "slot",
-																"compDomClasses": "newDropBorder"
+																"cType": "slot"
 															}
 														}
 													],
@@ -2325,8 +2440,7 @@ let pjson = {
 												"eID": "EdtrComp_3"
 											},
 											"O": {
-												"cType": "slot",
-												"compDomClasses": "col newDropBorder"
+												"cType": "slot"
 											},
 											"S": {
 												"xs-xl": {
@@ -2355,8 +2469,7 @@ let pjson = {
 								"eID": "EdtrComp_4"
 							},
 							"O": {
-								"cType": "slot",
-								"compDomClasses": "row newDropBorder"
+								"cType": "slot"
 							},
 							"S": {
 								"xs-xl": {
@@ -2383,8 +2496,7 @@ let pjson = {
 				"eID": "EdtrComp_5"
 			},
 			"O": {
-				"cType": "slot",
-				"compDomClasses": "container newDropBorder"
+				"cType": "slot"
 			},
 			"S": {
 				"xs-xl": {

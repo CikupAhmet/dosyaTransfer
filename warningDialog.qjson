@@ -1043,7 +1043,7 @@ let pjson = {
 																															},
 																															"E": {
 																																"click": {
-																																	"H": "quick.EM.trace(components.customerTable.items)\r\nquick.EM.trace(\"macera dolu amerika\")\r\n\r\nlet tableITems = components.customerTable.items;\r\nlet validateCheck = true;\r\n\r\nfor (const item of tableITems) {\r\n    quick.EM.trace(item)\r\n    if (item.hidden == false) {\r\n        validateCheck = false;\r\n        break;\r\n    }\r\n}\r\n\r\nquick.EM.trace(\"validateCheck\")\r\nquick.EM.trace(validateCheck)\r\n\r\nif (validateCheck) {\r\n    quick.parent.events.searchClickEvent();\r\n    components.warnDialog.qValue = false;\r\n}\r\n\r\n\r\n",
+																																	"H": "let tableITems = components.customerTable.items;\r\nlet validateCheck = true;\r\n\r\nfor (const item of tableITems) {\r\n    quick.EM.trace(item)\r\n    if (item.hidden == false) {\r\n        validateCheck = false;\r\n        break;\r\n    }\r\n}\r\n\r\nquick.EM.trace(\"validateCheck\")\r\nquick.EM.trace(validateCheck)\r\n\r\nif (validateCheck) {\r\n    quick.parent.events.searchClickEvent();\r\n    components.warnDialog.qValue = false;\r\n}\r\n\r\n\r\n",
 																																	"P": "mouseEvent:unknown | undefined",
 																																	"HL": "TS"
 																																}
@@ -1291,7 +1291,8 @@ let pjson = {
 				"eID": "EdtrComp_1"
 			},
 			"O": {
-				"cType": "child"
+				"cType": "child",
+				"compDomClasses": "newDropBorder"
 			},
 			"S": {
 				"xs-xl": {
@@ -1461,7 +1462,7 @@ let pjson = {
 																															},
 																															"O": {
 																																"cType": "slot",
-																																"compDomClasses": "v-icon notranslate mdi mdi-alert-octagon-outline theme--light info--text newDropBorder"
+																																"compDomClasses": "v-icon notranslate mdi mdi-alert-octagon-outline theme--light info--text"
 																															}
 																														}
 																													],
@@ -1491,7 +1492,7 @@ let pjson = {
 																													},
 																													"class": "d-flex col-1 justify-center"
 																												},
-																												"compDomClasses": "col d-flex col-1 justify-center newDropBorder"
+																												"compDomClasses": "col d-flex col-1 justify-center"
 																											}
 																										},
 																										{
@@ -1537,7 +1538,7 @@ let pjson = {
 																																	},
 																																	"class": "error--text"
 																																},
-																																"compDomClasses": "q-label error--text newDropBorder"
+																																"compDomClasses": "q-label  error--text"
 																															},
 																															"S": {
 																																"xs-xl": {
@@ -1569,7 +1570,7 @@ let pjson = {
 																											},
 																											"O": {
 																												"cType": "slot",
-																												"compDomClasses": "col newDropBorder"
+																												"compDomClasses": "col"
 																											}
 																										}
 																									],
@@ -1581,7 +1582,7 @@ let pjson = {
 																							},
 																							"O": {
 																								"cType": "slot",
-																								"compDomClasses": "row newDropBorder"
+																								"compDomClasses": "row"
 																							}
 																						},
 																						{
@@ -1657,7 +1658,7 @@ let pjson = {
 																															},
 																															"O": {
 																																"cType": "slot",
-																																"compDomClasses": "q-label newDropBorder"
+																																"compDomClasses": "q-label "
 																															}
 																														},
 																														{
@@ -2016,7 +2017,7 @@ let pjson = {
 																															},
 																															"O": {
 																																"cType": "scopedSlot",
-																																"compDomClasses": "v-data-table theme--light newDropBorder"
+																																"compDomClasses": "v-data-table theme--light"
 																															}
 																														}
 																													],
@@ -2044,7 +2045,7 @@ let pjson = {
 																													},
 																													"class": "d-flex flex-column"
 																												},
-																												"compDomClasses": "col d-flex flex-column newDropBorder"
+																												"compDomClasses": "col d-flex flex-column"
 																											},
 																											"S": {
 																												"xs-xl": {
@@ -2128,7 +2129,7 @@ let pjson = {
 																							},
 																							"O": {
 																								"cType": "slot",
-																								"compDomClasses": "row newDropBorder"
+																								"compDomClasses": "row"
 																							}
 																						},
 																						{
@@ -2211,7 +2212,7 @@ let pjson = {
 																																			},
 																																			"O": {
 																																				"cType": "child",
-																																				"compDomClasses": "q-label newDropBorder"
+																																				"compDomClasses": "q-label "
 																																			}
 																																		}
 																																	],
@@ -2229,7 +2230,7 @@ let pjson = {
 																																	},
 																																	"class": ""
 																																},
-																																"compDomClasses": "v-btn v-btn--depressed v-btn--flat v-btn--outlined theme--light elevation-0 v-size--default error--text newDropBorder"
+																																"compDomClasses": "v-btn v-btn--depressed v-btn--flat v-btn--outlined theme--light elevation-0 v-size--default error--text"
 																															}
 																														}
 																													],
@@ -2257,7 +2258,7 @@ let pjson = {
 																													},
 																													"class": "d-flex justify-end"
 																												},
-																												"compDomClasses": "col d-flex justify-end newDropBorder"
+																												"compDomClasses": "col d-flex justify-end"
 																											},
 																											"S": {
 																												"xs-xl": {
@@ -2305,7 +2306,7 @@ let pjson = {
 																															},
 																															"E": {
 																																"click": {
-																																	"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\nquick.EM.trace(components.customerTable.items);\r\nquick.EM.trace(\"macera dolu amerika\");\r\nvar tableITems = components.customerTable.items;\r\nvar validateCheck = true;\r\nfor (var _i = 0, tableITems_1 = tableITems; _i < tableITems_1.length; _i++) {\r\n    var item = tableITems_1[_i];\r\n    quick.EM.trace(item);\r\n    if (item.hidden == false) {\r\n        validateCheck = false;\r\n        break;\r\n    }\r\n}\r\nquick.EM.trace(\"validateCheck\");\r\nquick.EM.trace(validateCheck);\r\nif (validateCheck) {\r\n    quick.parent.events.searchClickEvent();\r\n    components.warnDialog.qValue = false;\r\n}\r\n",
+																																	"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\nvar tableITems = components.customerTable.items;\r\nvar validateCheck = true;\r\nfor (var _i = 0, tableITems_1 = tableITems; _i < tableITems_1.length; _i++) {\r\n    var item = tableITems_1[_i];\r\n    quick.EM.trace(item);\r\n    if (item.hidden == false) {\r\n        validateCheck = false;\r\n        break;\r\n    }\r\n}\r\nquick.EM.trace(\"validateCheck\");\r\nquick.EM.trace(validateCheck);\r\nif (validateCheck) {\r\n    quick.parent.events.searchClickEvent();\r\n    components.warnDialog.qValue = false;\r\n}\r\n",
 																																	"P": "mouseEvent:unknown | undefined",
 																																	"HL": "JS"
 																																}
@@ -2333,7 +2334,7 @@ let pjson = {
 																																			},
 																																			"O": {
 																																				"cType": "child",
-																																				"compDomClasses": "q-label newDropBorder"
+																																				"compDomClasses": "q-label "
 																																			}
 																																		}
 																																	],
@@ -2351,7 +2352,7 @@ let pjson = {
 																																	},
 																																	"class": ""
 																																},
-																																"compDomClasses": "v-btn v-btn--depressed v-btn--flat v-btn--outlined theme--light elevation-0 v-size--default info--text newDropBorder"
+																																"compDomClasses": "v-btn v-btn--depressed v-btn--flat v-btn--outlined theme--light elevation-0 v-size--default info--text"
 																															}
 																														}
 																													],
@@ -2379,7 +2380,7 @@ let pjson = {
 																													},
 																													"class": "d-flex justify-end"
 																												},
-																												"compDomClasses": "col d-flex justify-end newDropBorder"
+																												"compDomClasses": "col d-flex justify-end"
 																											}
 																										}
 																									],
@@ -2391,7 +2392,7 @@ let pjson = {
 																							},
 																							"O": {
 																								"cType": "slot",
-																								"compDomClasses": "row newDropBorder"
+																								"compDomClasses": "row"
 																							}
 																						}
 																					],
@@ -2411,7 +2412,7 @@ let pjson = {
 																					},
 																					"class": "mb-0"
 																				},
-																				"compDomClasses": "v-alert v-sheet theme--light elevation-4 v-alert--border v-alert--border-left mb-0 newDropBorder"
+																				"compDomClasses": "v-alert v-sheet theme--light elevation-4 v-alert--border v-alert--border-left mb-0"
 																			}
 																		}
 																	],
@@ -2422,7 +2423,8 @@ let pjson = {
 																"eID": "EdtrComp_535"
 															},
 															"O": {
-																"cType": "slot"
+																"cType": "slot",
+																"compDomClasses": "newDropBorder"
 															}
 														}
 													],
@@ -2440,7 +2442,8 @@ let pjson = {
 												"eID": "EdtrComp_3"
 											},
 											"O": {
-												"cType": "slot"
+												"cType": "slot",
+												"compDomClasses": "col newDropBorder"
 											},
 											"S": {
 												"xs-xl": {
@@ -2469,7 +2472,8 @@ let pjson = {
 								"eID": "EdtrComp_4"
 							},
 							"O": {
-								"cType": "slot"
+								"cType": "slot",
+								"compDomClasses": "row newDropBorder"
 							},
 							"S": {
 								"xs-xl": {
@@ -2496,7 +2500,8 @@ let pjson = {
 				"eID": "EdtrComp_5"
 			},
 			"O": {
-				"cType": "slot"
+				"cType": "slot",
+				"compDomClasses": "container newDropBorder"
 			},
 			"S": {
 				"xs-xl": {

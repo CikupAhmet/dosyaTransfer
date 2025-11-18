@@ -14,7 +14,7 @@ let pjson = {
 			},
 			"E": {
 				"EndRender": {
-					"H": "quick.EM.trace('End Render')\r\n\r\nquick.store.set(\"successVirement\", false);\r\n\r\nquick.store.set(\"$customConsumerCode\",'TANE.DEPVIREMENT');\r\n\r\ncomponents.accountInfo.loading = true;\r\n//components.operationTypeGroup.qValue = 0;\r\ncomponents.EdtrComp_4288.visible = false\r\ncomponents.EdtrComp_4253.visible = false\r\ncomponents.EdtrComp_34.visible = false\r\ncomponents.EdtrComp_25.visible = false\r\n\r\nlet accountTypes: { text: string; value: string }[] = [\r\n  { text: 'Vadesiz TL', value: 'DEMAND' }\r\n];\r\naccountTypes.forEach(function (accountType) {\r\n    components.accountType.items.push({\r\n        text: accountType.text,\r\n        value: accountType.value\r\n    });\r\n    components.accountType.qValue = accountType;\r\n    (<any>components.accountType).updateValue();\r\n});\r\n\r\n\r\nlet idempotentRequest: IRequest = {\r\n    url: '/api/dep-operations/v1/api/dep-operations/keys',\r\n    http: 'get',\r\n    blockRender: true,\r\n    onSuccess: 'onSuccessIdempotent',\r\n    onFail: 'onFailIdempotent',\r\n    responseField: 'idempotent',\r\n    data: null\r\n}\r\nquick.Request.async(idempotentRequest);\r\n\r\n\r\nlet customerContext = quick.containerServices.getCustomerContext() as any;\r\nquick.store.set(\"customerValue\", customerContext.customerNumber);\r\n\r\nlet accountListRequest: IRequest = {\r\n    url: '/api/dep-operations/v1/api/dep-operations/retrieveDepositAccounts?customerId=' + quick.store.get(\"customerValue\"),\r\n    http: 'get',\r\n    blockRender: true,\r\n    onSuccess: 'onSuccessAccountList',\r\n    onFail: 'onFailAccountList',\r\n    responseField: 'accountList',\r\n    data: null\r\n}\r\nquick.Request.async(accountListRequest);\r\n",
+					"H": "quick.EM.trace('End Render')\r\n\r\nquick.store.set(\"successVirement\", false);\r\nquick.store.set(\"$customConsumerCode\",'TANE.DEPVIREMENT');\r\n\r\ncomponents.accountInfo.loading = true;\r\n//components.operationTypeGroup.qValue = 0;\r\ncomponents.EdtrComp_4288.visible = false\r\ncomponents.EdtrComp_4253.visible = false\r\ncomponents.EdtrComp_34.visible = false\r\ncomponents.EdtrComp_25.visible = false\r\n\r\nlet accountTypes: { text: string; value: string }[] = [\r\n  { text: 'Vadesiz TL', value: 'DEMAND' }\r\n];\r\naccountTypes.forEach(function (accountType) {\r\n    components.accountType.items.push({\r\n        text: accountType.text,\r\n        value: accountType.value\r\n    });\r\n    components.accountType.qValue = accountType;\r\n    (<any>components.accountType).updateValue();\r\n});\r\n\r\n\r\nlet idempotentRequest: IRequest = {\r\n    url: '/api/dep-operations/v1/api/dep-operations/keys',\r\n    http: 'get',\r\n    blockRender: true,\r\n    onSuccess: 'onSuccessIdempotent',\r\n    onFail: 'onFailIdempotent',\r\n    responseField: 'idempotent',\r\n    data: null\r\n}\r\nquick.Request.async(idempotentRequest);\r\n\r\n\r\nlet customerContext = quick.containerServices.getCustomerContext() as any;\r\nquick.store.set(\"customerValue\", customerContext.customerNumber);\r\n\r\nlet accountListRequest: IRequest = {\r\n    url: '/api/dep-operations/v1/api/dep-operations/retrieveDepositAccounts?customerId=' + quick.store.get(\"customerValue\"),\r\n    http: 'get',\r\n    blockRender: true,\r\n    onSuccess: 'onSuccessAccountList',\r\n    onFail: 'onFailAccountList',\r\n    responseField: 'accountList',\r\n    data: null\r\n}\r\nquick.Request.async(accountListRequest);\r\n",
 					"HL": "TS"
 				},
 				"onSuccessAccountList": {
@@ -913,17 +913,204 @@ let pjson = {
 																																			"T": "Ghost",
 																																			"P": {
 																																				"ID": {
-																																					"H": "EdtrComp_1140",
+																																					"H": "EdtrComp_184",
 																																					"T": "prop"
 																																				}
 																																			},
 																																			"E": {},
 																																			"C": {},
 																																			"_Editor": {
-																																				"eID": "EdtrComp_1140"
+																																				"eID": "EdtrComp_184"
 																																			},
 																																			"O": {
 																																				"cType": "child"
+																																			}
+																																		}
+																																	],
+																																	"cType": "slot"
+																																}
+																															},
+																															"E": {},
+																															"P": {
+																																"ID": {
+																																	"H": "EdtrComp_10",
+																																	"T": "prop"
+																																}
+																															},
+																															"_Editor": {
+																																"eID": "EdtrComp_10"
+																															},
+																															"O": {
+																																"cType": "slot",
+																																"layout": {
+																																	"dOpt": {
+																																		"xs": [
+																																			"d:d-flex",
+																																			"fd:flex-column"
+																																		]
+																																	},
+																																	"class": "d-flex flex-column"
+																																}
+																															},
+																															"S": {
+																																"xs-xl": {
+																																	"col": "6",
+																																	"flexDirection": "column",
+																																	"alignItems": "",
+																																	"justifyContent": "",
+																																	"marginLeft": "",
+																																	"marginRight": "",
+																																	"marginBottom": "",
+																																	"marginTop": "",
+																																	"paddingTop": "0px",
+																																	"paddingBottom": "0px",
+																																	"paddingLeft": "12px",
+																																	"paddingRight": "12px",
+																																	"backgroundColor": "",
+																																	"boxShadow": "",
+																																	"boxSizing": "",
+																																	"borderTopStyle": "",
+																																	"borderRightStyle": "",
+																																	"borderBottomStyle": "",
+																																	"borderLeftStyle": "",
+																																	"borderTopLeftRadius": "",
+																																	"borderTopRightRadius": "",
+																																	"borderBottomLeftRadius": "",
+																																	"borderBottomRightRadius": "",
+																																	"borderTopWidth": "",
+																																	"borderRightWidth": "",
+																																	"borderBottomWidth": "",
+																																	"borderLeftWidth": "",
+																																	"defaultBorderColor": "",
+																																	"sides": ""
+																																},
+																																"layoutMap": {
+																																	"LAYOUT": "xs-xl"
+																																}
+																															}
+																														},
+																														{
+																															"T": "VCol",
+																															"C": {
+																																"default": {
+																																	"c": [
+																																		{
+																																			"T": "VTextField",
+																																			"P": {
+																																				"ID": {
+																																					"H": "summaryAmount2",
+																																					"T": "prop",
+																																					"HL": "QS"
+																																				},
+																																				"hideDetails": {
+																																					"H": "false",
+																																					"T": "prop"
+																																				},
+																																				"label": {
+																																					"H": "'Tahsil Edilen Tutar'",
+																																					"T": "prop",
+																																					"HL": "QS"
+																																				},
+																																				"visible": {
+																																					"H": "true",
+																																					"T": "prop"
+																																				}
+																																			},
+																																			"E": {},
+																																			"C": {},
+																																			"_Editor": {
+																																				"eID": "EdtrComp_105"
+																																			},
+																																			"S": {
+																																				"xs-xl": {
+																																					"marginLeft": "",
+																																					"legendMarginLeft": "0px",
+																																					"marginRight": "",
+																																					"marginBottom": "",
+																																					"marginTop": "4px",
+																																					"paddingTop": "12px",
+																																					"paddingBottom": "",
+																																					"paddingLeft": "",
+																																					"paddingRight": "",
+																																					"inputPaddingTop": "",
+																																					"inputPaddingRight": "",
+																																					"inputPaddingBottom": "",
+																																					"inputPaddingLeft": "",
+																																					"width": "",
+																																					"height": "",
+																																					"maxWidth": "",
+																																					"maxHeight": "",
+																																					"minWidth": "",
+																																					"minHeight": "",
+																																					"unlink": "false",
+																																					"unlinkMax": "false",
+																																					"unlinkMin": "false",
+																																					"isSizeCollapsed": "false",
+																																					"dense": "",
+																																					"labelDefaultFontColor": "#000000",
+																																					"labelDefaultFontFamily": "Roboto",
+																																					"labelDefaultFontSize": "16px",
+																																					"labelDefaultFontStyle": "normal",
+																																					"labelDefaultFontWeight": "400",
+																																					"labelDefaultCombinedFont": "Roboto-Regular",
+																																					"labelDefaultThemeFont": "Custom",
+																																					"prefixFontColor": "#000",
+																																					"prefixFontFamily": "Roboto",
+																																					"prefixFontSize": "16px",
+																																					"prefixFontStyle": "normal",
+																																					"prefixFontWeight": "400",
+																																					"prefixCombinedFont": "Roboto-Regular",
+																																					"prefixThemeFont": "Custom",
+																																					"PHFontColor": "#686868",
+																																					"PHFontFamily": "Roboto",
+																																					"PHFontSize": "16px",
+																																					"PHFontStyle": "normal",
+																																					"PHFontWeight": "400",
+																																					"PHCombinedFont": "Roboto-Regular",
+																																					"PHThemeFont": "Custom",
+																																					"inputFontColor": "#000",
+																																					"inputFontFamily": "Roboto",
+																																					"inputFontSize": "16px",
+																																					"inputFontStyle": "normal",
+																																					"inputFontWeight": "400",
+																																					"inputCombinedFont": "Roboto-Regular",
+																																					"inputDefaultThemeFont": "Custom",
+																																					"errorMessageFontColor": "#E96767",
+																																					"errorMessageFontFamily": "Roboto",
+																																					"errorMessageFontSize": "12px",
+																																					"errorMessageFontStyle": "normal",
+																																					"errorMessageFontWeight": "400",
+																																					"EMCombinedFont": "Roboto-Regular",
+																																					"errorMessageThemeFont": "Custom",
+																																					"errorMessageLineHeight": "",
+																																					"textAlign": "left",
+																																					"backgroundColor": "#ffffff",
+																																					"appendIconColor": "",
+																																					"appendOuterIconColor": "",
+																																					"prependIconColor": "",
+																																					"prependInnerIconColor": "",
+																																					"innerBoxShadow": "",
+																																					"activeBorderColor": "#1976d2",
+																																					"innerBoxSizing": "",
+																																					"innerBorderTopStyle": "",
+																																					"innerBorderRightStyle": "",
+																																					"innerBorderBottomStyle": "solid",
+																																					"innerBorderLeftStyle": "",
+																																					"innerBorderTopLeftRadius": "",
+																																					"innerBorderTopRightRadius": "",
+																																					"innerBorderBottomLeftRadius": "",
+																																					"innerBorderBottomRightRadius": "",
+																																					"innerBorderTopWidth": "0px",
+																																					"innerBorderRightWidth": "0px",
+																																					"innerBorderBottomWidth": "1px",
+																																					"innerBorderLeftWidth": "0px",
+																																					"innerDefaultBorderColor": "#0000006b",
+																																					"innerSides": ",Bottom",
+																																					"outlined": ""
+																																				}
+																																			},
+																																			"O": {
+																																				"cType": "slot"
 																																			}
 																																		}
 																																	],
@@ -939,6 +1126,91 @@ let pjson = {
 																															},
 																															"_Editor": {
 																																"eID": "EdtrComp_118"
+																															},
+																															"O": {
+																																"cType": "slot",
+																																"layout": {
+																																	"dOpt": {
+																																		"xs": [
+																																			"d:d-flex",
+																																			"fd:flex-column"
+																																		]
+																																	},
+																																	"class": "d-flex flex-column"
+																																}
+																															},
+																															"S": {
+																																"xs-xl": {
+																																	"col": "6",
+																																	"flexDirection": "column",
+																																	"alignItems": "",
+																																	"justifyContent": "",
+																																	"marginLeft": "",
+																																	"marginRight": "",
+																																	"marginBottom": "",
+																																	"marginTop": "",
+																																	"paddingTop": "12px",
+																																	"paddingBottom": "12px",
+																																	"paddingLeft": "12px",
+																																	"paddingRight": "12px",
+																																	"backgroundColor": "",
+																																	"boxShadow": "",
+																																	"boxSizing": "",
+																																	"borderTopStyle": "",
+																																	"borderRightStyle": "",
+																																	"borderBottomStyle": "",
+																																	"borderLeftStyle": "",
+																																	"borderTopLeftRadius": "",
+																																	"borderTopRightRadius": "",
+																																	"borderBottomLeftRadius": "",
+																																	"borderBottomRightRadius": "",
+																																	"borderTopWidth": "",
+																																	"borderRightWidth": "",
+																																	"borderBottomWidth": "",
+																																	"borderLeftWidth": "",
+																																	"defaultBorderColor": "",
+																																	"sides": ""
+																																},
+																																"layoutMap": {
+																																	"LAYOUT": "xs-xl"
+																																}
+																															}
+																														},
+																														{
+																															"T": "VCol",
+																															"C": {
+																																"default": {
+																																	"c": [
+																																		{
+																																			"T": "Ghost",
+																																			"P": {
+																																				"ID": {
+																																					"H": "EdtrComp_62",
+																																					"T": "prop"
+																																				}
+																																			},
+																																			"E": {},
+																																			"C": {},
+																																			"_Editor": {
+																																				"eID": "EdtrComp_62"
+																																			},
+																																			"O": {
+																																				"cType": "child"
+																																			}
+																																		}
+																																	],
+																																	"cType": "slot"
+																																}
+																															},
+																															"E": {},
+																															"P": {
+																																"ID": {
+																																	"H": "EdtrComp_61",
+																																	"T": "prop"
+																																}
+																															},
+																															"_Editor": {
+																																"eID": "EdtrComp_61"
 																															},
 																															"O": {
 																																"cType": "slot",
@@ -2660,7 +2932,7 @@ let pjson = {
 																																			},
 																																			"E": {
 																																				"change": {
-																																					"H": "quick.EM.trace(value)\r\n\r\ncomponents.EdtrComp_4288.visible = true\r\ncomponents.EdtrComp_4253.visible = true\r\ncomponents.EdtrComp_34.visible = true\r\ncomponents.EdtrComp_25.visible = true\r\n\r\nif (value == 0) {\r\n    components.operationNameText.text = 'Paranın Yatırılacağı Hesap'\r\n    components.totalAmount.visible = false\r\n} else {\r\n    components.operationNameText.text = 'Paranın Çekileceği Hesap'\r\n    components.totalAmount.visible = true\r\n}",
+																																					"H": "quick.EM.trace(value)\r\n\r\ncomponents.EdtrComp_4288.visible = true\r\ncomponents.EdtrComp_4253.visible = true\r\ncomponents.EdtrComp_34.visible = true\r\ncomponents.EdtrComp_25.visible = true\r\n\r\ncomponents.accountInfo.qValue = undefined;\r\ncomponents.amount.qValue = undefined;\r\ncomponents.description.qValue = undefined;\r\ncomponents.currency.qValue = undefined;\r\ncomponents.totalAmount.qValue = undefined;\r\n\r\nif (value == 0) {\r\n    components.operationNameText.text = 'Paranın Yatırılacağı Hesap'\r\n    components.totalAmount.visible = false\r\n} else {\r\n    components.operationNameText.text = 'Paranın Çekileceği Hesap'\r\n    components.totalAmount.visible = true\r\n}",
 																																					"P": "value:any",
 																																					"HL": "TS"
 																																				}
@@ -5916,7 +6188,7 @@ let pjson = {
 																													"HL": "TS"
 																												},
 																												"onSuccessCheckWithdrawCreate": {
-																													"H": "quick.EM.trace(\"onSuccessCheckWithdrawCreate\")\r\n\r\ndeclare const operationCode;\r\ndeclare const pcuBytes;\r\ndeclare const monetaryType;\r\n\r\nquick.MM.trigger(\"ofsaaRequest\", [{operationCode: \"K\", pcuBytes: \"A\", monetaryType: \"Z\"}]);\r\n\r\ncomponents.summaryDebitAccount.qValue = components.accountInfo.qValue.branchCode + ' - ' + components.accountInfo.qValue.iban + ' - ' + components.accountInfo.qValue.availableBalance + ' ' + components.currency.qValue\r\ncomponents.summaryDescription.qValue = components.description.qValue;\r\ncomponents.summaryAmount.qValue = components.amount.qValue + ' ' + components.currency.qValue;\r\n\r\nif (components.operationTypeGroup.qValue == 0) {\r\n    components.summaryDebitAccount.label = 'Paranının yatırılacağı hesap'\r\n} else {\r\n    components.summaryDebitAccount.label = 'Paranının çekileceği hesap'\r\n}\r\n\r\n\r\ncomponents.EdtrComp_4288.visible = false;\r\ncomponents.EdtrComp_4253.visible = false;\r\ncomponents.EdtrComp_34.visible = false;\r\ncomponents.EdtrComp_25.visible = false;\r\ncomponents.EdtrComp_41.visible = false;\r\ncomponents.summaryRow.visible = true;",
+																													"H": "quick.EM.trace(\"onSuccessCheckWithdrawCreate\")\r\n\r\ndeclare const operationCode;\r\ndeclare const pcuBytes;\r\ndeclare const monetaryType;\r\n\r\nquick.MM.trigger(\"ofsaaRequest\", [{operationCode: \"K\", pcuBytes: \"A\", monetaryType: \"Z\"}]);\r\n\r\ncomponents.summaryDebitAccount.qValue = components.accountInfo.qValue.branchCode + ' - ' + components.accountInfo.qValue.iban + ' - ' + components.accountInfo.qValue.availableBalance + ' ' + components.currency.qValue\r\ncomponents.summaryDescription.qValue = components.description.qValue;\r\ncomponents.summaryAmount.qValue = components.amount.qValue + ' ' + components.currency.qValue;\r\ncomponents.summaryAmount2.qValue = components.amount.qValue + ' ' + components.currency.qValue;\r\n\r\nif (components.operationTypeGroup.qValue == 0) {\r\n    components.summaryDebitAccount.label = 'Paranının yatırılacağı hesap'\r\n} else {\r\n    components.summaryDebitAccount.label = 'Paranının çekileceği hesap'\r\n}\r\n\r\n\r\ncomponents.EdtrComp_4288.visible = false;\r\ncomponents.EdtrComp_4253.visible = false;\r\ncomponents.EdtrComp_34.visible = false;\r\ncomponents.EdtrComp_25.visible = false;\r\ncomponents.EdtrComp_41.visible = false;\r\ncomponents.summaryRow.visible = true;",
 																													"C": true,
 																													"HL": "TS"
 																												},
@@ -6965,7 +7237,7 @@ let pjson = {
 																																			},
 																																			"O": {
 																																				"cType": "slot",
-																																				"compDomClasses": "v-input v-input--is-readonly theme--light v-text-field v-text-field--is-booted undefined"
+																																				"compDomClasses": "v-input v-input--is-readonly theme--light v-text-field v-text-field--is-booted undefined newDropBorder"
 																																			}
 																																		}
 																																	],
@@ -7251,7 +7523,7 @@ let pjson = {
 																																			},
 																																			"O": {
 																																				"cType": "slot",
-																																				"compDomClasses": "v-input v-input--is-readonly theme--light v-text-field v-text-field--is-booted undefined"
+																																				"compDomClasses": "v-input v-input--is-readonly theme--light v-text-field v-text-field--is-booted undefined newDropBorder"
 																																			}
 																																		}
 																																	],
@@ -7327,18 +7599,207 @@ let pjson = {
 																																			"T": "Ghost",
 																																			"P": {
 																																				"ID": {
-																																					"H": "EdtrComp_1140",
+																																					"H": "EdtrComp_184",
 																																					"T": "prop"
 																																				}
 																																			},
 																																			"E": {},
 																																			"C": {},
 																																			"_Editor": {
-																																				"eID": "EdtrComp_1140"
+																																				"eID": "EdtrComp_184"
 																																			},
 																																			"O": {
 																																				"cType": "child",
 																																				"compDomClasses": "editor-ghost-comp newDropBorder"
+																																			}
+																																		}
+																																	],
+																																	"cType": "slot"
+																																}
+																															},
+																															"E": {},
+																															"P": {
+																																"ID": {
+																																	"H": "EdtrComp_10",
+																																	"T": "prop"
+																																}
+																															},
+																															"_Editor": {
+																																"eID": "EdtrComp_10"
+																															},
+																															"O": {
+																																"cType": "slot",
+																																"layout": {
+																																	"dOpt": {
+																																		"xs": [
+																																			"d:d-flex",
+																																			"fd:flex-column"
+																																		]
+																																	},
+																																	"class": "d-flex flex-column"
+																																},
+																																"compDomClasses": "col d-flex flex-column newDropBorder"
+																															},
+																															"S": {
+																																"xs-xl": {
+																																	"col": "6",
+																																	"flexDirection": "column",
+																																	"alignItems": "",
+																																	"justifyContent": "",
+																																	"marginLeft": "",
+																																	"marginRight": "",
+																																	"marginBottom": "",
+																																	"marginTop": "",
+																																	"paddingTop": "0px",
+																																	"paddingBottom": "0px",
+																																	"paddingLeft": "12px",
+																																	"paddingRight": "12px",
+																																	"backgroundColor": "",
+																																	"boxShadow": "",
+																																	"boxSizing": "",
+																																	"borderTopStyle": "",
+																																	"borderRightStyle": "",
+																																	"borderBottomStyle": "",
+																																	"borderLeftStyle": "",
+																																	"borderTopLeftRadius": "",
+																																	"borderTopRightRadius": "",
+																																	"borderBottomLeftRadius": "",
+																																	"borderBottomRightRadius": "",
+																																	"borderTopWidth": "",
+																																	"borderRightWidth": "",
+																																	"borderBottomWidth": "",
+																																	"borderLeftWidth": "",
+																																	"defaultBorderColor": "",
+																																	"sides": ""
+																																},
+																																"layoutMap": {
+																																	"LAYOUT": "xs-xl"
+																																}
+																															}
+																														},
+																														{
+																															"T": "VCol",
+																															"C": {
+																																"default": {
+																																	"c": [
+																																		{
+																																			"T": "VTextField",
+																																			"P": {
+																																				"ID": {
+																																					"H": "summaryAmount2",
+																																					"T": "prop",
+																																					"HL": "QS"
+																																				},
+																																				"hideDetails": {
+																																					"H": "╬false╩╩",
+																																					"T": "prop"
+																																				},
+																																				"label": {
+																																					"H": "╬'Tahsil Edilen Tutar'╩╩",
+																																					"T": "prop",
+																																					"HL": "QS"
+																																				},
+																																				"visible": {
+																																					"H": "╬true╩╩",
+																																					"T": "prop"
+																																				}
+																																			},
+																																			"E": {},
+																																			"C": {},
+																																			"_Editor": {
+																																				"eID": "EdtrComp_105"
+																																			},
+																																			"S": {
+																																				"xs-xl": {
+																																					"marginLeft": "",
+																																					"legendMarginLeft": "0px",
+																																					"marginRight": "",
+																																					"marginBottom": "",
+																																					"marginTop": "4px",
+																																					"paddingTop": "12px",
+																																					"paddingBottom": "",
+																																					"paddingLeft": "",
+																																					"paddingRight": "",
+																																					"inputPaddingTop": "",
+																																					"inputPaddingRight": "",
+																																					"inputPaddingBottom": "",
+																																					"inputPaddingLeft": "",
+																																					"width": "",
+																																					"height": "",
+																																					"maxWidth": "",
+																																					"maxHeight": "",
+																																					"minWidth": "",
+																																					"minHeight": "",
+																																					"unlink": "false",
+																																					"unlinkMax": "false",
+																																					"unlinkMin": "false",
+																																					"isSizeCollapsed": "false",
+																																					"dense": "",
+																																					"labelDefaultFontColor": "#000000",
+																																					"labelDefaultFontFamily": "Roboto",
+																																					"labelDefaultFontSize": "16px",
+																																					"labelDefaultFontStyle": "normal",
+																																					"labelDefaultFontWeight": "400",
+																																					"labelDefaultCombinedFont": "Roboto-Regular",
+																																					"labelDefaultThemeFont": "Custom",
+																																					"prefixFontColor": "#000",
+																																					"prefixFontFamily": "Roboto",
+																																					"prefixFontSize": "16px",
+																																					"prefixFontStyle": "normal",
+																																					"prefixFontWeight": "400",
+																																					"prefixCombinedFont": "Roboto-Regular",
+																																					"prefixThemeFont": "Custom",
+																																					"PHFontColor": "#686868",
+																																					"PHFontFamily": "Roboto",
+																																					"PHFontSize": "16px",
+																																					"PHFontStyle": "normal",
+																																					"PHFontWeight": "400",
+																																					"PHCombinedFont": "Roboto-Regular",
+																																					"PHThemeFont": "Custom",
+																																					"inputFontColor": "#000",
+																																					"inputFontFamily": "Roboto",
+																																					"inputFontSize": "16px",
+																																					"inputFontStyle": "normal",
+																																					"inputFontWeight": "400",
+																																					"inputCombinedFont": "Roboto-Regular",
+																																					"inputDefaultThemeFont": "Custom",
+																																					"errorMessageFontColor": "#E96767",
+																																					"errorMessageFontFamily": "Roboto",
+																																					"errorMessageFontSize": "12px",
+																																					"errorMessageFontStyle": "normal",
+																																					"errorMessageFontWeight": "400",
+																																					"EMCombinedFont": "Roboto-Regular",
+																																					"errorMessageThemeFont": "Custom",
+																																					"errorMessageLineHeight": "",
+																																					"textAlign": "left",
+																																					"backgroundColor": "#ffffff",
+																																					"appendIconColor": "",
+																																					"appendOuterIconColor": "",
+																																					"prependIconColor": "",
+																																					"prependInnerIconColor": "",
+																																					"innerBoxShadow": "",
+																																					"activeBorderColor": "#1976d2",
+																																					"innerBoxSizing": "",
+																																					"innerBorderTopStyle": "",
+																																					"innerBorderRightStyle": "",
+																																					"innerBorderBottomStyle": "solid",
+																																					"innerBorderLeftStyle": "",
+																																					"innerBorderTopLeftRadius": "",
+																																					"innerBorderTopRightRadius": "",
+																																					"innerBorderBottomLeftRadius": "",
+																																					"innerBorderBottomRightRadius": "",
+																																					"innerBorderTopWidth": "0px",
+																																					"innerBorderRightWidth": "0px",
+																																					"innerBorderBottomWidth": "1px",
+																																					"innerBorderLeftWidth": "0px",
+																																					"innerDefaultBorderColor": "#0000006b",
+																																					"innerSides": ",Bottom",
+																																					"outlined": ""
+																																				}
+																																			},
+																																			"O": {
+																																				"cType": "slot",
+																																				"compDomClasses": "v-input theme--light v-text-field v-text-field--is-booted undefined newDropBorder"
 																																			}
 																																		}
 																																	],
@@ -7354,6 +7815,93 @@ let pjson = {
 																															},
 																															"_Editor": {
 																																"eID": "EdtrComp_118"
+																															},
+																															"O": {
+																																"cType": "slot",
+																																"layout": {
+																																	"dOpt": {
+																																		"xs": [
+																																			"d:d-flex",
+																																			"fd:flex-column"
+																																		]
+																																	},
+																																	"class": "d-flex flex-column"
+																																},
+																																"compDomClasses": "col d-flex flex-column newDropBorder"
+																															},
+																															"S": {
+																																"xs-xl": {
+																																	"col": "6",
+																																	"flexDirection": "column",
+																																	"alignItems": "",
+																																	"justifyContent": "",
+																																	"marginLeft": "",
+																																	"marginRight": "",
+																																	"marginBottom": "",
+																																	"marginTop": "",
+																																	"paddingTop": "12px",
+																																	"paddingBottom": "12px",
+																																	"paddingLeft": "12px",
+																																	"paddingRight": "12px",
+																																	"backgroundColor": "",
+																																	"boxShadow": "",
+																																	"boxSizing": "",
+																																	"borderTopStyle": "",
+																																	"borderRightStyle": "",
+																																	"borderBottomStyle": "",
+																																	"borderLeftStyle": "",
+																																	"borderTopLeftRadius": "",
+																																	"borderTopRightRadius": "",
+																																	"borderBottomLeftRadius": "",
+																																	"borderBottomRightRadius": "",
+																																	"borderTopWidth": "",
+																																	"borderRightWidth": "",
+																																	"borderBottomWidth": "",
+																																	"borderLeftWidth": "",
+																																	"defaultBorderColor": "",
+																																	"sides": ""
+																																},
+																																"layoutMap": {
+																																	"LAYOUT": "xs-xl"
+																																}
+																															}
+																														},
+																														{
+																															"T": "VCol",
+																															"C": {
+																																"default": {
+																																	"c": [
+																																		{
+																																			"T": "Ghost",
+																																			"P": {
+																																				"ID": {
+																																					"H": "EdtrComp_62",
+																																					"T": "prop"
+																																				}
+																																			},
+																																			"E": {},
+																																			"C": {},
+																																			"_Editor": {
+																																				"eID": "EdtrComp_62"
+																																			},
+																																			"O": {
+																																				"cType": "child",
+																																				"compDomClasses": "editor-ghost-comp newDropBorder"
+																																			}
+																																		}
+																																	],
+																																	"cType": "slot"
+																																}
+																															},
+																															"E": {},
+																															"P": {
+																																"ID": {
+																																	"H": "EdtrComp_61",
+																																	"T": "prop"
+																																}
+																															},
+																															"_Editor": {
+																																"eID": "EdtrComp_61"
 																															},
 																															"O": {
 																																"cType": "slot",
@@ -7537,7 +8085,7 @@ let pjson = {
 																																			},
 																																			"O": {
 																																				"cType": "slot",
-																																				"compDomClasses": "v-input v-input--is-readonly theme--light v-text-field v-text-field--is-booted undefined"
+																																				"compDomClasses": "v-input v-input--is-readonly theme--light v-text-field v-text-field--is-booted undefined newDropBorder"
 																																			}
 																																		}
 																																	],
@@ -9117,7 +9665,7 @@ let pjson = {
 																																			},
 																																			"E": {
 																																				"change": {
-																																					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\nquick.EM.trace(value);\r\ncomponents.EdtrComp_4288.visible = true;\r\ncomponents.EdtrComp_4253.visible = true;\r\ncomponents.EdtrComp_34.visible = true;\r\ncomponents.EdtrComp_25.visible = true;\r\nif (value == 0) {\r\n    components.operationNameText.text = 'Paranın Yatırılacağı Hesap';\r\n    components.totalAmount.visible = false;\r\n}\r\nelse {\r\n    components.operationNameText.text = 'Paranın Çekileceği Hesap';\r\n    components.totalAmount.visible = true;\r\n}\r\n",
+																																					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\nquick.EM.trace(value);\r\ncomponents.EdtrComp_4288.visible = true;\r\ncomponents.EdtrComp_4253.visible = true;\r\ncomponents.EdtrComp_34.visible = true;\r\ncomponents.EdtrComp_25.visible = true;\r\ncomponents.accountInfo.qValue = undefined;\r\ncomponents.amount.qValue = undefined;\r\ncomponents.description.qValue = undefined;\r\ncomponents.currency.qValue = undefined;\r\ncomponents.totalAmount.qValue = undefined;\r\nif (value == 0) {\r\n    components.operationNameText.text = 'Paranın Yatırılacağı Hesap';\r\n    components.totalAmount.visible = false;\r\n}\r\nelse {\r\n    components.operationNameText.text = 'Paranın Çekileceği Hesap';\r\n    components.totalAmount.visible = true;\r\n}\r\n",
 																																					"P": "value:any",
 																																					"HL": "JS"
 																																				}
@@ -10374,7 +10922,7 @@ let pjson = {
 																																			},
 																																			"O": {
 																																				"cType": "slot",
-																																				"compDomClasses": "v-input v-input--is-label-active v-input--is-dirty v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-select v-autocomplete undefined"
+																																				"compDomClasses": "v-input v-input--is-label-active v-input--is-dirty v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-select v-autocomplete undefined newDropBorder"
 																																			}
 																																		}
 																																	],
@@ -10606,7 +11154,7 @@ let pjson = {
 																																			},
 																																			"O": {
 																																				"cType": "slot",
-																																				"compDomClasses": "v-input v-input--is-loading v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-select v-autocomplete undefined"
+																																				"compDomClasses": "v-input v-input--is-loading v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-select v-autocomplete undefined newDropBorder"
 																																			}
 																																		}
 																																	],
@@ -11292,7 +11840,7 @@ let pjson = {
 																																			},
 																																			"O": {
 																																				"cType": "slot",
-																																				"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined undefined"
+																																				"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined undefined newDropBorder"
 																																			}
 																																		}
 																																	],
@@ -11488,7 +12036,7 @@ let pjson = {
 																																			},
 																																			"O": {
 																																				"cType": "slot",
-																																				"compDomClasses": "v-input v-input--is-disabled theme--light v-text-field v-text-field--is-booted undefined"
+																																				"compDomClasses": "v-input v-input--is-disabled theme--light v-text-field v-text-field--is-booted undefined newDropBorder"
 																																			}
 																																		}
 																																	],
@@ -12066,7 +12614,7 @@ let pjson = {
 																											},
 																											"O": {
 																												"cType": "slot",
-																												"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined undefined"
+																												"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined undefined newDropBorder"
 																											}
 																										}
 																									],
@@ -12438,7 +12986,7 @@ let pjson = {
 																													"HL": "JS"
 																												},
 																												"onSuccessCheckWithdrawCreate": {
-																													"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nquick.EM.trace(\"onSuccessCheckWithdrawCreate\");\r\nquick.MM.trigger(\"ofsaaRequest\", [{ operationCode: \"K\", pcuBytes: \"A\", monetaryType: \"Z\" }]);\r\ncomponents.summaryDebitAccount.qValue = components.accountInfo.qValue.branchCode + ' - ' + components.accountInfo.qValue.iban + ' - ' + components.accountInfo.qValue.availableBalance + ' ' + components.currency.qValue;\r\ncomponents.summaryDescription.qValue = components.description.qValue;\r\ncomponents.summaryAmount.qValue = components.amount.qValue + ' ' + components.currency.qValue;\r\nif (components.operationTypeGroup.qValue == 0) {\r\n    components.summaryDebitAccount.label = 'Paranının yatırılacağı hesap';\r\n}\r\nelse {\r\n    components.summaryDebitAccount.label = 'Paranının çekileceği hesap';\r\n}\r\ncomponents.EdtrComp_4288.visible = false;\r\ncomponents.EdtrComp_4253.visible = false;\r\ncomponents.EdtrComp_34.visible = false;\r\ncomponents.EdtrComp_25.visible = false;\r\ncomponents.EdtrComp_41.visible = false;\r\ncomponents.summaryRow.visible = true;\r\n",
+																													"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nquick.EM.trace(\"onSuccessCheckWithdrawCreate\");\r\nquick.MM.trigger(\"ofsaaRequest\", [{ operationCode: \"K\", pcuBytes: \"A\", monetaryType: \"Z\" }]);\r\ncomponents.summaryDebitAccount.qValue = components.accountInfo.qValue.branchCode + ' - ' + components.accountInfo.qValue.iban + ' - ' + components.accountInfo.qValue.availableBalance + ' ' + components.currency.qValue;\r\ncomponents.summaryDescription.qValue = components.description.qValue;\r\ncomponents.summaryAmount.qValue = components.amount.qValue + ' ' + components.currency.qValue;\r\ncomponents.summaryAmount2.qValue = components.amount.qValue + ' ' + components.currency.qValue;\r\nif (components.operationTypeGroup.qValue == 0) {\r\n    components.summaryDebitAccount.label = 'Paranının yatırılacağı hesap';\r\n}\r\nelse {\r\n    components.summaryDebitAccount.label = 'Paranının çekileceği hesap';\r\n}\r\ncomponents.EdtrComp_4288.visible = false;\r\ncomponents.EdtrComp_4253.visible = false;\r\ncomponents.EdtrComp_34.visible = false;\r\ncomponents.EdtrComp_25.visible = false;\r\ncomponents.EdtrComp_41.visible = false;\r\ncomponents.summaryRow.visible = true;\r\n",
 																													"C": true,
 																													"HL": "JS"
 																												},
@@ -12877,7 +13425,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": "newDropBorder"
+				"compDomClasses": ""
 			}
 		},
 		{

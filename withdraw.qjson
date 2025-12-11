@@ -23,7 +23,7 @@ let pjson = {
 					"HL": "TS"
 				},
 				"PostRender": {
-					"H": "/*var validateTotalAmount = function (): boolean | string {\r\n    if (!components.accountInfo.qValue && components.totalAmount.qValue) {\r\n        return \"Paranın çekileceği hesabı seçmeniz gerekiyor.\";\r\n    }\r\n    return true;\r\n}\r\n\r\ncomponents.totalAmount.rules.push(() => validateTotalAmount());\r\n\r\n/*var validateBalanceAndAmount = function (): boolean | string {\r\n    \r\n    if(components.amount.qValue && components.debitAccountInfo.qValue) {\r\n\r\n        let availableAmount: number = quick.Quick.toDecimal(components.debitAccountInfo.qValue.balance);\r\n        let amount: number = quick.Quick.toDecimal(components.amount.qValue);\r\n\r\n        if (components.debitAccountInfo.qValue.isHidden != true) {\r\n            if (amount > availableAmount) {\r\n                return \"Transfer edilmek istenen tutar paranın çekileceği hesabından bakiyesinden büyük olamaz.\"\r\n            }\r\n        }\r\n    }\r\n\r\n    return true;\r\n}\r\n\r\ncomponents.amount.rules.push(() => validateBalanceAndAmount());\r\ncomponents.debitAccountInfo.rules.push(() => validateBalanceAndAmount());\r\n\r\n*/",
+					"H": "/*var validateTotalAmount = function (): boolean | string {\r\n    if (!components.accountInfo.qValue && components.totalAmount.qValue) {\r\n        return \"Paranın çekileceği hesabı seçmeniz gerekiyor.\";\r\n    }\r\n    return true;\r\n}\r\n\r\ncomponents.totalAmount.rules.push(() => validateTotalAmount());\r\n\r\n/*var validateBalanceAndAmount = function (): boolean | string {\r\n    \r\n    if(components.amount.qValue && components.debitAccountInfo.qValue) {\r\n\r\n        let availableAmount: number = quick.Quick.toDecimal(components.debitAccountInfo.qValue.balance);\r\n        let amount: number = quick.Quick.toDecimal(components.amount.qValue);\r\n\r\n        if (components.debitAccountInfo.qValue.isHidden != true) {\r\n            if (amount > availableAmount) {\r\n                return \"Transfer edilmek istenen tutar paranın çekileceği hesabından bakiyesinden büyük olamaz.\"\r\n            }\r\n        }\r\n    }\r\n\r\n    return true;\r\n}\r\n\r\ncomponents.amount.rules.push(() => validateBalanceAndAmount());\r\ncomponents.debitAccountInfo.rules.push(() => validateBalanceAndAmount());\r\n\r\n*/\r\n\r\nconst description: string = components.description.qValue;\r\n//const descriptionLength: number = description.length;\r\n\r\n//quick.EM.trace(description.length)\r\n/*var validateDescription = function (): boolean | string {\r\n    \r\n    //quick.EM.trace(description.length)\r\n    if (description < 3) {\r\n        return \"Açıklama alanı 3 karakterden az olamaz\";\r\n    }\r\n    return true;\r\n}\r\n\r\ncomponents.description.rules.push(() => validateDescription());\r\n\r\n*/",
 					"TO": 1,
 					"HL": "TS"
 				},
@@ -5460,7 +5460,7 @@ let pjson = {
 																													"HL": "QS"
 																												},
 																												"rules": {
-																													"H": "[Quick.validation.required('Bu Alan Zorunludur')]",
+																													"H": "[]",
 																													"T": "prop",
 																													"HL": "QS"
 																												}
@@ -5911,7 +5911,7 @@ let pjson = {
 																											},
 																											"E": {
 																												"click": {
-																													"H": "quick.EM.trace(response.idempotent.firstIdempotent.toUpperCase())\r\nquick.EM.trace(quick.Quick.toDecimal(components.amount.qValue, \",\").toString())\r\n\r\nlet validated: boolean = quick.Quick.validateAll(false, false);\r\n\r\nlet isSolidary = components.accountInfo.qValue.isSolidary;\r\nquick.EM.trace(isSolidary)\r\n\r\nif (isSolidary && validated && (components.operationTypeGroup.qValue == 1)) {\r\n    components.warningDialogVirement.dialogClick({ accountId: components.accountInfo.qValue.accountId});\r\n} else {\r\n\r\n    if (validated) {\r\n\r\n        components.EdtrComp_1463.disabled = true\r\n\r\n        let virementRequest: any = {};\r\n        \r\n        quick.EM.trace(components.accountInfo.qValue)\r\n\r\n        let accountId = components.accountInfo.qValue.accountId;\r\n        let amount = quick.Quick.toDecimal(components.amount.qValue, \",\").toString();\r\n        let currencyCode = components.currency.qValue;\r\n        let description = components.description.qValue;\r\n\r\n        \r\n        virementRequest.amount = amount;\r\n        virementRequest.currencyCode = currencyCode;\r\n        virementRequest.description = description;\r\n\r\n        let urlNew = '';\r\n\r\n        if (components.operationTypeGroup.qValue == 0) {\r\n            urlNew = '/api/dep-operations/v1/api/dep-operations/checkDeposit'\r\n            virementRequest.creditAccountId = accountId;\r\n            quick.store.set(\"$customConsumerCode\",'TANE.DEPDEPOSIT');\r\n        } else {\r\n            urlNew = '/api/dep-operations/v1/api/dep-operations/checkWithdraw'\r\n            virementRequest.debitAccountId = accountId;\r\n            quick.store.set(\"$customConsumerCode\",'TANE.DEPWITHDRAW');\r\n        }\r\n\r\n        //let urlNew = '/api/dep-operations/v1/api/dep-operations/checkWithdraw';\r\n\r\n        let virementCheckCreateRequest: IRequest = {\r\n            url: urlNew,\r\n            http: 'post',\r\n            blockRender: true,\r\n            onSuccess: 'onSuccessCheckWithdrawCreate',\r\n            onFail: 'onSFailCheckWithdrawCreate',\r\n            responseField: 'responseCheckWithdrawCreate',\r\n            data: virementRequest\r\n        }\r\n        quick.Request.async(virementCheckCreateRequest);\r\n    }\r\n}",
+																													"H": "quick.EM.trace(response.idempotent.firstIdempotent.toUpperCase())\r\nquick.EM.trace(quick.Quick.toDecimal(components.amount.qValue, \",\").toString())\r\n\r\nlet validated: boolean = quick.Quick.validateAll(false, false);\r\n\r\nlet isSolidary = components.accountInfo.qValue.isSolidary;\r\nquick.EM.trace(isSolidary)\r\n\r\nlet descriptionLength =  components.description.qValue.length;\r\n\r\nif (descriptionLength < 3) {\r\n    components.description.errorMessages = \"Açıklama alanı minimum 3 karakter olmalıdır.\"\r\n    validated = validated && false;\r\n}\r\n\r\nif (isSolidary && validated && (components.operationTypeGroup.qValue == 1)) {\r\n    components.warningDialogVirement.dialogClick({ accountId: components.accountInfo.qValue.accountId});\r\n} else {\r\n\r\n    if (validated) {\r\n\r\n        components.EdtrComp_1463.disabled = true\r\n\r\n        let virementRequest: any = {};\r\n        \r\n        quick.EM.trace(components.accountInfo.qValue)\r\n\r\n        let accountId = components.accountInfo.qValue.accountId;\r\n        let amount = quick.Quick.toDecimal(components.amount.qValue, \",\").toString();\r\n        let currencyCode = components.currency.qValue;\r\n        let description = components.description.qValue;\r\n\r\n        \r\n        virementRequest.amount = amount;\r\n        virementRequest.currencyCode = currencyCode;\r\n        virementRequest.description = description;\r\n\r\n        let urlNew = '';\r\n\r\n        if (components.operationTypeGroup.qValue == 0) {\r\n            urlNew = '/api/dep-operations/v1/api/dep-operations/checkDeposit'\r\n            virementRequest.creditAccountId = accountId;\r\n            quick.store.set(\"$customConsumerCode\",'TANE.DEPDEPOSIT');\r\n        } else {\r\n            urlNew = '/api/dep-operations/v1/api/dep-operations/checkWithdraw'\r\n            virementRequest.debitAccountId = accountId;\r\n            quick.store.set(\"$customConsumerCode\",'TANE.DEPWITHDRAW');\r\n        }\r\n\r\n        //let urlNew = '/api/dep-operations/v1/api/dep-operations/checkWithdraw';\r\n\r\n        let virementCheckCreateRequest: IRequest = {\r\n            url: urlNew,\r\n            http: 'post',\r\n            blockRender: true,\r\n            onSuccess: 'onSuccessCheckWithdrawCreate',\r\n            onFail: 'onSFailCheckWithdrawCreate',\r\n            responseField: 'responseCheckWithdrawCreate',\r\n            data: virementRequest\r\n        }\r\n        quick.Request.async(virementCheckCreateRequest);\r\n    }\r\n}",
 																													"P": "mouseEvent:unknown | undefined",
 																													"HL": "TS"
 																												},
@@ -6426,7 +6426,7 @@ let pjson = {
 					"HL": "JS"
 				},
 				"PostRender": {
-					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n; /*var validateTotalAmount = function (): boolean | string {\r\n    if (!components.accountInfo.qValue && components.totalAmount.qValue) {\r\n        return \"Paranın çekileceği hesabı seçmeniz gerekiyor.\";\r\n    }\r\n    return true;\r\n}\r\n\r\ncomponents.totalAmount.rules.push(() => validateTotalAmount());\r\n\r\n/*var validateBalanceAndAmount = function (): boolean | string {\r\n    \r\n    if(components.amount.qValue && components.debitAccountInfo.qValue) {\r\n\r\n        let availableAmount: number = quick.Quick.toDecimal(components.debitAccountInfo.qValue.balance);\r\n        let amount: number = quick.Quick.toDecimal(components.amount.qValue);\r\n\r\n        if (components.debitAccountInfo.qValue.isHidden != true) {\r\n            if (amount > availableAmount) {\r\n                return \"Transfer edilmek istenen tutar paranın çekileceği hesabından bakiyesinden büyük olamaz.\"\r\n            }\r\n        }\r\n    }\r\n\r\n    return true;\r\n}\r\n\r\ncomponents.amount.rules.push(() => validateBalanceAndAmount());\r\ncomponents.debitAccountInfo.rules.push(() => validateBalanceAndAmount());\r\n\r\n*/\r\n",
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n; /*var validateTotalAmount = function (): boolean | string {\r\n    if (!components.accountInfo.qValue && components.totalAmount.qValue) {\r\n        return \"Paranın çekileceği hesabı seçmeniz gerekiyor.\";\r\n    }\r\n    return true;\r\n}\r\n\r\ncomponents.totalAmount.rules.push(() => validateTotalAmount());\r\n\r\n/*var validateBalanceAndAmount = function (): boolean | string {\r\n    \r\n    if(components.amount.qValue && components.debitAccountInfo.qValue) {\r\n\r\n        let availableAmount: number = quick.Quick.toDecimal(components.debitAccountInfo.qValue.balance);\r\n        let amount: number = quick.Quick.toDecimal(components.amount.qValue);\r\n\r\n        if (components.debitAccountInfo.qValue.isHidden != true) {\r\n            if (amount > availableAmount) {\r\n                return \"Transfer edilmek istenen tutar paranın çekileceği hesabından bakiyesinden büyük olamaz.\"\r\n            }\r\n        }\r\n    }\r\n\r\n    return true;\r\n}\r\n\r\ncomponents.amount.rules.push(() => validateBalanceAndAmount());\r\ncomponents.debitAccountInfo.rules.push(() => validateBalanceAndAmount());\r\n\r\n*/\r\nvar description = components.description.qValue;\r\n",
 					"TO": 1,
 					"HL": "JS"
 				},
@@ -6965,7 +6965,7 @@ let pjson = {
 																																			},
 																																			"O": {
 																																				"cType": "slot",
-																																				"compDomClasses": "v-input v-input--is-readonly theme--light v-text-field v-text-field--is-booted undefined newDropBorder"
+																																				"compDomClasses": "v-input v-input--is-readonly theme--light v-text-field v-text-field--is-booted undefined"
 																																			}
 																																		}
 																																	],
@@ -7251,7 +7251,7 @@ let pjson = {
 																																			},
 																																			"O": {
 																																				"cType": "slot",
-																																				"compDomClasses": "v-input v-input--is-readonly theme--light v-text-field v-text-field--is-booted undefined newDropBorder"
+																																				"compDomClasses": "v-input v-input--is-readonly theme--light v-text-field v-text-field--is-booted undefined"
 																																			}
 																																		}
 																																	],
@@ -7537,7 +7537,7 @@ let pjson = {
 																																			},
 																																			"O": {
 																																				"cType": "slot",
-																																				"compDomClasses": "v-input v-input--is-readonly theme--light v-text-field v-text-field--is-booted undefined newDropBorder"
+																																				"compDomClasses": "v-input v-input--is-readonly theme--light v-text-field v-text-field--is-booted undefined"
 																																			}
 																																		}
 																																	],
@@ -10374,7 +10374,7 @@ let pjson = {
 																																			},
 																																			"O": {
 																																				"cType": "slot",
-																																				"compDomClasses": "v-input v-input--is-label-active v-input--is-dirty v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-select v-autocomplete undefined newDropBorder"
+																																				"compDomClasses": "v-input v-input--is-label-active v-input--is-dirty v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-select v-autocomplete undefined"
 																																			}
 																																		}
 																																	],
@@ -10606,7 +10606,7 @@ let pjson = {
 																																			},
 																																			"O": {
 																																				"cType": "slot",
-																																				"compDomClasses": "v-input v-input--is-loading v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-select v-autocomplete undefined newDropBorder"
+																																				"compDomClasses": "v-input v-input--is-loading v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-select v-autocomplete undefined"
 																																			}
 																																		}
 																																	],
@@ -11292,7 +11292,7 @@ let pjson = {
 																																			},
 																																			"O": {
 																																				"cType": "slot",
-																																				"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined undefined newDropBorder"
+																																				"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined undefined"
 																																			}
 																																		}
 																																	],
@@ -11488,7 +11488,7 @@ let pjson = {
 																																			},
 																																			"O": {
 																																				"cType": "slot",
-																																				"compDomClasses": "v-input v-input--is-disabled theme--light v-text-field v-text-field--is-booted undefined newDropBorder"
+																																				"compDomClasses": "v-input v-input--is-disabled theme--light v-text-field v-text-field--is-booted undefined"
 																																			}
 																																		}
 																																	],
@@ -11967,7 +11967,7 @@ let pjson = {
 																													"HL": "QS"
 																												},
 																												"rules": {
-																													"H": "╬[]╠()╣.╣.╣Quick╩╠validation╩╩╠required╩╩╠'Bu Alan Zorunludur'╩╩╩╩",
+																													"H": "╬[]╩╩",
 																													"T": "prop",
 																													"HL": "QS"
 																												}
@@ -12066,7 +12066,7 @@ let pjson = {
 																											},
 																											"O": {
 																												"cType": "slot",
-																												"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined undefined newDropBorder"
+																												"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined undefined"
 																											}
 																										}
 																									],
@@ -12433,7 +12433,7 @@ let pjson = {
 																											},
 																											"E": {
 																												"click": {
-																													"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\nquick.EM.trace(response.idempotent.firstIdempotent.toUpperCase());\r\nquick.EM.trace(quick.Quick.toDecimal(components.amount.qValue, \",\").toString());\r\nvar validated = quick.Quick.validateAll(false, false);\r\nvar isSolidary = components.accountInfo.qValue.isSolidary;\r\nquick.EM.trace(isSolidary);\r\nif (isSolidary && validated && (components.operationTypeGroup.qValue == 1)) {\r\n    components.warningDialogVirement.dialogClick({ accountId: components.accountInfo.qValue.accountId });\r\n}\r\nelse {\r\n    if (validated) {\r\n        components.EdtrComp_1463.disabled = true;\r\n        var virementRequest = {};\r\n        quick.EM.trace(components.accountInfo.qValue);\r\n        var accountId = components.accountInfo.qValue.accountId;\r\n        var amount = quick.Quick.toDecimal(components.amount.qValue, \",\").toString();\r\n        var currencyCode = components.currency.qValue;\r\n        var description = components.description.qValue;\r\n        virementRequest.amount = amount;\r\n        virementRequest.currencyCode = currencyCode;\r\n        virementRequest.description = description;\r\n        var urlNew = '';\r\n        if (components.operationTypeGroup.qValue == 0) {\r\n            urlNew = '/api/dep-operations/v1/api/dep-operations/checkDeposit';\r\n            virementRequest.creditAccountId = accountId;\r\n            quick.store.set(\"$customConsumerCode\", 'TANE.DEPDEPOSIT');\r\n        }\r\n        else {\r\n            urlNew = '/api/dep-operations/v1/api/dep-operations/checkWithdraw';\r\n            virementRequest.debitAccountId = accountId;\r\n            quick.store.set(\"$customConsumerCode\", 'TANE.DEPWITHDRAW');\r\n        }\r\n        //let urlNew = '/api/dep-operations/v1/api/dep-operations/checkWithdraw';\r\n        var virementCheckCreateRequest = {\r\n            url: urlNew,\r\n            http: 'post',\r\n            blockRender: true,\r\n            onSuccess: 'onSuccessCheckWithdrawCreate',\r\n            onFail: 'onSFailCheckWithdrawCreate',\r\n            responseField: 'responseCheckWithdrawCreate',\r\n            data: virementRequest\r\n        };\r\n        quick.Request.async(virementCheckCreateRequest);\r\n    }\r\n}\r\n",
+																													"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\nquick.EM.trace(response.idempotent.firstIdempotent.toUpperCase());\r\nquick.EM.trace(quick.Quick.toDecimal(components.amount.qValue, \",\").toString());\r\nvar validated = quick.Quick.validateAll(false, false);\r\nvar isSolidary = components.accountInfo.qValue.isSolidary;\r\nquick.EM.trace(isSolidary);\r\nvar descriptionLength = components.description.qValue.length;\r\nif (descriptionLength < 3) {\r\n    components.description.errorMessages = \"Açıklama alanı minimum 3 karakter olmalıdır.\";\r\n    validated = validated && false;\r\n}\r\nif (isSolidary && validated && (components.operationTypeGroup.qValue == 1)) {\r\n    components.warningDialogVirement.dialogClick({ accountId: components.accountInfo.qValue.accountId });\r\n}\r\nelse {\r\n    if (validated) {\r\n        components.EdtrComp_1463.disabled = true;\r\n        var virementRequest = {};\r\n        quick.EM.trace(components.accountInfo.qValue);\r\n        var accountId = components.accountInfo.qValue.accountId;\r\n        var amount = quick.Quick.toDecimal(components.amount.qValue, \",\").toString();\r\n        var currencyCode = components.currency.qValue;\r\n        var description = components.description.qValue;\r\n        virementRequest.amount = amount;\r\n        virementRequest.currencyCode = currencyCode;\r\n        virementRequest.description = description;\r\n        var urlNew = '';\r\n        if (components.operationTypeGroup.qValue == 0) {\r\n            urlNew = '/api/dep-operations/v1/api/dep-operations/checkDeposit';\r\n            virementRequest.creditAccountId = accountId;\r\n            quick.store.set(\"$customConsumerCode\", 'TANE.DEPDEPOSIT');\r\n        }\r\n        else {\r\n            urlNew = '/api/dep-operations/v1/api/dep-operations/checkWithdraw';\r\n            virementRequest.debitAccountId = accountId;\r\n            quick.store.set(\"$customConsumerCode\", 'TANE.DEPWITHDRAW');\r\n        }\r\n        //let urlNew = '/api/dep-operations/v1/api/dep-operations/checkWithdraw';\r\n        var virementCheckCreateRequest = {\r\n            url: urlNew,\r\n            http: 'post',\r\n            blockRender: true,\r\n            onSuccess: 'onSuccessCheckWithdrawCreate',\r\n            onFail: 'onSFailCheckWithdrawCreate',\r\n            responseField: 'responseCheckWithdrawCreate',\r\n            data: virementRequest\r\n        };\r\n        quick.Request.async(virementCheckCreateRequest);\r\n    }\r\n}\r\n",
 																													"P": "mouseEvent:unknown | undefined",
 																													"HL": "JS"
 																												},
@@ -12931,7 +12931,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": "newDropBorder"
+				"compDomClasses": ""
 			}
 		}
 	],

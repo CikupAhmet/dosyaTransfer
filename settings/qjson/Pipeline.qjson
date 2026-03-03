@@ -1,0 +1,87 @@
+let pjson = {
+	"pJson": [
+		{
+			"T": "Messaging",
+			"P": {
+				"ID": {
+					"H": "EdtrComp_22",
+					"T": "prop"
+				}
+			},
+			"E": {
+				"onBeforeRequest": {
+					"H": "declare const requestObject : any\r\nquick.EM.trace(quick.containerServices.extensions?.getHeaderConsumerCode())\r\nrequestObject.headers[\"X-rly-user-id\"] = 200098;\r\nrequestObject.headers[\"Authorization\"] = 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJVRGpuZE8tU3JxVERyWUZQdzlyVjZUelN6bXpqVTh3b0NqZ1JCeERIdXYwIn0.eyJleHAiOjE3NzIyMDQ0MjAsImlhdCI6MTc3MjIwMDgyMCwianRpIjoiOWM0YmJiMzktODAwNi00N2Q4LWJmZmQtM2M5MzM1MzBkNzVlIiwiaXNzIjoiaHR0cHM6Ly9pYW11c2VyLmt1YmUudWF0aXNiYW5rL2F1dGgvcmVhbG1zL21haW4iLCJzdWIiOiI3ZjMwZGY0MC01MzlkLTRkZDYtYTVlMC02ZTIxOTNiMjJkMjIiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJ1aS1uYXItY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6IjZkNjdmZTZmLTNhOGMtNGQ4Yy05OTcwLTlkNmJmY2MzNzRlNiIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiaHR0cDovL2VhZGVza3RvcHVhdC5nbS5pc2JhbmsuY29tLnRyIl0sInNjb3BlIjoicHJvZmlsZSBvcGVuaWQgZW1haWwiLCJzaWQiOiI2ZDY3ZmU2Zi0zYThjLTRkOGMtOTk3MC05ZDZiZmNjMzc0ZTYiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsInByZWZlcnJlZF91c2VybmFtZSI6Ijk2Njg5In0.LmPSDb6nO22CSssDLA4tTsyrPa9uAhtkU56_b9OQbehxdD1httUnVhgXQqFWVET7MHTXSxvxVAs6HmrvlZesSIohpDFMO_tmUGxpegstAK9p6tdebkNqzE9fmmICcUspqgUbEXl6ZjFtJ0qszqxpd4AWI3t-jEBdcRi7PTLesW14RDIMwwC4xGufdzkj6puBRlYjL2X6sdyaGHmlEG7QGmb0BjQGcGLWWf_3stn3A4NKqwyVCp-thWIHMtD5XRH4CumLzXzn5_gl55bfJRX2vPe3eqsFKd-7LtbdBev789YKf1-EhNM6ESaskNf7QM--I6UszS0HEYlixuu_XpRCdw';\r\n\r\nrequestObject.headers[\"X-Consumer\"] = quick.containerServices.extensions?.getHeaderConsumerCode();\r\nrequestObject.headers[\"x-rly-corr\"] = quick.containerServices.extensions.getCorrelationId();\r\nrequestObject.headers[\"x-isb-client\"] = quick.containerServices.extensions.getHeader('','isbClient');\r\nrequestObject.headers[\"x-customer\"] = quick.containerServices.extensions.getHeader('','customer');\r\nrequestObject.headers[\"Accept-Language\"] = \"tr-TR\";\r\n",
+					"C": true,
+					"EV": true,
+					"HL": "TS"
+				},
+				"onAfterResponse": {
+					"H": "quick.EM.trace('onAfterResponse started...')\r\nquick.EM.trace(\"OnAfterResponse\");\r\nquick.EM.trace(response);",
+					"C": true,
+					"EV": true,
+					"HL": "TS"
+				}
+			},
+			"C": {},
+			"_Editor": {
+				"eID": "EdtrComp_22"
+			},
+			"O": {
+				"compDomClasses": "newDropBorder",
+				"cType": "child"
+			}
+		}
+	],
+	"cJson": [
+		{
+			"T": "Messaging",
+			"P": {
+				"ID": {
+					"H": "EdtrComp_22",
+					"T": "prop"
+				}
+			},
+			"E": {
+				"onBeforeRequest": {
+					"H": "var _a, _b;\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nquick.EM.trace((_a = quick.containerServices.extensions) === null || _a === void 0 ? void 0 : _a.getHeaderConsumerCode());\r\nrequestObject.headers[\"X-rly-user-id\"] = 200098;\r\nrequestObject.headers[\"Authorization\"] = 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJVRGpuZE8tU3JxVERyWUZQdzlyVjZUelN6bXpqVTh3b0NqZ1JCeERIdXYwIn0.eyJleHAiOjE3NzIyMDQ0MjAsImlhdCI6MTc3MjIwMDgyMCwianRpIjoiOWM0YmJiMzktODAwNi00N2Q4LWJmZmQtM2M5MzM1MzBkNzVlIiwiaXNzIjoiaHR0cHM6Ly9pYW11c2VyLmt1YmUudWF0aXNiYW5rL2F1dGgvcmVhbG1zL21haW4iLCJzdWIiOiI3ZjMwZGY0MC01MzlkLTRkZDYtYTVlMC02ZTIxOTNiMjJkMjIiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJ1aS1uYXItY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6IjZkNjdmZTZmLTNhOGMtNGQ4Yy05OTcwLTlkNmJmY2MzNzRlNiIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiaHR0cDovL2VhZGVza3RvcHVhdC5nbS5pc2JhbmsuY29tLnRyIl0sInNjb3BlIjoicHJvZmlsZSBvcGVuaWQgZW1haWwiLCJzaWQiOiI2ZDY3ZmU2Zi0zYThjLTRkOGMtOTk3MC05ZDZiZmNjMzc0ZTYiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsInByZWZlcnJlZF91c2VybmFtZSI6Ijk2Njg5In0.LmPSDb6nO22CSssDLA4tTsyrPa9uAhtkU56_b9OQbehxdD1httUnVhgXQqFWVET7MHTXSxvxVAs6HmrvlZesSIohpDFMO_tmUGxpegstAK9p6tdebkNqzE9fmmICcUspqgUbEXl6ZjFtJ0qszqxpd4AWI3t-jEBdcRi7PTLesW14RDIMwwC4xGufdzkj6puBRlYjL2X6sdyaGHmlEG7QGmb0BjQGcGLWWf_3stn3A4NKqwyVCp-thWIHMtD5XRH4CumLzXzn5_gl55bfJRX2vPe3eqsFKd-7LtbdBev789YKf1-EhNM6ESaskNf7QM--I6UszS0HEYlixuu_XpRCdw';\r\nrequestObject.headers[\"X-Consumer\"] = (_b = quick.containerServices.extensions) === null || _b === void 0 ? void 0 : _b.getHeaderConsumerCode();\r\nrequestObject.headers[\"x-rly-corr\"] = quick.containerServices.extensions.getCorrelationId();\r\nrequestObject.headers[\"x-isb-client\"] = quick.containerServices.extensions.getHeader('', 'isbClient');\r\nrequestObject.headers[\"x-customer\"] = quick.containerServices.extensions.getHeader('', 'customer');\r\nrequestObject.headers[\"Accept-Language\"] = \"tr-TR\";\r\n",
+					"C": true,
+					"EV": true,
+					"HL": "JS"
+				},
+				"onAfterResponse": {
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nquick.EM.trace('onAfterResponse started...');\r\nquick.EM.trace(\"OnAfterResponse\");\r\nquick.EM.trace(response);\r\n",
+					"C": true,
+					"EV": true,
+					"HL": "JS"
+				}
+			},
+			"C": {},
+			"_Editor": {
+				"eID": "EdtrComp_22"
+			},
+			"O": {
+				"compDomClasses": "newDropBorder",
+				"cType": "child"
+			}
+		}
+	],
+	"lrids": {
+		"tr-TR": {
+			"validationMsg": "'Lütfen zorunlu alanları giriniz.'"
+		},
+		"en-US": {
+			"validationMsg": "'Please enter all required fields'"
+		}
+	},
+	"clrids": {
+		"tr-TR": {
+			"validationMsg": "╬'Lütfen zorunlu alanları giriniz.'╩╩"
+		},
+		"en-US": {
+			"validationMsg": "╬'Please enter all required fields'╩╩"
+		}
+	},
+	"description": {},
+	"opt": {}
+};
+export default pjson

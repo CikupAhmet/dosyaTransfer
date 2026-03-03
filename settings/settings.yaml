@@ -6,22 +6,22 @@ containerServicesPath: /settings/js/ContainerServiceFile.ts
 localproxy: /settings/localProxy.yaml
 pipelineqjson: /settings/qjson/Pipeline.qjson
 alertqjson: 
-rootqjson: /static/ui-depOperations/withdrawHome.qjson
+rootqjson: /static/depOperations/withdrawHome.qjson
 fileMap: 
 - id: 7ips2y3r-mg74-oyof-euq3-elp0mli0u0dq
-  path: /static/ui-depOperations
+  path: /static/depOperations
   name: /errorDialog.qjson
   version: Fri Feb 27 2026 10:35:26 GMT+0300 (GMT+03:00)
 - id: uat07ajt-fsgb-3588-qhmd-rid0mli0u0i8
-  path: /static/ui-depOperations
+  path: /static/depOperations
   name: /successDialog.qjson
   version: Fri Feb 27 2026 10:35:11 GMT+0300 (GMT+03:00)
 - id: fjnmfpdj-g9yb-prh8-xzk6-2030mli0u0vl
-  path: /static/ui-depOperations
+  path: /static/depOperations
   name: /warningDialog.qjson
   version: Fri Feb 27 2026 10:34:54 GMT+0300 (GMT+03:00)
 - id: hf8ibfve-u9b8-xmbb-1xpm-a410mli0u0rf
-  path: /static/ui-depOperations
+  path: /static/depOperations
   name: /feeamount.qjson
   version: Fri Feb 27 2026 10:35:20 GMT+0300 (GMT+03:00)
 - id: x39m77pi-f7xo-tl39-l3ts-zg20mm4o2r3j
@@ -33,7 +33,7 @@ fileMap:
   name: /Roboto-Black.ttf
   version: Fri Feb 27 2026 12:05:25 GMT+0300 (GMT+03:00)
 - id: pcdhsf14-4so6-z4cm-soos-u3g0mlkpvpuh
-  path: /static/ui-depOperations
+  path: /static/depOperations
   name: /withdrawHome.qjson
   version: Thu Feb 26 2026 15:57:33 GMT+0300 (GMT+03:00)
 - id: sprf28o3-p3bd-46el-zg31-xlh0mm4o2r60
@@ -76,16 +76,20 @@ fileMap:
   path: /static/css/Roboto
   name: /Roboto-ThinItalic.ttf
   version: Fri Feb 27 2026 12:05:30 GMT+0300 (GMT+03:00)
+- id: o8smu704-6gjn-db6v-2xil-psz0mlhy4xma
+  path: /static
+  name: /App Settings.appSettings
+  version: Fri Feb 27 2026 17:03:47 GMT+0300 (GMT+03:00)
 - id: qf2d8qrm-4txv-431i-c01o-j810mlhysizt
-  path: /static/ui-depOperations
+  path: /static/depOperations
   name: /withdraw.qjson
   version: Tue Mar 03 2026 10:05:16 GMT+0300 (GMT+03:00)
 - id: v6ck2cck-xrfq-835w-yo58-0hd0mlp9nk7m
-  path: /static/ui-depOperations
+  path: /static/depOperations
   name: /withdrawReview.qjson
   version: Fri Feb 27 2026 10:34:37 GMT+0300 (GMT+03:00)
 - id: vgwiawhl-pxcy-sjpg-f95n-3yk0mlun5uoc
-  path: /static/ui-depOperations
+  path: /static/depOperations
   name: /virement.qjson
   version: Fri Feb 27 2026 10:35:03 GMT+0300 (GMT+03:00)
 

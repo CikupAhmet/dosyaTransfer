@@ -475,7 +475,7 @@ let pjson = {
 																																					"marginBottom": "",
 																																					"marginTop": "4px",
 																																					"paddingTop": "12px",
-																																					"paddingBottom": "",
+																																					"paddingBottom": "4px",
 																																					"paddingLeft": "",
 																																					"paddingRight": "",
 																																					"inputPaddingTop": "",
@@ -492,7 +492,7 @@ let pjson = {
 																																					"unlinkMax": "false",
 																																					"unlinkMin": "false",
 																																					"isSizeCollapsed": "false",
-																																					"dense": "",
+																																					"dense": "true",
 																																					"labelDefaultFontColor": "#000000",
 																																					"labelDefaultFontFamily": "Roboto",
 																																					"labelDefaultFontSize": "16px",
@@ -552,7 +552,8 @@ let pjson = {
 																																					"innerBorderLeftWidth": "0px",
 																																					"innerDefaultBorderColor": "#0000006b",
 																																					"innerSides": ",Bottom",
-																																					"outlined": ""
+																																					"outlined": "",
+																																					"menuFontSize": "13px"
 																																				}
 																																			},
 																																			"O": {
@@ -4202,7 +4203,7 @@ let pjson = {
 																																					"height": "",
 																																					"maxWidth": "",
 																																					"minWidth": "",
-																																					"minHeight": "30px",
+																																					"minHeight": "25px",
 																																					"unlink": "false",
 																																					"unlinkMax": "false",
 																																					"unlinkMin": "false",
@@ -7310,7 +7311,7 @@ let pjson = {
 																																					"marginBottom": "",
 																																					"marginTop": "4px",
 																																					"paddingTop": "12px",
-																																					"paddingBottom": "",
+																																					"paddingBottom": "4px",
 																																					"paddingLeft": "",
 																																					"paddingRight": "",
 																																					"inputPaddingTop": "",
@@ -7327,7 +7328,7 @@ let pjson = {
 																																					"unlinkMax": "false",
 																																					"unlinkMin": "false",
 																																					"isSizeCollapsed": "false",
-																																					"dense": "",
+																																					"dense": "true",
 																																					"labelDefaultFontColor": "#000000",
 																																					"labelDefaultFontFamily": "Roboto",
 																																					"labelDefaultFontSize": "16px",
@@ -7387,12 +7388,13 @@ let pjson = {
 																																					"innerBorderLeftWidth": "0px",
 																																					"innerDefaultBorderColor": "#0000006b",
 																																					"innerSides": ",Bottom",
-																																					"outlined": ""
+																																					"outlined": "",
+																																					"menuFontSize": "13px"
 																																				}
 																																			},
 																																			"O": {
 																																				"cType": "slot",
-																																				"compDomClasses": "v-input v-input--is-readonly theme--light v-text-field v-text-field--is-booted undefined newDropBorder"
+																																				"compDomClasses": "v-input v-input--is-readonly v-input--dense theme--light v-text-field v-text-field--is-booted undefined newDropBorder"
 																																			}
 																																		}
 																																	],
@@ -11120,7 +11122,7 @@ let pjson = {
 																																					"height": "",
 																																					"maxWidth": "",
 																																					"minWidth": "",
-																																					"minHeight": "30px",
+																																					"minHeight": "25px",
 																																					"unlink": "false",
 																																					"unlinkMax": "false",
 																																					"unlinkMin": "false",
@@ -13702,7 +13704,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": ""
+				"compDomClasses": "newDropBorder"
 			}
 		},
 		{

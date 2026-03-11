@@ -4,7 +4,7 @@ csspath:
 
 containerServicesPath: /settings/js/ContainerServiceFile.ts
 localproxy: /settings/localProxy.yaml
-pipelineqjson: /settings/qjson/Pipeline.qjson
+pipelineqjson: /settings/qjson/pipeline.qjson
 alertqjson: 
 rootqjson: /static/depOperations/withdrawHome.qjson
 fileMap: 
@@ -23,7 +23,7 @@ fileMap:
 - id: hf8ibfve-u9b8-xmbb-1xpm-a410mli0u0rf
   path: /static/depOperations
   name: /feeamount.qjson
-  version: Fri Feb 27 2026 10:35:20 GMT+0300 (GMT+03:00)
+  version: Wed Mar 11 2026 12:11:22 GMT+0300 (GMT+03:00)
 - id: x39m77pi-f7xo-tl39-l3ts-zg20mm4o2r3j
   path: /static/css/Roboto
   name: /Roboto-BlackItalic.ttf
@@ -76,6 +76,10 @@ fileMap:
   path: /static/css/Roboto
   name: /Roboto-ThinItalic.ttf
   version: Fri Feb 27 2026 12:05:30 GMT+0300 (GMT+03:00)
+- id: 3xh6kshq-er5d-d0ke-f1co-74t0mmlpocle
+  path: /static/depOperations
+  name: /feeamount_1.qjson
+  version: Wed Mar 11 2026 10:22:17 GMT+0300 (GMT+03:00)
 - id: o8smu704-6gjn-db6v-2xil-psz0mlhy4xma
   path: /static
   name: /App Settings.appSettings
@@ -83,7 +87,7 @@ fileMap:
 - id: qf2d8qrm-4txv-431i-c01o-j810mlhysizt
   path: /static/depOperations
   name: /withdraw.qjson
-  version: Tue Mar 03 2026 10:05:16 GMT+0300 (GMT+03:00)
+  version: Wed Mar 11 2026 12:10:39 GMT+0300 (GMT+03:00)
 - id: v6ck2cck-xrfq-835w-yo58-0hd0mlp9nk7m
   path: /static/depOperations
   name: /withdrawReview.qjson

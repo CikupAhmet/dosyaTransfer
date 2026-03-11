@@ -26,7 +26,7 @@ let pjson = {
 					"HL": "TS"
 				},
 				"setAmount": {
-					"H": "quick.EM.trace(\"setAmount\")\r\ndeclare const amount;\r\ndeclare const currency;\r\ndeclare const accountList;\r\ndeclare const feeAmountResponse;\r\nquick.store.set(\"feeAmountResponse\", feeAmountResponse)\r\nquick.EM.trace(accountList)\r\n\r\nif (feeAmountResponse.customizationAllowed) {\r\n    components.totalAmount.readonly = false;\r\n}\r\n\r\nlet scaledValue = Number(feeAmountResponse.feeAmount.unscaledValue) / Math.pow(10, 2);\r\nlet bsmv = Number(feeAmountResponse.bsmv.unscaledValue) / Math.pow(10, 5)\r\n\r\nlet taxAmount = scaledValue * bsmv;\r\n\r\nconst formattedResultTax = new Intl.NumberFormat(\"tr-TR\", {\r\n      minimumFractionDigits: 2,\r\n      maximumFractionDigits: 2\r\n    }).format(taxAmount);\r\n\r\ncomponents.taxAmount.qValue = formattedResultTax;\r\ncomponents.amount.qValue = amount;\r\ncomponents.currency.qValue = currency;\r\ncomponents.anotherAccountInfo.items = accountList;",
+					"H": "quick.EM.trace(\"setAmount\")\r\ndeclare const amount;\r\ndeclare const currency;\r\ndeclare const accountList;\r\ndeclare const feeAmountResponse;\r\nquick.store.set(\"feeAmountResponse\", feeAmountResponse)\r\nquick.EM.trace(\"feeAmountDialogSet\")\r\nquick.EM.trace(accountList)\r\n\r\nif (feeAmountResponse.customizationAllowed) {\r\n    components.totalAmount.readonly = false;\r\n}\r\n\r\nlet scaledValue = Number(feeAmountResponse.feeAmount.unscaledValue) / Math.pow(10, 2);\r\nlet bsmv = Number(feeAmountResponse.bsmv.unscaledValue) / Math.pow(10, 5)\r\n\r\nlet taxAmount = scaledValue * bsmv;\r\n\r\nconst formattedResultTax = new Intl.NumberFormat(\"tr-TR\", {\r\n      minimumFractionDigits: 2,\r\n      maximumFractionDigits: 2\r\n    }).format(taxAmount);\r\n\r\ncomponents.taxAmount.qValue = formattedResultTax;\r\ncomponents.amount.qValue = amount;\r\ncomponents.currency.qValue = currency;\r\ncomponents.anotherAccountInfo.items = accountList;",
 					"C": true,
 					"HL": "TS"
 				}
@@ -2003,7 +2003,7 @@ let pjson = {
 					"HL": "JS"
 				},
 				"setAmount": {
-					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nquick.EM.trace(\"setAmount\");\r\nquick.store.set(\"feeAmountResponse\", feeAmountResponse);\r\nquick.EM.trace(accountList);\r\nif (feeAmountResponse.customizationAllowed) {\r\n    components.totalAmount.readonly = false;\r\n}\r\nvar scaledValue = Number(feeAmountResponse.feeAmount.unscaledValue) / Math.pow(10, 2);\r\nvar bsmv = Number(feeAmountResponse.bsmv.unscaledValue) / Math.pow(10, 5);\r\nvar taxAmount = scaledValue * bsmv;\r\nvar formattedResultTax = new Intl.NumberFormat(\"tr-TR\", {\r\n    minimumFractionDigits: 2,\r\n    maximumFractionDigits: 2\r\n}).format(taxAmount);\r\ncomponents.taxAmount.qValue = formattedResultTax;\r\ncomponents.amount.qValue = amount;\r\ncomponents.currency.qValue = currency;\r\ncomponents.anotherAccountInfo.items = accountList;\r\n",
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nquick.EM.trace(\"setAmount\");\r\nquick.store.set(\"feeAmountResponse\", feeAmountResponse);\r\nquick.EM.trace(\"feeAmountDialogSet\");\r\nquick.EM.trace(accountList);\r\nif (feeAmountResponse.customizationAllowed) {\r\n    components.totalAmount.readonly = false;\r\n}\r\nvar scaledValue = Number(feeAmountResponse.feeAmount.unscaledValue) / Math.pow(10, 2);\r\nvar bsmv = Number(feeAmountResponse.bsmv.unscaledValue) / Math.pow(10, 5);\r\nvar taxAmount = scaledValue * bsmv;\r\nvar formattedResultTax = new Intl.NumberFormat(\"tr-TR\", {\r\n    minimumFractionDigits: 2,\r\n    maximumFractionDigits: 2\r\n}).format(taxAmount);\r\ncomponents.taxAmount.qValue = formattedResultTax;\r\ncomponents.amount.qValue = amount;\r\ncomponents.currency.qValue = currency;\r\ncomponents.anotherAccountInfo.items = accountList;\r\n",
 					"C": true,
 					"HL": "JS"
 				}
@@ -2013,7 +2013,8 @@ let pjson = {
 				"eID": "EdtrComp_1"
 			},
 			"O": {
-				"cType": "child"
+				"cType": "child",
+				"compDomClasses": "newDropBorder"
 			},
 			"S": {
 				"xs-xl": {
@@ -2183,7 +2184,7 @@ let pjson = {
 																															},
 																															"O": {
 																																"cType": "slot",
-																																"compDomClasses": "v-icon notranslate mdi mdi-alert-octagon-outline theme--light info--text newDropBorder"
+																																"compDomClasses": "v-icon notranslate mdi mdi-alert-octagon-outline theme--light info--text"
 																															}
 																														}
 																													],
@@ -2213,7 +2214,7 @@ let pjson = {
 																													},
 																													"class": "d-flex col-1 justify-center"
 																												},
-																												"compDomClasses": "col d-flex col-1 justify-center newDropBorder"
+																												"compDomClasses": "col d-flex col-1 justify-center"
 																											}
 																										},
 																										{
@@ -2259,7 +2260,7 @@ let pjson = {
 																																	},
 																																	"class": "error--text"
 																																},
-																																"compDomClasses": "q-label error--text newDropBorder"
+																																"compDomClasses": "q-label  error--text"
 																															},
 																															"S": {
 																																"xs-xl": {
@@ -2291,7 +2292,7 @@ let pjson = {
 																											},
 																											"O": {
 																												"cType": "slot",
-																												"compDomClasses": "col newDropBorder"
+																												"compDomClasses": "col"
 																											}
 																										}
 																									],
@@ -2303,7 +2304,7 @@ let pjson = {
 																							},
 																							"O": {
 																								"cType": "slot",
-																								"compDomClasses": "row newDropBorder"
+																								"compDomClasses": "row"
 																							}
 																						},
 																						{
@@ -2456,7 +2457,7 @@ let pjson = {
 																															},
 																															"O": {
 																																"cType": "slot",
-																																"compDomClasses": "v-input v-input--is-readonly v-input--dense theme--light v-text-field v-text-field--is-booted undefined newDropBorder"
+																																"compDomClasses": "v-input v-input--is-readonly v-input--dense theme--light v-text-field v-text-field--is-booted undefined"
 																															}
 																														}
 																													],
@@ -2484,7 +2485,7 @@ let pjson = {
 																													},
 																													"class": "d-flex flex-column"
 																												},
-																												"compDomClasses": "col d-flex flex-column newDropBorder"
+																												"compDomClasses": "col d-flex flex-column"
 																											},
 																											"S": {
 																												"xs-xl": {
@@ -2658,7 +2659,7 @@ let pjson = {
 																															},
 																															"O": {
 																																"cType": "slot",
-																																"compDomClasses": "v-input v-input--is-readonly v-input--dense theme--light v-text-field v-text-field--is-booted undefined newDropBorder"
+																																"compDomClasses": "v-input v-input--is-readonly v-input--dense theme--light v-text-field v-text-field--is-booted undefined"
 																															}
 																														}
 																													],
@@ -2686,7 +2687,7 @@ let pjson = {
 																													},
 																													"class": "d-flex flex-column"
 																												},
-																												"compDomClasses": "col d-flex flex-column newDropBorder"
+																												"compDomClasses": "col d-flex flex-column"
 																											},
 																											"S": {
 																												"xs-xl": {
@@ -2866,7 +2867,7 @@ let pjson = {
 																															},
 																															"O": {
 																																"cType": "slot",
-																																"compDomClasses": "v-input v-input--is-readonly v-input--dense theme--light v-text-field v-text-field--is-booted undefined newDropBorder"
+																																"compDomClasses": "v-input v-input--is-readonly v-input--dense theme--light v-text-field v-text-field--is-booted undefined"
 																															}
 																														}
 																													],
@@ -2894,7 +2895,7 @@ let pjson = {
 																													},
 																													"class": "d-flex flex-column"
 																												},
-																												"compDomClasses": "col d-flex flex-column newDropBorder"
+																												"compDomClasses": "col d-flex flex-column"
 																											},
 																											"S": {
 																												"xs-xl": {
@@ -3058,7 +3059,7 @@ let pjson = {
 																															},
 																															"O": {
 																																"cType": "slot",
-																																"compDomClasses": "v-input v-input--is-readonly v-input--dense theme--light v-text-field v-text-field--is-booted undefined newDropBorder"
+																																"compDomClasses": "v-input v-input--is-readonly v-input--dense theme--light v-text-field v-text-field--is-booted undefined"
 																															}
 																														}
 																													],
@@ -3086,7 +3087,7 @@ let pjson = {
 																													},
 																													"class": "d-flex flex-column"
 																												},
-																												"compDomClasses": "col d-flex flex-column newDropBorder"
+																												"compDomClasses": "col d-flex flex-column"
 																											},
 																											"S": {
 																												"xs-xl": {
@@ -3271,7 +3272,7 @@ let pjson = {
 																															},
 																															"O": {
 																																"cType": "slot",
-																																"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--is-booted v-select v-autocomplete undefined newDropBorder"
+																																"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--is-booted v-select v-autocomplete undefined"
 																															}
 																														}
 																													],
@@ -3299,7 +3300,7 @@ let pjson = {
 																													},
 																													"class": "d-flex flex-column"
 																												},
-																												"compDomClasses": "col d-flex flex-column newDropBorder"
+																												"compDomClasses": "col d-flex flex-column"
 																											},
 																											"S": {
 																												"xs-xl": {
@@ -3479,7 +3480,7 @@ let pjson = {
 																															},
 																															"O": {
 																																"cType": "slot",
-																																"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--is-booted v-select v-autocomplete undefined newDropBorder"
+																																"compDomClasses": "v-input v-input--dense theme--light v-text-field v-text-field--is-booted v-select v-autocomplete undefined"
 																															}
 																														}
 																													],
@@ -3507,7 +3508,7 @@ let pjson = {
 																													},
 																													"class": "d-flex flex-column"
 																												},
-																												"compDomClasses": "col d-flex flex-column newDropBorder"
+																												"compDomClasses": "col d-flex flex-column"
 																											},
 																											"S": {
 																												"xs-xl": {
@@ -3591,7 +3592,7 @@ let pjson = {
 																							},
 																							"O": {
 																								"cType": "slot",
-																								"compDomClasses": "row newDropBorder"
+																								"compDomClasses": "row"
 																							}
 																						},
 																						{
@@ -3674,7 +3675,7 @@ let pjson = {
 																																			},
 																																			"O": {
 																																				"cType": "child",
-																																				"compDomClasses": "q-label newDropBorder"
+																																				"compDomClasses": "q-label "
 																																			}
 																																		}
 																																	],
@@ -3692,7 +3693,7 @@ let pjson = {
 																																	},
 																																	"class": ""
 																																},
-																																"compDomClasses": "v-btn v-btn--depressed v-btn--flat v-btn--outlined theme--light elevation-0 v-size--default error--text newDropBorder"
+																																"compDomClasses": "v-btn v-btn--depressed v-btn--flat v-btn--outlined theme--light elevation-0 v-size--default error--text"
 																															}
 																														}
 																													],
@@ -3720,7 +3721,7 @@ let pjson = {
 																													},
 																													"class": "d-flex justify-end"
 																												},
-																												"compDomClasses": "col d-flex justify-end newDropBorder"
+																												"compDomClasses": "col d-flex justify-end"
 																											},
 																											"S": {
 																												"xs-xl": {
@@ -3796,7 +3797,7 @@ let pjson = {
 																																			},
 																																			"O": {
 																																				"cType": "child",
-																																				"compDomClasses": "q-label newDropBorder"
+																																				"compDomClasses": "q-label "
 																																			}
 																																		}
 																																	],
@@ -3814,7 +3815,7 @@ let pjson = {
 																																	},
 																																	"class": ""
 																																},
-																																"compDomClasses": "v-btn v-btn--depressed v-btn--flat v-btn--outlined theme--light elevation-0 v-size--default info--text newDropBorder"
+																																"compDomClasses": "v-btn v-btn--depressed v-btn--flat v-btn--outlined theme--light elevation-0 v-size--default info--text"
 																															}
 																														}
 																													],
@@ -3842,7 +3843,7 @@ let pjson = {
 																													},
 																													"class": "d-flex justify-end"
 																												},
-																												"compDomClasses": "col d-flex justify-end newDropBorder"
+																												"compDomClasses": "col d-flex justify-end"
 																											}
 																										}
 																									],
@@ -3854,7 +3855,7 @@ let pjson = {
 																							},
 																							"O": {
 																								"cType": "slot",
-																								"compDomClasses": "row newDropBorder"
+																								"compDomClasses": "row"
 																							}
 																						}
 																					],
@@ -3874,7 +3875,7 @@ let pjson = {
 																					},
 																					"class": "mb-0"
 																				},
-																				"compDomClasses": "v-alert v-sheet theme--light elevation-4 v-alert--border v-alert--border-left mb-0 newDropBorder"
+																				"compDomClasses": "v-alert v-sheet theme--light elevation-4 v-alert--border v-alert--border-left mb-0"
 																			}
 																		}
 																	],
@@ -3885,7 +3886,8 @@ let pjson = {
 																"eID": "EdtrComp_535"
 															},
 															"O": {
-																"cType": "slot"
+																"cType": "slot",
+																"compDomClasses": "newDropBorder"
 															}
 														}
 													],
@@ -3903,7 +3905,8 @@ let pjson = {
 												"eID": "EdtrComp_3"
 											},
 											"O": {
-												"cType": "slot"
+												"cType": "slot",
+												"compDomClasses": "col newDropBorder"
 											},
 											"S": {
 												"xs-xl": {
@@ -3932,7 +3935,8 @@ let pjson = {
 								"eID": "EdtrComp_4"
 							},
 							"O": {
-								"cType": "slot"
+								"cType": "slot",
+								"compDomClasses": "row newDropBorder"
 							},
 							"S": {
 								"xs-xl": {
@@ -3959,7 +3963,8 @@ let pjson = {
 				"eID": "EdtrComp_5"
 			},
 			"O": {
-				"cType": "slot"
+				"cType": "slot",
+				"compDomClasses": "container newDropBorder"
 			},
 			"S": {
 				"xs-xl": {

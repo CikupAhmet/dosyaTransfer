@@ -14,7 +14,7 @@ let pjson = {
 			},
 			"E": {
 				"EndRender": {
-					"H": "quick.EM.trace('End Render')\r\n\r\nquick.store.set(\"successVirement\", false);\r\n\r\nif (components.operationTypeGroup.qValue == 0) {\r\n    quick.store.set(\"$customConsumerCode\",'TANE.DEPDEPOSIT');\r\n} else {\r\n    quick.store.set(\"$customConsumerCode\",'TANE.DEPWITHDRAW');\r\n}\r\n\r\n\r\ncomponents.accountInfo.loading = true;\r\ncomponents.EdtrComp_4288.visible = false\r\ncomponents.EdtrComp_4253.visible = false\r\ncomponents.EdtrComp_34.visible = false\r\ncomponents.EdtrComp_25.visible = false\r\n\r\nlet accountTypes: { text: string; value: string }[] = [\r\n  { text: 'Vadesiz TL', value: 'DEMAND' }\r\n];\r\naccountTypes.forEach(function (accountType) {\r\n    components.accountType.items.push({\r\n        text: accountType.text,\r\n        value: accountType.value\r\n    });\r\n    components.accountType.qValue = accountType;\r\n    (<any>components.accountType).updateValue();\r\n});\r\n\r\nlet idempotentRequest: IRequest = {\r\n    url: '/api/dep-operations/v1/api/dep-operations/keys',\r\n    http: 'get',\r\n    blockRender: true,\r\n    onSuccess: 'onSuccessIdempotent',\r\n    onFail: 'onFailIdempotent',\r\n    responseField: 'idempotent',\r\n    data: null\r\n}\r\nquick.Request.async(idempotentRequest);\r\n\r\n\r\nlet customerContext = quick.containerServices.getCustomerContext() as any;\r\nquick.store.set(\"customerValue\", customerContext.customerNumber);\r\n//url: '/api/dep-operations/v1/api/dep-operations/retrieveDepositAccounts?customerId=' + quick.store.get(\"customerValue\")\r\n\r\n\r\nlet accountListRequest: IRequest = {\r\n    url: '/api/dep-operations/v1/api/dep-operations/retrieveDepositAccounts?customerId=' + quick.store.get(\"customerValue\"),\r\n    http: 'get',\r\n    blockRender: true,\r\n    onSuccess: 'onSuccessAccountList',\r\n    onFail: 'onFailAccountList',\r\n    responseField: 'accountList',\r\n    data: null\r\n}\r\nquick.Request.async(accountListRequest);\r\n\r\n",
+					"H": "quick.EM.trace('End Render')\r\n\r\nquick.store.set(\"successVirement\", false);\r\n\r\nif (components.operationTypeGroup.qValue == 0) {\r\n    quick.store.set(\"$customConsumerCode\",'TANE.DEPDEPOSIT');\r\n} else {\r\n    quick.store.set(\"$customConsumerCode\",'TANE.DEPWITHDRAW');\r\n}\r\n\r\n\r\n\r\ncomponents.accountInfo.loading = true;\r\ncomponents.EdtrComp_4288.visible = false\r\ncomponents.EdtrComp_4253.visible = false\r\ncomponents.EdtrComp_34.visible = false\r\ncomponents.EdtrComp_25.visible = false\r\n\r\nlet accountTypes: { text: string; value: string }[] = [\r\n  { text: 'Vadesiz TL', value: 'DEMAND' }\r\n];\r\naccountTypes.forEach(function (accountType) {\r\n    components.accountType.items.push({\r\n        text: accountType.text,\r\n        value: accountType.value\r\n    });\r\n    components.accountType.qValue = accountType;\r\n    (<any>components.accountType).updateValue();\r\n});\r\n\r\nlet idempotentRequest: IRequest = {\r\n    url: '/api/dep-operations/v1/api/dep-operations/keys',\r\n    http: 'get',\r\n    blockRender: true,\r\n    onSuccess: 'onSuccessIdempotent',\r\n    onFail: 'onFailIdempotent',\r\n    responseField: 'idempotent',\r\n    data: null\r\n}\r\nquick.Request.async(idempotentRequest);\r\n\r\n\r\nlet customerContext = quick.containerServices.getCustomerContext() as any;\r\nquick.store.set(\"customerValue\", customerContext.customerNumber);\r\n//url: '/api/dep-operations/v1/api/dep-operations/retrieveDepositAccounts?customerId=' + quick.store.get(\"customerValue\")\r\n\r\n\r\nlet accountListRequest: IRequest = {\r\n    url: '/api/dep-operations/v1/api/dep-operations/retrieveDepositAccounts?customerId=' + quick.store.get(\"customerValue\"),\r\n    http: 'get',\r\n    blockRender: true,\r\n    onSuccess: 'onSuccessAccountList',\r\n    onFail: 'onFailAccountList',\r\n    responseField: 'accountList',\r\n    data: null\r\n}\r\nquick.Request.async(accountListRequest);\r\n\r\n",
 					"HL": "TS"
 				},
 				"onSuccessAccountList": {
@@ -33,7 +33,7 @@ let pjson = {
 					"HL": "TS"
 				},
 				"onFailAccountList": {
-					"H": "declare var error;\r\n\r\nquick.EM.trace('onFailAccountList')\r\nquick.EM.trace(error.response)\r\n\r\ncomponents.accountInfo.loading = false;\r\n\r\nlet errorMessage = \"\";\r\n\r\nif (error.response) {\r\n    if (error.response.data.responseMessage) {\r\n        errorMessage = error.response.data.responseMessage\r\n    } else {\r\n        errorMessage = \"Beklenmedik bir hata oluştu.\"\r\n    }\r\n}\r\n\r\ncomponents.errorDialogVirement.dialogClick({ text: errorMessage});",
+					"H": "declare var error;\r\n\r\nquick.EM.trace('onFailAccountList')\r\nquick.EM.trace(error.response)\r\n\r\ncomponents.accountInfo.loading = false;\r\n\r\nlet errorMessage = \"\";\r\n\r\nif (error.response) {\r\n    if (error.response.data.responseMessage) {\r\n        errorMessage = error.response.data.responseMessage\r\n    } else {\r\n        errorMessage = \"Beklenmedik bir hata oluştu.\"\r\n    }\r\n}\r\n\r\ncomponents.errorDialogWithdraw.dialogClick({ text: errorMessage});",
 					"C": true,
 					"HL": "TS"
 				},
@@ -58,7 +58,7 @@ let pjson = {
 					"HL": "TS"
 				},
 				"onSFailCheckWithdrawCreate": {
-					"H": "declare var error;\r\n\r\nquick.EM.trace(\"onSFailCheckWithdrawCreate\")\r\n\r\nquick.MM.trigger(\"ofsaaRequest\", [{operationCode: \"K\", pcuBytes: \"R\", monetaryType: \"Z\"}]);\r\n\r\nquick.EM.trace(error.response.data.responseMessage)\r\nlet errorMessage = \"\";\r\n\r\nif (error.response) {\r\n    if (error.response.data.responseMessage) {\r\n        errorMessage = error.response.data.responseMessage\r\n    } else {\r\n        errorMessage = \"Beklenmedik bir hata oluştu.\"\r\n    }\r\n}\r\n\r\ncomponents.errorDialogVirement.dialogClick({ text: errorMessage});\r\n",
+					"H": "declare var error;\r\n\r\nquick.EM.trace(\"onSFailCheckWithdrawCreate\")\r\n\r\nquick.MM.trigger(\"ofsaaRequest\", [{operationCode: \"K\", pcuBytes: \"R\", monetaryType: \"Z\"}]);\r\n\r\nquick.EM.trace(error.response.data.responseMessage)\r\nlet errorMessage = \"\";\r\n\r\nif (error.response) {\r\n    if (error.response.data.responseMessage) {\r\n        errorMessage = error.response.data.responseMessage\r\n    } else {\r\n        errorMessage = \"Beklenmedik bir hata oluştu.\"\r\n    }\r\n}\r\n\r\ncomponents.errorDialogWithdraw.dialogClick({ text: errorMessage});\r\n",
 					"C": true,
 					"HL": "TS"
 				}
@@ -2356,7 +2356,7 @@ let pjson = {
 																																					"HL": "TS"
 																																				},
 																																				"onFailControlWithdrawCreate": {
-																																					"H": "declare var error;\r\n\r\nquick.EM.trace('onFailVirementCreate')\r\n\r\nquick.store.set(\"successVirement\", false);\r\ncomponents.EdtrComp_191.disabled = false\r\n\r\nquick.MM.trigger(\"ofsaaRequest\", [{operationCode: \"O\", pcuBytes: \"R\", monetaryType: \"P\"}]);\r\n\r\n\r\n\r\nlet errorMessage = \"\";\r\n\r\nif (error.response) {\r\n    if (error.response.data.responseMessage) {\r\n        errorMessage = error.response.data.responseMessage\r\n    } else {\r\n        errorMessage = \"Beklenmedik bir hata oluştu.\"\r\n    }\r\n}\r\n\r\ncomponents.errorDialogVirement.dialogClick({ text: errorMessage});\r\n",
+																																					"H": "declare var error;\r\n\r\nquick.EM.trace('onFailVirementCreate')\r\n\r\nquick.store.set(\"successVirement\", false);\r\ncomponents.EdtrComp_191.disabled = false\r\n\r\nquick.MM.trigger(\"ofsaaRequest\", [{operationCode: \"O\", pcuBytes: \"R\", monetaryType: \"P\"}]);\r\n\r\n\r\n\r\nlet errorMessage = \"\";\r\n\r\nif (error.response) {\r\n    if (error.response.data.responseMessage) {\r\n        errorMessage = error.response.data.responseMessage\r\n    } else {\r\n        errorMessage = \"Beklenmedik bir hata oluştu.\"\r\n    }\r\n}\r\n\r\ncomponents.errorDialogWithdraw.dialogClick({ text: errorMessage});\r\n",
 																																					"C": true,
 																																					"HL": "TS"
 																																				},
@@ -2366,7 +2366,7 @@ let pjson = {
 																																					"HL": "TS"
 																																				},
 																																				"onFailWithdrawCreate": {
-																																					"H": "quick.EM.trace(\"fail\")\r\n\r\ndeclare var error;\r\n\r\nquick.EM.trace('onFailVirementCreate')\r\n\r\nquick.store.set(\"successVirement\", false);\r\ncomponents.EdtrComp_191.disabled = false\r\n\r\nquick.MM.trigger(\"ofsaaRequest\", [{operationCode: \"O\", pcuBytes: \"R\", monetaryType: \"P\"}]);\r\n\r\n\r\n\r\nlet errorMessage = \"\";\r\n\r\nif (error.response) {\r\n    if (error.response.data.responseMessage) {\r\n        errorMessage = error.response.data.responseMessage\r\n    } else {\r\n        errorMessage = \"Beklenmedik bir hata oluştu.\"\r\n    }\r\n}\r\n\r\ncomponents.errorDialogVirement.dialogClick({ text: errorMessage});\r\n",
+																																					"H": "quick.EM.trace(\"fail\")\r\n\r\ndeclare var error;\r\n\r\nquick.EM.trace('onFailVirementCreate')\r\n\r\nquick.store.set(\"successVirement\", false);\r\ncomponents.EdtrComp_191.disabled = false\r\n\r\nquick.MM.trigger(\"ofsaaRequest\", [{operationCode: \"O\", pcuBytes: \"R\", monetaryType: \"P\"}]);\r\n\r\n\r\n\r\nlet errorMessage = \"\";\r\n\r\nif (error.response) {\r\n    if (error.response.data.responseMessage) {\r\n        errorMessage = error.response.data.responseMessage\r\n    } else {\r\n        errorMessage = \"Beklenmedik bir hata oluştu.\"\r\n    }\r\n}\r\n\r\ncomponents.errorDialogWithdraw.dialogClick({ text: errorMessage});\r\n",
 																																					"C": true,
 																																					"HL": "TS"
 																																				}
@@ -6315,7 +6315,7 @@ let pjson = {
 																													"HL": "TS"
 																												},
 																												"onSFailCheckWithdrawCreate": {
-																													"H": "declare var error;\r\n\r\ncomponents.EdtrComp_1463.disabled = false;\r\nquick.EM.trace(\"onSFailCheckWithdrawCreate\")\r\n\r\nquick.MM.trigger(\"ofsaaRequest\", [{operationCode: \"K\", pcuBytes: \"R\", monetaryType: \"Z\"}]);\r\n\r\nquick.EM.trace(error.response.data.responseMessage)\r\nlet errorMessage = \"\";\r\n\r\nif (error.response) {\r\n    if (error.response.data.responseMessage) {\r\n        errorMessage = error.response.data.responseMessage\r\n    } else {\r\n        errorMessage = \"Beklenmedik bir hata oluştu.\"\r\n    }\r\n}\r\n\r\ncomponents.errorDialogVirement.dialogClick({ text: errorMessage});\r\n",
+																													"H": "declare var error;\r\n\r\ncomponents.EdtrComp_1463.disabled = false;\r\nquick.EM.trace(\"onSFailCheckWithdrawCreate\")\r\n\r\nquick.MM.trigger(\"ofsaaRequest\", [{operationCode: \"K\", pcuBytes: \"R\", monetaryType: \"Z\"}]);\r\n\r\nquick.EM.trace(error.response.data.responseMessage)\r\nlet errorMessage = \"\";\r\n\r\nif (error.response) {\r\n    if (error.response.data.responseMessage) {\r\n        errorMessage = error.response.data.responseMessage\r\n    } else {\r\n        errorMessage = \"Beklenmedik bir hata oluştu.\"\r\n    }\r\n}\r\n\r\ncomponents.errorDialogWithdraw.dialogClick({ text: errorMessage});\r\n",
 																													"C": true,
 																													"HL": "TS"
 																												}
@@ -6724,36 +6724,12 @@ let pjson = {
 			"T": "CustomComponent",
 			"P": {
 				"ID": {
-					"H": "errorDialogVirement",
-					"T": "prop",
-					"HL": "QS"
-				},
-				"QJsonPath": {
-					"H": "'/static/depOperations/errorDialogWithdraw.qjson'",
-					"T": "prop",
-					"HL": "QS"
-				}
-			},
-			"E": {},
-			"C": {},
-			"_Editor": {
-				"eID": "EdtrComp_452"
-			},
-			"O": {
-				"cType": "child",
-				"dynProps": true
-			}
-		},
-		{
-			"T": "CustomComponent",
-			"P": {
-				"ID": {
 					"H": "successDialogVirement",
 					"T": "prop",
 					"HL": "QS"
 				},
 				"QJsonPath": {
-					"H": "'/static/depOperations/successDialogWithdraw.qjson'",
+					"H": "'/narMicroUI/dep-operations/static/depOperations/successDialogWithdraw.qjson'",
 					"T": "prop",
 					"HL": "QS"
 				}
@@ -6777,7 +6753,7 @@ let pjson = {
 					"HL": "QS"
 				},
 				"QJsonPath": {
-					"H": "'/static/depOperations/warningDialogWithdraw.qjson'",
+					"H": "'/narMicroUI/dep-operations/static/depOperations/warningDialogWithdraw.qjson'",
 					"T": "prop",
 					"HL": "QS"
 				}
@@ -6807,7 +6783,7 @@ let pjson = {
 					"HL": "QS"
 				},
 				"QJsonPath": {
-					"H": "'/static/depOperations/feeamountWithdraw.qjson'",
+					"H": "'/narMicroUI/dep-operations/static/depOperations/feeamountWithdraw.qjson'",
 					"T": "prop",
 					"HL": "QS"
 				}
@@ -6823,6 +6799,29 @@ let pjson = {
 			"C": {},
 			"_Editor": {
 				"eID": "EdtrComp_140"
+			},
+			"O": {
+				"cType": "child",
+				"dynProps": true
+			}
+		},
+		{
+			"T": "CustomComponent",
+			"P": {
+				"ID": {
+					"H": "errorDialogWithdraw",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"QJsonPath": {
+					"H": "'/narMicroUI/dep-operations/static/depOperations/errorDialogWithdraw.qjson'",
+					"T": "prop"
+				}
+			},
+			"E": {},
+			"C": {},
+			"_Editor": {
+				"eID": "EdtrComp_61"
 			},
 			"O": {
 				"cType": "child",
@@ -6864,7 +6863,7 @@ let pjson = {
 					"HL": "JS"
 				},
 				"onFailAccountList": {
-					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nquick.EM.trace('onFailAccountList');\r\nquick.EM.trace(error.response);\r\ncomponents.accountInfo.loading = false;\r\nvar errorMessage = \"\";\r\nif (error.response) {\r\n    if (error.response.data.responseMessage) {\r\n        errorMessage = error.response.data.responseMessage;\r\n    }\r\n    else {\r\n        errorMessage = \"Beklenmedik bir hata oluştu.\";\r\n    }\r\n}\r\ncomponents.errorDialogVirement.dialogClick({ text: errorMessage });\r\n",
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nquick.EM.trace('onFailAccountList');\r\nquick.EM.trace(error.response);\r\ncomponents.accountInfo.loading = false;\r\nvar errorMessage = \"\";\r\nif (error.response) {\r\n    if (error.response.data.responseMessage) {\r\n        errorMessage = error.response.data.responseMessage;\r\n    }\r\n    else {\r\n        errorMessage = \"Beklenmedik bir hata oluştu.\";\r\n    }\r\n}\r\ncomponents.errorDialogWithdraw.dialogClick({ text: errorMessage });\r\n",
 					"C": true,
 					"HL": "JS"
 				},
@@ -6889,7 +6888,7 @@ let pjson = {
 					"HL": "JS"
 				},
 				"onSFailCheckWithdrawCreate": {
-					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nquick.EM.trace(\"onSFailCheckWithdrawCreate\");\r\nquick.MM.trigger(\"ofsaaRequest\", [{ operationCode: \"K\", pcuBytes: \"R\", monetaryType: \"Z\" }]);\r\nquick.EM.trace(error.response.data.responseMessage);\r\nvar errorMessage = \"\";\r\nif (error.response) {\r\n    if (error.response.data.responseMessage) {\r\n        errorMessage = error.response.data.responseMessage;\r\n    }\r\n    else {\r\n        errorMessage = \"Beklenmedik bir hata oluştu.\";\r\n    }\r\n}\r\ncomponents.errorDialogVirement.dialogClick({ text: errorMessage });\r\n",
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nquick.EM.trace(\"onSFailCheckWithdrawCreate\");\r\nquick.MM.trigger(\"ofsaaRequest\", [{ operationCode: \"K\", pcuBytes: \"R\", monetaryType: \"Z\" }]);\r\nquick.EM.trace(error.response.data.responseMessage);\r\nvar errorMessage = \"\";\r\nif (error.response) {\r\n    if (error.response.data.responseMessage) {\r\n        errorMessage = error.response.data.responseMessage;\r\n    }\r\n    else {\r\n        errorMessage = \"Beklenmedik bir hata oluştu.\";\r\n    }\r\n}\r\ncomponents.errorDialogWithdraw.dialogClick({ text: errorMessage });\r\n",
 					"C": true,
 					"HL": "JS"
 				}
@@ -9235,7 +9234,7 @@ let pjson = {
 																																					"HL": "JS"
 																																				},
 																																				"onFailControlWithdrawCreate": {
-																																					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nquick.EM.trace('onFailVirementCreate');\r\nquick.store.set(\"successVirement\", false);\r\ncomponents.EdtrComp_191.disabled = false;\r\nquick.MM.trigger(\"ofsaaRequest\", [{ operationCode: \"O\", pcuBytes: \"R\", monetaryType: \"P\" }]);\r\nvar errorMessage = \"\";\r\nif (error.response) {\r\n    if (error.response.data.responseMessage) {\r\n        errorMessage = error.response.data.responseMessage;\r\n    }\r\n    else {\r\n        errorMessage = \"Beklenmedik bir hata oluştu.\";\r\n    }\r\n}\r\ncomponents.errorDialogVirement.dialogClick({ text: errorMessage });\r\n",
+																																					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nquick.EM.trace('onFailVirementCreate');\r\nquick.store.set(\"successVirement\", false);\r\ncomponents.EdtrComp_191.disabled = false;\r\nquick.MM.trigger(\"ofsaaRequest\", [{ operationCode: \"O\", pcuBytes: \"R\", monetaryType: \"P\" }]);\r\nvar errorMessage = \"\";\r\nif (error.response) {\r\n    if (error.response.data.responseMessage) {\r\n        errorMessage = error.response.data.responseMessage;\r\n    }\r\n    else {\r\n        errorMessage = \"Beklenmedik bir hata oluştu.\";\r\n    }\r\n}\r\ncomponents.errorDialogWithdraw.dialogClick({ text: errorMessage });\r\n",
 																																					"C": true,
 																																					"HL": "JS"
 																																				},
@@ -9245,7 +9244,7 @@ let pjson = {
 																																					"HL": "JS"
 																																				},
 																																				"onFailWithdrawCreate": {
-																																					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nquick.EM.trace(\"fail\");\r\nquick.EM.trace('onFailVirementCreate');\r\nquick.store.set(\"successVirement\", false);\r\ncomponents.EdtrComp_191.disabled = false;\r\nquick.MM.trigger(\"ofsaaRequest\", [{ operationCode: \"O\", pcuBytes: \"R\", monetaryType: \"P\" }]);\r\nvar errorMessage = \"\";\r\nif (error.response) {\r\n    if (error.response.data.responseMessage) {\r\n        errorMessage = error.response.data.responseMessage;\r\n    }\r\n    else {\r\n        errorMessage = \"Beklenmedik bir hata oluştu.\";\r\n    }\r\n}\r\ncomponents.errorDialogVirement.dialogClick({ text: errorMessage });\r\n",
+																																					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nquick.EM.trace(\"fail\");\r\nquick.EM.trace('onFailVirementCreate');\r\nquick.store.set(\"successVirement\", false);\r\ncomponents.EdtrComp_191.disabled = false;\r\nquick.MM.trigger(\"ofsaaRequest\", [{ operationCode: \"O\", pcuBytes: \"R\", monetaryType: \"P\" }]);\r\nvar errorMessage = \"\";\r\nif (error.response) {\r\n    if (error.response.data.responseMessage) {\r\n        errorMessage = error.response.data.responseMessage;\r\n    }\r\n    else {\r\n        errorMessage = \"Beklenmedik bir hata oluştu.\";\r\n    }\r\n}\r\ncomponents.errorDialogWithdraw.dialogClick({ text: errorMessage });\r\n",
 																																					"C": true,
 																																					"HL": "JS"
 																																				}
@@ -13269,7 +13268,7 @@ let pjson = {
 																													"HL": "JS"
 																												},
 																												"onSFailCheckWithdrawCreate": {
-																													"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ncomponents.EdtrComp_1463.disabled = false;\r\nquick.EM.trace(\"onSFailCheckWithdrawCreate\");\r\nquick.MM.trigger(\"ofsaaRequest\", [{ operationCode: \"K\", pcuBytes: \"R\", monetaryType: \"Z\" }]);\r\nquick.EM.trace(error.response.data.responseMessage);\r\nvar errorMessage = \"\";\r\nif (error.response) {\r\n    if (error.response.data.responseMessage) {\r\n        errorMessage = error.response.data.responseMessage;\r\n    }\r\n    else {\r\n        errorMessage = \"Beklenmedik bir hata oluştu.\";\r\n    }\r\n}\r\ncomponents.errorDialogVirement.dialogClick({ text: errorMessage });\r\n",
+																													"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\ncomponents.EdtrComp_1463.disabled = false;\r\nquick.EM.trace(\"onSFailCheckWithdrawCreate\");\r\nquick.MM.trigger(\"ofsaaRequest\", [{ operationCode: \"K\", pcuBytes: \"R\", monetaryType: \"Z\" }]);\r\nquick.EM.trace(error.response.data.responseMessage);\r\nvar errorMessage = \"\";\r\nif (error.response) {\r\n    if (error.response.data.responseMessage) {\r\n        errorMessage = error.response.data.responseMessage;\r\n    }\r\n    else {\r\n        errorMessage = \"Beklenmedik bir hata oluştu.\";\r\n    }\r\n}\r\ncomponents.errorDialogWithdraw.dialogClick({ text: errorMessage });\r\n",
 																													"C": true,
 																													"HL": "JS"
 																												}
@@ -13686,37 +13685,12 @@ let pjson = {
 			"T": "CustomComponent",
 			"P": {
 				"ID": {
-					"H": "errorDialogVirement",
-					"T": "prop",
-					"HL": "QS"
-				},
-				"QJsonPath": {
-					"H": "╬'/static/depOperations/errorDialogWithdraw.qjson'╩╩",
-					"T": "prop",
-					"HL": "QS"
-				}
-			},
-			"E": {},
-			"C": {},
-			"_Editor": {
-				"eID": "EdtrComp_452"
-			},
-			"O": {
-				"cType": "child",
-				"dynProps": true,
-				"compDomClasses": "newDropBorder"
-			}
-		},
-		{
-			"T": "CustomComponent",
-			"P": {
-				"ID": {
 					"H": "successDialogVirement",
 					"T": "prop",
 					"HL": "QS"
 				},
 				"QJsonPath": {
-					"H": "╬'/static/depOperations/successDialogWithdraw.qjson'╩╩",
+					"H": "╬'/narMicroUI/dep-operations/static/depOperations/successDialogWithdraw.qjson'╩╩",
 					"T": "prop",
 					"HL": "QS"
 				}
@@ -13741,7 +13715,7 @@ let pjson = {
 					"HL": "QS"
 				},
 				"QJsonPath": {
-					"H": "╬'/static/depOperations/warningDialogWithdraw.qjson'╩╩",
+					"H": "╬'/narMicroUI/dep-operations/static/depOperations/warningDialogWithdraw.qjson'╩╩",
 					"T": "prop",
 					"HL": "QS"
 				}
@@ -13760,7 +13734,7 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": "newDropBorder"
+				"compDomClasses": ""
 			}
 		},
 		{
@@ -13772,7 +13746,7 @@ let pjson = {
 					"HL": "QS"
 				},
 				"QJsonPath": {
-					"H": "╬'/static/depOperations/feeamountWithdraw.qjson'╩╩",
+					"H": "╬'/narMicroUI/dep-operations/static/depOperations/feeamountWithdraw.qjson'╩╩",
 					"T": "prop",
 					"HL": "QS"
 				}
@@ -13792,7 +13766,31 @@ let pjson = {
 			"O": {
 				"cType": "child",
 				"dynProps": true,
-				"compDomClasses": "newDropBorder"
+				"compDomClasses": ""
+			}
+		},
+		{
+			"T": "CustomComponent",
+			"P": {
+				"ID": {
+					"H": "errorDialogWithdraw",
+					"T": "prop",
+					"HL": "QS"
+				},
+				"QJsonPath": {
+					"H": "╬'/narMicroUI/dep-operations/static/depOperations/errorDialogWithdraw.qjson'╩╩",
+					"T": "prop"
+				}
+			},
+			"E": {},
+			"C": {},
+			"_Editor": {
+				"eID": "EdtrComp_61"
+			},
+			"O": {
+				"cType": "child",
+				"dynProps": true,
+				"compDomClasses": ""
 			}
 		}
 	],

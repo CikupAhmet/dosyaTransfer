@@ -6729,7 +6729,7 @@ let pjson = {
 					"HL": "QS"
 				},
 				"QJsonPath": {
-					"H": "'/static/depOperations/errorDialog.qjson'",
+					"H": "'/static/depOperations/errorDialogWithdraw.qjson'",
 					"T": "prop",
 					"HL": "QS"
 				}
@@ -6753,7 +6753,7 @@ let pjson = {
 					"HL": "QS"
 				},
 				"QJsonPath": {
-					"H": "'/static/depOperations/successDialog.qjson'",
+					"H": "'/static/depOperations/successDialogWithdraw.qjson'",
 					"T": "prop",
 					"HL": "QS"
 				}
@@ -6777,7 +6777,7 @@ let pjson = {
 					"HL": "QS"
 				},
 				"QJsonPath": {
-					"H": "'/static/depOperations/warningDialog.qjson'",
+					"H": "'/static/depOperations/warningDialogWithdraw.qjson'",
 					"T": "prop",
 					"HL": "QS"
 				}
@@ -6807,7 +6807,7 @@ let pjson = {
 					"HL": "QS"
 				},
 				"QJsonPath": {
-					"H": "'/static/depOperations/feeamount.qjson'",
+					"H": "'/static/depOperations/feeamountWithdraw.qjson'",
 					"T": "prop",
 					"HL": "QS"
 				}
@@ -13691,7 +13691,7 @@ let pjson = {
 					"HL": "QS"
 				},
 				"QJsonPath": {
-					"H": "╬'/static/depOperations/errorDialog.qjson'╩╩",
+					"H": "╬'/static/depOperations/errorDialogWithdraw.qjson'╩╩",
 					"T": "prop",
 					"HL": "QS"
 				}
@@ -13716,7 +13716,7 @@ let pjson = {
 					"HL": "QS"
 				},
 				"QJsonPath": {
-					"H": "╬'/static/depOperations/successDialog.qjson'╩╩",
+					"H": "╬'/static/depOperations/successDialogWithdraw.qjson'╩╩",
 					"T": "prop",
 					"HL": "QS"
 				}
@@ -13741,7 +13741,7 @@ let pjson = {
 					"HL": "QS"
 				},
 				"QJsonPath": {
-					"H": "╬'/static/depOperations/warningDialog.qjson'╩╩",
+					"H": "╬'/static/depOperations/warningDialogWithdraw.qjson'╩╩",
 					"T": "prop",
 					"HL": "QS"
 				}
@@ -13772,7 +13772,7 @@ let pjson = {
 					"HL": "QS"
 				},
 				"QJsonPath": {
-					"H": "╬'/static/depOperations/feeamount.qjson'╩╩",
+					"H": "╬'/static/depOperations/feeamountWithdraw.qjson'╩╩",
 					"T": "prop",
 					"HL": "QS"
 				}

@@ -19,7 +19,7 @@ let pjson = {
 					"HL": "TS"
 				},
 				"EndRender": {
-					"H": "let accountListRequest: IRequest = {\r\n    url: '/api/dep-operations/v1/api/dep-operations/retrieveOnlineApprove?approveId=102925',\r\n    http: 'get',\r\n    blockRender: true,\r\n    onSuccess: 'onSuccessRetrieveOnlineApprove',\r\n    onFail: 'onFaiRetrieveOnlineApprove',\r\n    responseField: 'retrieveOnlineApprove',\r\n    data: null\r\n}\r\nquick.Request.async(accountListRequest);\r\n",
+					"H": "let params = quick.Url.getDeepLinkParams();\r\nquick.EM.trace(\"url\")\r\nquick.EM.trace(params);\r\n\r\nlet accountListRequest: IRequest = {\r\n    url: '/api/dep-operations/v1/api/dep-operations/retrieveOnlineApprove?approveId=' + params?.onlineApproveId,\r\n    http: 'get',\r\n    blockRender: true,\r\n    onSuccess: 'onSuccessRetrieveOnlineApprove',\r\n    onFail: 'onFaiRetrieveOnlineApprove',\r\n    responseField: 'retrieveOnlineApprove',\r\n    data: null\r\n}\r\nquick.Request.async(accountListRequest);\r\n",
 					"HL": "TS"
 				},
 				"onSuccessRetrieveOnlineApprove": {
@@ -2744,7 +2744,7 @@ let pjson = {
 					"HL": "QS"
 				},
 				"QJsonPath": {
-					"H": "'<<qjson:7ips2y3r-mg74-oyof-euq3-elp0mli0u0dq>>'",
+					"H": "'/static/depOperations/errorDialogWithdraw.qjson'",
 					"T": "prop",
 					"HL": "QS"
 				}
@@ -2768,7 +2768,7 @@ let pjson = {
 					"HL": "QS"
 				},
 				"QJsonPath": {
-					"H": "'<<qjson:uat07ajt-fsgb-3588-qhmd-rid0mli0u0i8>>'",
+					"H": "'/static/depOperations/successDialogWithdraw.qjson'",
 					"T": "prop",
 					"HL": "QS"
 				}
@@ -2792,7 +2792,7 @@ let pjson = {
 					"HL": "QS"
 				},
 				"QJsonPath": {
-					"H": "'<<qjson:fjnmfpdj-g9yb-prh8-xzk6-2030mli0u0vl>>'",
+					"H": "'/static/depOperations/warningDialogWithdraw.qjson'",
 					"T": "prop",
 					"HL": "QS"
 				}
@@ -2822,7 +2822,7 @@ let pjson = {
 					"HL": "QS"
 				},
 				"QJsonPath": {
-					"H": "'<<qjson:hf8ibfve-u9b8-xmbb-1xpm-a410mli0u0rf>>'",
+					"H": "'/static/depOperations/feeamountWithdraw.qjson'",
 					"T": "prop",
 					"HL": "QS"
 				}
@@ -2858,7 +2858,7 @@ let pjson = {
 					"HL": "JS"
 				},
 				"EndRender": {
-					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nvar accountListRequest = {\r\n    url: '/api/dep-operations/v1/api/dep-operations/retrieveOnlineApprove?approveId=102925',\r\n    http: 'get',\r\n    blockRender: true,\r\n    onSuccess: 'onSuccessRetrieveOnlineApprove',\r\n    onFail: 'onFaiRetrieveOnlineApprove',\r\n    responseField: 'retrieveOnlineApprove',\r\n    data: null\r\n};\r\nquick.Request.async(accountListRequest);\r\n",
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nvar params = quick.Url.getDeepLinkParams();\r\nquick.EM.trace(\"url\");\r\nquick.EM.trace(params);\r\nvar accountListRequest = {\r\n    url: '/api/dep-operations/v1/api/dep-operations/retrieveOnlineApprove?approveId=' + (params === null || params === void 0 ? void 0 : params.onlineApproveId),\r\n    http: 'get',\r\n    blockRender: true,\r\n    onSuccess: 'onSuccessRetrieveOnlineApprove',\r\n    onFail: 'onFaiRetrieveOnlineApprove',\r\n    responseField: 'retrieveOnlineApprove',\r\n    data: null\r\n};\r\nquick.Request.async(accountListRequest);\r\n",
 					"HL": "JS"
 				},
 				"onSuccessRetrieveOnlineApprove": {
@@ -5641,7 +5641,7 @@ let pjson = {
 					"HL": "QS"
 				},
 				"QJsonPath": {
-					"H": "╬'<<qjson:7ips2y3r-mg74-oyof-euq3-elp0mli0u0dq>>'╩╩",
+					"H": "╬'/static/depOperations/errorDialogWithdraw.qjson'╩╩",
 					"T": "prop",
 					"HL": "QS"
 				}
@@ -5666,7 +5666,7 @@ let pjson = {
 					"HL": "QS"
 				},
 				"QJsonPath": {
-					"H": "╬'<<qjson:uat07ajt-fsgb-3588-qhmd-rid0mli0u0i8>>'╩╩",
+					"H": "╬'/static/depOperations/successDialogWithdraw.qjson'╩╩",
 					"T": "prop",
 					"HL": "QS"
 				}
@@ -5691,7 +5691,7 @@ let pjson = {
 					"HL": "QS"
 				},
 				"QJsonPath": {
-					"H": "╬'<<qjson:fjnmfpdj-g9yb-prh8-xzk6-2030mli0u0vl>>'╩╩",
+					"H": "╬'/static/depOperations/warningDialogWithdraw.qjson'╩╩",
 					"T": "prop",
 					"HL": "QS"
 				}
@@ -5722,7 +5722,7 @@ let pjson = {
 					"HL": "QS"
 				},
 				"QJsonPath": {
-					"H": "╬'<<qjson:hf8ibfve-u9b8-xmbb-1xpm-a410mli0u0rf>>'╩╩",
+					"H": "╬'/static/depOperations/feeamountWithdraw.qjson'╩╩",
 					"T": "prop",
 					"HL": "QS"
 				}

@@ -10,20 +10,20 @@ rootqjson: /static/depOperations/withdrawHome.qjson
 fileMap: 
 - id: 7ips2y3r-mg74-oyof-euq3-elp0mli0u0dq
   path: /static/depOperations
-  name: /errorDialog.qjson
-  version: Fri Feb 27 2026 10:35:26 GMT+0300 (GMT+03:00)
+  name: /errorDialogWithdraw.qjson
+  version: Thu Mar 12 2026 15:11:08 GMT+0300 (GMT+03:00)
 - id: uat07ajt-fsgb-3588-qhmd-rid0mli0u0i8
   path: /static/depOperations
-  name: /successDialog.qjson
-  version: Fri Feb 27 2026 10:35:11 GMT+0300 (GMT+03:00)
+  name: /successDialogWithdraw.qjson
+  version: Thu Mar 12 2026 15:10:50 GMT+0300 (GMT+03:00)
 - id: fjnmfpdj-g9yb-prh8-xzk6-2030mli0u0vl
   path: /static/depOperations
-  name: /warningDialog.qjson
-  version: Fri Feb 27 2026 10:34:54 GMT+0300 (GMT+03:00)
+  name: /warningDialogWithdraw.qjson
+  version: Thu Mar 12 2026 15:08:55 GMT+0300 (GMT+03:00)
 - id: hf8ibfve-u9b8-xmbb-1xpm-a410mli0u0rf
   path: /static/depOperations
-  name: /feeamount.qjson
-  version: Wed Mar 11 2026 12:11:22 GMT+0300 (GMT+03:00)
+  name: /feeamountWithdraw.qjson
+  version: Thu Mar 12 2026 15:11:25 GMT+0300 (GMT+03:00)
 - id: x39m77pi-f7xo-tl39-l3ts-zg20mm4o2r3j
   path: /static/css/Roboto
   name: /Roboto-BlackItalic.ttf
@@ -80,6 +80,10 @@ fileMap:
   path: /static/depOperations
   name: /feeamount_1.qjson
   version: Wed Mar 11 2026 10:22:17 GMT+0300 (GMT+03:00)
+- id: b7ugn76d-7wgg-hhz7-hxju-t620mmn410jx
+  path: /static/depOperations
+  name: /menuOperationsOADetails.qjson
+  version: Thu Mar 12 2026 09:51:49 GMT+0300 (GMT+03:00)
 - id: o8smu704-6gjn-db6v-2xil-psz0mlhy4xma
   path: /static
   name: /App Settings.appSettings
@@ -87,11 +91,11 @@ fileMap:
 - id: qf2d8qrm-4txv-431i-c01o-j810mlhysizt
   path: /static/depOperations
   name: /withdraw.qjson
-  version: Wed Mar 11 2026 12:10:39 GMT+0300 (GMT+03:00)
+  version: Thu Mar 12 2026 15:12:58 GMT+0300 (GMT+03:00)
 - id: v6ck2cck-xrfq-835w-yo58-0hd0mlp9nk7m
   path: /static/depOperations
   name: /withdrawReview.qjson
-  version: Fri Feb 27 2026 10:34:37 GMT+0300 (GMT+03:00)
+  version: Thu Mar 12 2026 09:55:33 GMT+0300 (GMT+03:00)
 - id: vgwiawhl-pxcy-sjpg-f95n-3yk0mlun5uoc
   path: /static/depOperations
   name: /virement.qjson

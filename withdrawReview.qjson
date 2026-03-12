@@ -19,7 +19,7 @@ let pjson = {
 					"HL": "TS"
 				},
 				"EndRender": {
-					"H": "let accountListRequest: IRequest = {\r\n    url: '/api/dep-operations/v1/api/dep-operations/retrieveOnlineApprove?approveId=102925',\r\n    http: 'get',\r\n    blockRender: true,\r\n    onSuccess: 'onSuccessRetrieveOnlineApprove',\r\n    onFail: 'onFaiRetrieveOnlineApprove',\r\n    responseField: 'retrieveOnlineApprove',\r\n    data: null\r\n}\r\nquick.Request.async(accountListRequest);\r\n",
+					"H": "let params = quick.Url.getDeepLinkParams();\r\nquick.EM.trace(\"url\")\r\nquick.EM.trace(params);\r\n\r\nlet accountListRequest: IRequest = {\r\n    url: '/api/dep-operations/v1/api/dep-operations/retrieveOnlineApprove?approveId=' + params?.onlineApproveId,\r\n    http: 'get',\r\n    blockRender: true,\r\n    onSuccess: 'onSuccessRetrieveOnlineApprove',\r\n    onFail: 'onFaiRetrieveOnlineApprove',\r\n    responseField: 'retrieveOnlineApprove',\r\n    data: null\r\n}\r\nquick.Request.async(accountListRequest);\r\n",
 					"HL": "TS"
 				},
 				"onSuccessRetrieveOnlineApprove": {
@@ -2858,7 +2858,7 @@ let pjson = {
 					"HL": "JS"
 				},
 				"EndRender": {
-					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nvar accountListRequest = {\r\n    url: '/api/dep-operations/v1/api/dep-operations/retrieveOnlineApprove?approveId=102925',\r\n    http: 'get',\r\n    blockRender: true,\r\n    onSuccess: 'onSuccessRetrieveOnlineApprove',\r\n    onFail: 'onFaiRetrieveOnlineApprove',\r\n    responseField: 'retrieveOnlineApprove',\r\n    data: null\r\n};\r\nquick.Request.async(accountListRequest);\r\n",
+					"H": "Object.defineProperty(exports, \"__esModule\", { value: true });\r\n;\r\nvar params = quick.Url.getDeepLinkParams();\r\nquick.EM.trace(\"url\");\r\nquick.EM.trace(params);\r\nvar accountListRequest = {\r\n    url: '/api/dep-operations/v1/api/dep-operations/retrieveOnlineApprove?approveId=' + (params === null || params === void 0 ? void 0 : params.onlineApproveId),\r\n    http: 'get',\r\n    blockRender: true,\r\n    onSuccess: 'onSuccessRetrieveOnlineApprove',\r\n    onFail: 'onFaiRetrieveOnlineApprove',\r\n    responseField: 'retrieveOnlineApprove',\r\n    data: null\r\n};\r\nquick.Request.async(accountListRequest);\r\n",
 					"HL": "JS"
 				},
 				"onSuccessRetrieveOnlineApprove": {
